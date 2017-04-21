@@ -19,6 +19,7 @@ public class RFC7797JsonWebSignature extends JsonWebSignature {
 		return base64url.base64UrlEncodeUtf8ByteRepresentation(this.fixedHeader);
 	}
 
+	@Override
 	public String getEncodedPayload() {
 
 		return this.unencodedPayload;

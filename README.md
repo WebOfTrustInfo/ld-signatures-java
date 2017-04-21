@@ -31,9 +31,10 @@ Example code:
 		String created = "2017-10-24T05:33:31Z";
 		String domain = "example.com";
 		String nonce = null;
-
+		
 		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(jsonLdObject, TestUtil.testRSAPrivateKey, creator, created, domain, nonce);
 		LdSignature ldSignature = signer.buildLdSignature();
+		LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.buildJsonLdSignatureObject();
 
 Example Linked Data Signature:
 

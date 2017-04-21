@@ -30,16 +30,23 @@ public class LdSignature {
 	private String nonce;
 	private String signatureValue;
 
-	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+	public LinkedHashMap<String, Object> buildJsonLdSignatureObject() {
 
 		LinkedHashMap<String, Object> jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
-		
+
 		if (this.type != null) jsonLdSignatureObject.put(JSONLD_TERM_TYPE, this.type);
 		if (this.creator != null) jsonLdSignatureObject.put(JSONLD_TERM_CREATOR, this.creator);
 		if (this.created != null) jsonLdSignatureObject.put(JSONLD_TERM_CREATED, this.created);
 		if (this.domain != null) jsonLdSignatureObject.put(JSONLD_TERM_DOMAIN, this.domain);
 		if (this.nonce != null) jsonLdSignatureObject.put(JSONLD_TERM_NONCE, this.nonce);
 		if (this.signatureValue != null) jsonLdSignatureObject.put(JSONLD_TERM_SIGNATUREVALUE, this.signatureValue);
+
+		return jsonLdSignatureObject;
+	}
+
+	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+
+		LinkedHashMap<String, Object> jsonLdSignatureObject = this.buildJsonLdSignatureObject();
 
 		jsonLdObject.put(JSONLD_TERM_SIGNATURE, jsonLdSignatureObject);
 	}

@@ -5,7 +5,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 
-import org.jose4j.base64url.Base64Url;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.lang.JoseException;
 
@@ -16,7 +15,6 @@ import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
 import info.weboftrust.ldsignatures.suites.RsaSignature2017SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
-import info.weboftrust.ldsignatures.util.SHAUtil;
 
 public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017SignatureSuite> {
 
@@ -51,12 +49,11 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 
 		// build the payload
 
-		String unencodedPayload = Base64Url.encode(SHAUtil.sha256(canonicalizedDocument));
+		String unencodedPayload = canonicalizedDocument;
 
 		// build the JWS header and payload to be signed
 
-		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, canonicalizedDocument);
-		jws.setEncodedPayload(unencodedPayload);
+		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, unencodedPayload);
 		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
 
 		// sign the payload and build the JWS
