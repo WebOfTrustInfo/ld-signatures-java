@@ -39,7 +39,7 @@ Example code:
 Example Linked Data Signature:
 
 	  "signature" : {
-	    "type" : "https://w3id.org/security#SignatureSuite",
+	    "type" : "https://w3id.org/security#RsaSignature2017",
 	    "creator" : "https://example.com/jdoe/keys/1",
 	    "created" : "2017-10-24T05:33:31Z",
 	    "domain" : "example.com",

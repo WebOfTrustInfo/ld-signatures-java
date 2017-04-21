@@ -79,7 +79,7 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 		// build the JSON-LD signature object
 
 		LdSignature ldSignature = new LdSignature();
-		ldSignature.setType(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getType());
+		ldSignature.setType(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getId());
 		ldSignature.setCreator(creator);
 		ldSignature.setCreated(created);
 		ldSignature.setDomain(domain);
