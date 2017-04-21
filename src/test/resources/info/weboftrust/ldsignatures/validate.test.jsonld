@@ -1,0 +1,11 @@
+{
+  "@context": ["http://schema.org/", "https://w3id.org/security/v1"],
+  "description": "Hello world!",
+  "signature": {
+    "type": "RsaSignature2017",
+    "created": "2017-10-24T05:33:31Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "domain": "example.com",
+    "signatureValue": "eyiOiJJ0eXAK...EjXkgFWFO"
+  }
+}
