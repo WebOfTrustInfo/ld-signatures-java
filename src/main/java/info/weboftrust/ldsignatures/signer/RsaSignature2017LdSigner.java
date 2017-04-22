@@ -18,17 +18,8 @@ import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017SignatureSuite> {
 
-	//	static JWSHeader JWS_HEADER;
 	static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
 
-	/*	static {
-
-		JWS_HEADER = new JWSHeader.Builder(JWSAlgorithm.RS256)
-				.criticalParams(Collections.singleton("b64"))
-				.customParam("b64", Boolean.FALSE)
-				.build();
-	}
-	 */
 	private LinkedHashMap<String, Object> jsonLdObject;
 	private RSAPrivateKey privateKey;
 
@@ -85,23 +76,23 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 		ldSignature.setDomain(domain);
 		ldSignature.setNonce(nonce);
 		ldSignature.setSignatureValue(signatureValue);
-		
+
 		// done
-		
+
 		return ldSignature;
 	}
-	
+
 	public LdSignature buildLdSignature() throws JsonLdError, ParseException, JoseException {
 
 		String signatureValue = this.buildSignatureValue();
-		
+
 		return buildLdSignature(signatureValue, this.creator, this.created, this.domain, this.nonce);
 	}
-	
+
 	public void sign() throws JsonLdError, ParseException, JoseException {
 
-		LdSignature ldSignature = buildLdSignature();
-		
+		LdSignature ldSignature = this.buildLdSignature();
+
 		ldSignature.addToJsonLdObject(this.jsonLdObject);
 	}
 }
