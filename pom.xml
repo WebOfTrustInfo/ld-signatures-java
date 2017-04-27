@@ -3,20 +3,20 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.weboftrust</groupId>
-	<artifactId>ld-signatures-java</artifactId>
+	<artifactId>jsonld-signatures-java</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>ld-signatures-java</name>
+	<name>jsonld-signatures-java</name>
 
 	<issueManagement>
-		<url>https://github.com/projectdanube/ld-signatures-java/issues</url>
+		<url>https://github.com/WebOfTrustInfo/ld-signatures-java/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
 	<scm>
-		<url>https://github.com/projectdanube/ld-signatures-java</url>
-		<connection>scm:git:git://github.com/projectdanube/ld-signatures-java.git</connection>
-		<developerConnection>scm:git:git@github.com:projectdanube/ld-signatures-java.git</developerConnection>
+		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
+		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
+		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
 	</scm>
 
 	<properties>
