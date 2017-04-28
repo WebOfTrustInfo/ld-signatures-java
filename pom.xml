@@ -3,10 +3,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.weboftrust</groupId>
-	<artifactId>jsonld-signatures-java</artifactId>
+	<artifactId>ld-signatures-java</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>jsonld-signatures-java</name>
+	<name>ld-signatures-java</name>
 
 	<issueManagement>
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java/issues</url>
