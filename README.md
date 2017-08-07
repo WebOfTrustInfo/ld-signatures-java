@@ -8,6 +8,21 @@ This is a work-in-progress implementation of the [2017 RSA Signature Suite](http
 
 Highly experimental, incomplete, and not ready for production use! Use at your own risk! Pull requests welcome.
 
+### Maven
+
+Build:
+
+	mvn clean install
+
+Dependency:
+
+	<dependency>
+		<groupId>info.weboftrust</groupId>
+		<artifactId>ld-signatures-java</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<scope>compile</scope>
+	</dependency>
+
 ### Example
 
 Example JSON-LD document:
