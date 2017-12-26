@@ -11,8 +11,8 @@ public class LdSignature {
 	public static final URI URI_CREATOR = URI.create("http://purl.org/dc/terms/creator");
 	public static final URI URI_CREATED = URI.create("http://purl.org/dc/terms/created");
 	public static final URI URI_DOMAIN = URI.create("https://w3id.org/security#domain");
-	public static final URI URI_NONCE = URI.create("https://w3id.org/security#nonoce");
-	public static final URI URI_SIGNATUREVALUE= URI.create("https://w3id.org/security#signatureValue");
+	public static final URI URI_NONCE = URI.create("https://w3id.org/security#nonce");
+	public static final URI URI_SIGNATUREVALUE = URI.create("https://w3id.org/security#signatureValue");
 
 	public static final String JSONLD_TERM_SIGNATURE = "signature";
 
