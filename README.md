@@ -47,9 +47,9 @@ Example code:
 		String domain = "example.com";
 		String nonce = null;
 		
-		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(jsonLdObject, TestUtil.testRSAPrivateKey, creator, created, domain, nonce);
-		LdSignature ldSignature = signer.buildLdSignature();
-		LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.buildJsonLdSignatureObject();
+		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
+		LdSignature ldSignature = signer.sign(jsonLdObject);
+		LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.getJsonLdSignatureObject();
 
 Example Linked Data Signature:
 

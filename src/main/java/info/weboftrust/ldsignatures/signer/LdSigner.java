@@ -1,22 +1,71 @@
 package info.weboftrust.ldsignatures.signer;
 
 import java.net.URI;
+import java.text.ParseException;
+import java.util.LinkedHashMap;
 
+import org.jose4j.lang.JoseException;
+
+import com.github.jsonldjava.core.JsonLdError;
+
+import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
+import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
+	protected SIGNATURESUITE signatureSuite;
 	protected URI creator;
 	protected String created;
 	protected String domain;
 	protected String nonce;
 
-	public LdSigner(URI creator, String created, String domain, String nonce) {
+	protected LdSigner(SIGNATURESUITE signatureSuite, URI creator, String created, String domain, String nonce) {
 
+		this.signatureSuite = signatureSuite;
 		this.creator = creator;
 		this.created = created;
 		this.domain = domain;
 		this.nonce = nonce;
+	}
+
+	public abstract String sign(String canonicalizedDocument) throws JoseException;
+
+	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject, boolean add) throws JsonLdError, JoseException {
+
+		// obtain the canonicalized document
+
+		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<String, Object> (jsonLdObject);
+		LdSignature.removeFromJsonLdObject(jsonLdObjectWithoutSignature);
+		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectWithoutSignature);
+
+		// sign
+
+		String signatureValue = this.sign(canonicalizedDocument);
+
+		// build the signature object
+
+		LdSignature ldSignature = new LdSignature();
+
+		ldSignature.setType(this.signatureSuite.getId());
+		ldSignature.setCreator(this.creator);
+		ldSignature.setCreated(this.created);
+		ldSignature.setDomain(this.domain);
+		ldSignature.setNonce(this.nonce);
+		ldSignature.setSignatureValue(signatureValue);
+
+		// add signature to JSON-LD?
+
+		if (add) ldSignature.addToJsonLdObject(jsonLdObject);
+
+		// done
+
+		return ldSignature;
+	}
+
+	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, ParseException, JoseException {
+
+		return sign(jsonLdObject, true);
 	}
 
 	public URI getCreator() {
@@ -49,54 +98,5 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public void setNonce(String nonce) {
 		this.nonce = nonce;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
-		result = prime * result + ((domain == null) ? 0 : domain.hashCode());
-		result = prime * result + ((nonce == null) ? 0 : nonce.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LdSigner other = (LdSigner) obj;
-		if (created == null) {
-			if (other.created != null)
-				return false;
-		} else if (!created.equals(other.created))
-			return false;
-		if (creator == null) {
-			if (other.creator != null)
-				return false;
-		} else if (!creator.equals(other.creator))
-			return false;
-		if (domain == null) {
-			if (other.domain != null)
-				return false;
-		} else if (!domain.equals(other.domain))
-			return false;
-		if (nonce == null) {
-			if (other.nonce != null)
-				return false;
-		} else if (!nonce.equals(other.nonce))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "LdSigner [creator=" + creator + ", created=" + created + ", domain=" + domain + ", nonce=" + nonce
-				+ "]";
 	}
 }

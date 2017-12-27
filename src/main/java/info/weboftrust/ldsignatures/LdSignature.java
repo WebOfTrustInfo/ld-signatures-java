@@ -23,92 +23,100 @@ public class LdSignature {
 	public static final String JSONLD_TERM_NONCE = "nonce";
 	public static final String JSONLD_TERM_SIGNATUREVALUE = "signatureValue";
 
-	private URI type;
-	private URI creator;
-	private String created;
-	private String domain;
-	private String nonce;
-	private String signatureValue;
+	private final LinkedHashMap<String, Object> jsonLdSignatureObject;
 
-	public LinkedHashMap<String, Object> buildJsonLdSignatureObject() {
+	private LdSignature(LinkedHashMap<String, Object> jsonLdSignatureObject) { 
 
-		LinkedHashMap<String, Object> jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
-
-		if (this.type != null) jsonLdSignatureObject.put(JSONLD_TERM_TYPE, this.type);
-		if (this.creator != null) jsonLdSignatureObject.put(JSONLD_TERM_CREATOR, this.creator);
-		if (this.created != null) jsonLdSignatureObject.put(JSONLD_TERM_CREATED, this.created);
-		if (this.domain != null) jsonLdSignatureObject.put(JSONLD_TERM_DOMAIN, this.domain);
-		if (this.nonce != null) jsonLdSignatureObject.put(JSONLD_TERM_NONCE, this.nonce);
-		if (this.signatureValue != null) jsonLdSignatureObject.put(JSONLD_TERM_SIGNATUREVALUE, this.signatureValue);
-
-		return jsonLdSignatureObject;
+		this.jsonLdSignatureObject = jsonLdSignatureObject;
 	}
 
-	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+	public LdSignature() {
 
-		LinkedHashMap<String, Object> jsonLdSignatureObject = this.buildJsonLdSignatureObject();
+		this.jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
+	}
+
+	public LinkedHashMap<String, Object> getJsonLdSignatureObject() {
+
+		return this.jsonLdSignatureObject;
+	}
+
+	public static void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, LinkedHashMap<String, Object> jsonLdSignatureObject) {
 
 		jsonLdObject.put(JSONLD_TERM_SIGNATURE, jsonLdSignatureObject);
 	}
 
+	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+
+		addToJsonLdObject(jsonLdObject, this.getJsonLdSignatureObject());
+	}
+
+	public static void removeFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+
+		jsonLdObject.remove(JSONLD_TERM_SIGNATURE);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static LdSignature getFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+
+		LinkedHashMap<String, Object> jsonLdSignatureObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_SIGNATURE);
+		if (jsonLdSignatureObject == null) return null;
+
+		return new LdSignature(jsonLdSignatureObject);
+	}
+
 	public URI getType() {
-		return type;
+		return (URI) this.jsonLdSignatureObject.get(JSONLD_TERM_TYPE);
 	}
 
 	public void setType(URI type) {
-		this.type = type;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_TYPE, type);
 	}
 
 	public URI getCreator() {
-		return creator;
+		return (URI) this.jsonLdSignatureObject.get(JSONLD_TERM_CREATOR);
 	}
 
 	public void setCreator(URI creator) {
-		this.creator = creator;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_CREATOR, creator);
 	}
 
 	public String getCreated() {
-		return created;
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_CREATED);
 	}
 
 	public void setCreated(String created) {
-		this.created = created;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_CREATED, created);
 	}
 
 	public String getDomain() {
-		return domain;
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_DOMAIN);
 	}
 
 	public void setDomain(String domain) {
-		this.domain = domain;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_DOMAIN, domain);
 	}
 
 	public String getNonce() {
-		return nonce;
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_NONCE);
 	}
 
 	public void setNonce(String nonce) {
-		this.nonce = nonce;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_NONCE, nonce);
 	}
 
 	public String getSignatureValue() {
-		return signatureValue;
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_SIGNATUREVALUE);
 	}
 
 	public void setSignatureValue(String signatureValue) {
-		this.signatureValue = signatureValue;
+		this.jsonLdSignatureObject.put(JSONLD_TERM_SIGNATUREVALUE, signatureValue);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
-		result = prime * result + ((domain == null) ? 0 : domain.hashCode());
-		result = prime * result + ((nonce == null) ? 0 : nonce.hashCode());
-		result = prime * result + ((signatureValue == null) ? 0 : signatureValue.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((jsonLdSignatureObject == null) ? 0 : jsonLdSignatureObject.hashCode());
 		return result;
 	}
 
@@ -121,42 +129,16 @@ public class LdSignature {
 		if (getClass() != obj.getClass())
 			return false;
 		LdSignature other = (LdSignature) obj;
-		if (created == null) {
-			if (other.created != null)
+		if (jsonLdSignatureObject == null) {
+			if (other.jsonLdSignatureObject != null)
 				return false;
-		} else if (!created.equals(other.created))
-			return false;
-		if (creator == null) {
-			if (other.creator != null)
-				return false;
-		} else if (!creator.equals(other.creator))
-			return false;
-		if (domain == null) {
-			if (other.domain != null)
-				return false;
-		} else if (!domain.equals(other.domain))
-			return false;
-		if (nonce == null) {
-			if (other.nonce != null)
-				return false;
-		} else if (!nonce.equals(other.nonce))
-			return false;
-		if (signatureValue == null) {
-			if (other.signatureValue != null)
-				return false;
-		} else if (!signatureValue.equals(other.signatureValue))
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
+		} else if (!jsonLdSignatureObject.equals(other.jsonLdSignatureObject))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "LdSignature [type=" + type + ", creator=" + creator + ", created=" + created + ", domain=" + domain
-				+ ", nonce=" + nonce + ", signatureValue=" + signatureValue + "]";
+		return "LdSignature [jsonLdSignatureObject=" + jsonLdSignatureObject + "]";
 	}
 }

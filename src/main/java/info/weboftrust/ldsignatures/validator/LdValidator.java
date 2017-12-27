@@ -4,7 +4,10 @@ import info.weboftrust.ldsignatures.suites.SignatureSuite;
 
 public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 
-	public LdValidator() {
+	protected SIGNATURESUITE signatureSuite;
 
+	protected LdValidator(SIGNATURESUITE signatureSuite) {
+
+		this.signatureSuite = signatureSuite;
 	}
 }

@@ -21,6 +21,7 @@ public class JsonLdSignTest extends TestCase {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void testSign() throws Exception {
 
 		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromString(TestUtil.read(JsonLdSignTest.class.getResourceAsStream("sign.test.jsonld")));
@@ -29,8 +30,8 @@ public class JsonLdSignTest extends TestCase {
 		String domain = "example.com";
 		String nonce = null;
 
-		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(jsonLdObject, TestUtil.testRSAPrivateKey, creator, created, domain, nonce);
-		LdSignature ldSignature = signer.buildLdSignature();
+		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
+		LdSignature ldSignature = signer.sign(jsonLdObject);
 
 		ldSignature.setType(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getId());
 		ldSignature.setCreator(creator);
