@@ -35,6 +35,11 @@ public class LdSignature {
 		this.jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
 	}
 
+	public static LdSignature fromJsonLdSignatureObject(LinkedHashMap<String, Object> jsonLdSignatureObject) {
+
+		return new LdSignature(jsonLdSignatureObject);
+	}
+
 	public LinkedHashMap<String, Object> getJsonLdSignatureObject() {
 
 		return this.jsonLdSignatureObject;
