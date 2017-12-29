@@ -21,12 +21,7 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws JoseException;
 
-	public boolean validate(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, JoseException {
-
-		// obtain the signature object
-
-		LdSignature ldSignature = LdSignature.getFromJsonLdObject(jsonLdObject);
-		if (ldSignature == null) return false;
+	public boolean validate(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, JoseException {
 
 		// obtain the canonicalized document
 
@@ -41,5 +36,17 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 		// done
 
 		return validate;
+	}
+
+	public boolean validate(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, JoseException {
+
+		// obtain the signature object
+
+		LdSignature ldSignature = LdSignature.getFromJsonLdObject(jsonLdObject);
+		if (ldSignature == null) return false;
+
+		// done
+
+		return this.validate(jsonLdObject, ldSignature);
 	}
 }
