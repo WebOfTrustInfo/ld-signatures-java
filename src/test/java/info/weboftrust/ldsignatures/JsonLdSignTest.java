@@ -33,12 +33,6 @@ public class JsonLdSignTest extends TestCase {
 		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
 		LdSignature ldSignature = signer.sign(jsonLdObject);
 
-		ldSignature.setType(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getId());
-		ldSignature.setCreator(creator);
-		ldSignature.setCreated(created);
-		ldSignature.setDomain(domain);
-		ldSignature.setNonce(nonce);
-
 		assertEquals(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getId(), ldSignature.getType());
 		assertEquals(creator, ldSignature.getCreator());
 		assertEquals(created, ldSignature.getCreated());

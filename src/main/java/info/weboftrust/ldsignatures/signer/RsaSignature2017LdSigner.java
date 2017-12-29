@@ -12,7 +12,8 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017SignatureSuite> {
 
-	static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
+	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
+	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	private RSAPrivateKey privateKey;
 
@@ -33,6 +34,7 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 
 		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, unencodedPayload);
 		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+		jws.setKnownCriticalHeaders(KNOWN_CRITICAL_HEADERS);
 
 		// sign the payload and build the JWS
 
