@@ -47,7 +47,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		LdSignature ldSignature = new LdSignature();
 
-		ldSignature.setType(this.signatureSuite.getId());
+		ldSignature.setType(this.signatureSuite.getTerm());
 		ldSignature.setCreator(this.creator);
 		ldSignature.setCreated(this.created);
 		ldSignature.setDomain(this.domain);

@@ -6,19 +6,25 @@ public abstract class SignatureSuite {
 
 	public static final URI URI_TYPE_SIGNATURESUITE = URI.create("https://w3id.org/security#SignatureSuite");
 
+	private String term;
 	private URI id;
 	private URI type;
 	private URI canonicalizationAlgorithm;
 	private URI digestAlgorithm;
 	private URI signatureAlgorithm;
 
-	public SignatureSuite(URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI signatureAlgorithm) {
+	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI signatureAlgorithm) {
 
+		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
 		this.canonicalizationAlgorithm = canonicalizationAlgorithm;
 		this.digestAlgorithm = digestAlgorithm;
 		this.signatureAlgorithm = signatureAlgorithm;
+	}
+
+	public String getTerm() {
+		return term;
 	}
 
 	public URI getId() {
@@ -49,6 +55,7 @@ public abstract class SignatureSuite {
 		result = prime * result + ((digestAlgorithm == null) ? 0 : digestAlgorithm.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((signatureAlgorithm == null) ? 0 : signatureAlgorithm.hashCode());
+		result = prime * result + ((term == null) ? 0 : term.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -82,6 +89,11 @@ public abstract class SignatureSuite {
 				return false;
 		} else if (!signatureAlgorithm.equals(other.signatureAlgorithm))
 			return false;
+		if (term == null) {
+			if (other.term != null)
+				return false;
+		} else if (!term.equals(other.term))
+			return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
@@ -92,7 +104,7 @@ public abstract class SignatureSuite {
 
 	@Override
 	public String toString() {
-		return "SignatureSuite [id=" + id + ", type=" + type + ", canonicalizationAlgorithm="
+		return "SignatureSuite [term=" + term + ", id=" + id + ", type=" + type + ", canonicalizationAlgorithm="
 				+ canonicalizationAlgorithm + ", digestAlgorithm=" + digestAlgorithm + ", signatureAlgorithm="
 				+ signatureAlgorithm + "]";
 	}

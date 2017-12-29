@@ -69,11 +69,11 @@ public class LdSignature {
 		return new LdSignature(jsonLdSignatureObject);
 	}
 
-	public URI getType() {
-		return (URI) this.jsonLdSignatureObject.get(JSONLD_TERM_TYPE);
+	public String getType() {
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_TYPE);
 	}
 
-	public void setType(URI type) {
+	public void setType(String type) {
 		this.jsonLdSignatureObject.put(JSONLD_TERM_TYPE, type);
 	}
 

@@ -7,6 +7,7 @@ public class RsaSignature2017SignatureSuite extends SignatureSuite {
 	RsaSignature2017SignatureSuite() {
 
 		super(
+				"RsaSignature2017",
 				URI.create("https://w3id.org/security#RsaSignature2017"), 
 				URI.create("https://w3id.org/security#GCA2015"), 
 				URI.create("https://registry.ietf.org/ietf-digest-algorithms#SHA256"), 
