@@ -65,4 +65,4 @@ Example Linked Data Signature:
 
 Rebooting Web-of-Trust - http://www.weboftrust.info/
 
-Markus Sabadello, Danube Tech -  https://danubetech.com/
+Markus Sabadello, Danube Tech - https://danubetech.com/

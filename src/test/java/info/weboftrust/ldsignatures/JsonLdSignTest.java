@@ -25,6 +25,7 @@ public class JsonLdSignTest extends TestCase {
 	public void testSign() throws Exception {
 
 		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromString(TestUtil.read(JsonLdSignTest.class.getResourceAsStream("sign.test.jsonld")));
+
 		URI creator = URI.create("https://example.com/jdoe/keys/1");
 		String created = "2017-10-24T05:33:31Z";
 		String domain = "example.com";
