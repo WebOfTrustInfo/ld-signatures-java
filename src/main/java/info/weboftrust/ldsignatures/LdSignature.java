@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import com.github.jsonldjava.core.JsonLdApi;
 import com.github.jsonldjava.core.JsonLdConsts;
 
 public class LdSignature {

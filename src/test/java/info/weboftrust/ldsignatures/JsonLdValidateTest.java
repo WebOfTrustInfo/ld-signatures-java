@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 
 import com.github.jsonldjava.utils.JsonUtils;
 
-import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.validator.RsaSignature2017LdValidator;
 import junit.framework.TestCase;
 
