@@ -1,9 +1,15 @@
 package info.weboftrust.ldsignatures;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import com.github.jsonldjava.core.JsonLdApi;
+import com.github.jsonldjava.core.JsonLdConsts;
+
 public class LdSignature {
+
+	public static final String JSONLD_CONTEXT_SECURITY = "https://w3id.org/security/v1";
 
 	public static final URI URI_SIGNATURE = URI.create("https://w3id.org/security#signature");
 
@@ -45,7 +51,31 @@ public class LdSignature {
 		return this.jsonLdSignatureObject;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static void addSecurityContextToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+
+		Object context = jsonLdObject.get(JsonLdConsts.CONTEXT);
+		ArrayList<Object> contexts;
+
+		if (context instanceof ArrayList<?>) {
+
+			contexts = (ArrayList<Object>) context;
+		} else {
+
+			contexts = new ArrayList<Object> ();
+			contexts.add(context);
+			jsonLdObject.put(JsonLdConsts.CONTEXT, contexts);
+		}
+
+		if (! contexts.contains(JSONLD_CONTEXT_SECURITY)) {
+
+			contexts.add(JSONLD_CONTEXT_SECURITY);
+		}
+	}
+
 	public static void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, LinkedHashMap<String, Object> jsonLdSignatureObject) {
+
+		addSecurityContextToJsonLdObject(jsonLdObject);
 
 		jsonLdObject.put(JSONLD_TERM_SIGNATURE, jsonLdSignatureObject);
 	}

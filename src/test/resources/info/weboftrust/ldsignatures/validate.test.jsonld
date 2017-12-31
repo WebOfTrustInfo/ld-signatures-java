@@ -1,15 +1,15 @@
 {
-  "@context" : {
+  "@context" : [ {
     "schema" : "http://schema.org/",
     "name" : "schema:name",
     "homepage" : "schema:url",
     "image" : "schema:image"
-  },
+  }, "https://w3id.org/security/v1" ],
   "name" : "Manu Sporny",
   "homepage" : "https://manu.sporny.org/",
   "image" : "https://manu.sporny.org/images/manu.png",
   "signature" : {
-    "type" : "https://w3id.org/security#RsaSignature2017",
+    "type" : "RsaSignature2017",
     "creator" : "https://example.com/jdoe/keys/1",
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
