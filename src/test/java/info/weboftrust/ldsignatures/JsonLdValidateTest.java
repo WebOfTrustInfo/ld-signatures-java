@@ -9,20 +9,10 @@ import junit.framework.TestCase;
 
 public class JsonLdValidateTest extends TestCase {
 
-	@Override
-	protected void setUp() throws Exception {
-
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-	}
-
 	@SuppressWarnings("unchecked")
 	public void testValidate() throws Exception {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromString(TestUtil.read(JsonLdValidateTest.class.getResourceAsStream("validate.test.jsonld")));
+		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdValidateTest.class.getResourceAsStream("validate.test.jsonld"));
 
 		RsaSignature2017LdValidator validator = new RsaSignature2017LdValidator(TestUtil.testRSAPublicKey);
 		boolean validate = validator.validate(jsonLdObject);
@@ -33,7 +23,7 @@ public class JsonLdValidateTest extends TestCase {
 	@SuppressWarnings("unchecked")
 	public void testBadValidate() throws Exception {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromString(TestUtil.read(JsonLdValidateTest.class.getResourceAsStream("validate.bad.test.jsonld")));
+		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdValidateTest.class.getResourceAsStream("validate.bad.test.jsonld"));
 
 		RsaSignature2017LdValidator validator = new RsaSignature2017LdValidator(TestUtil.testRSAPublicKey);
 		boolean validate = validator.validate(jsonLdObject);

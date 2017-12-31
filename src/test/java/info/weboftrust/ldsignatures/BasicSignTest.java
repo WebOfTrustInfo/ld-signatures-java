@@ -10,16 +10,6 @@ public class BasicSignTest extends TestCase {
 	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
 	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
-	@Override
-	protected void setUp() throws Exception {
-
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-	}
-
 	public void testSign() throws Exception {
 
 		// build the payload
