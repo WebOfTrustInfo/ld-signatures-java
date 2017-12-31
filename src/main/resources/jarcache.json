@@ -3,10 +3,5 @@
     "Content-Location": "https://w3id.org/security/v1",
     "X-Classpath": "info/weboftrust/ldsignatures/security-v1.jsonld",
     "Content-Type": "application/ld+json"
-  },
-  {
-    "Content-Location": "https://w3id.org/credentials/v1",
-    "X-Classpath": "info/weboftrust/ldsignatures/credentials-v1.jsonld",
-    "Content-Type": "application/ld+json"
   }
 ]
