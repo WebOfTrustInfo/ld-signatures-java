@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.validator;
 
+import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPublicKey;
 
 import org.jose4j.jws.AlgorithmIdentifiers;
@@ -24,7 +25,7 @@ public class RsaSignature2017LdValidator extends LdValidator<RsaSignature2017Sig
 		this.publicKey = publicKey;
 	}
 
-	public static boolean validate(String canonicalizedDocument, LdSignature ldSignature, RSAPublicKey publicKey) throws JoseException {
+	public static boolean validate(String canonicalizedDocument, LdSignature ldSignature, RSAPublicKey publicKey) throws GeneralSecurityException {
 
 		// build the payload
 
@@ -39,9 +40,18 @@ public class RsaSignature2017LdValidator extends LdValidator<RsaSignature2017Sig
 		// validate the signature on the payload
 
 		jws.setKey(publicKey);
-		jws.setCompactSerialization(ldSignature.getSignatureValue());
 
-		boolean validate = jws.verifySignature();
+		boolean validate;
+
+		try {
+
+			jws.setCompactSerialization(ldSignature.getSignatureValue());
+
+			validate = jws.verifySignature();
+		} catch (JoseException ex) {
+
+			throw new GeneralSecurityException("JOSE validation problem: " + ex.getMessage(), ex);
+		}
 
 		// done
 
@@ -49,7 +59,7 @@ public class RsaSignature2017LdValidator extends LdValidator<RsaSignature2017Sig
 	}
 
 	@Override
-	public boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws JoseException {
+	public boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
 
 		return validate(canonicalizedDocument, ldSignature, this.publicKey);
 	}

@@ -1,6 +1,7 @@
 package info.weboftrust.ldsignatures.signer;
 
 import java.net.URI;
+import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPrivateKey;
 
 import org.jose4j.jws.AlgorithmIdentifiers;
@@ -24,7 +25,7 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 		this.privateKey = privateKey;
 	}
 
-	public static String sign(String canonicalizedDocument, RSAPrivateKey privateKey) throws JoseException {
+	public static String sign(String canonicalizedDocument, RSAPrivateKey privateKey) throws GeneralSecurityException {
 
 		// build the payload
 
@@ -40,7 +41,15 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 
 		jws.setKey(privateKey);
 
-		String signatureValue = jws.getDetachedContentCompactSerialization();
+		String signatureValue;
+
+		try {
+
+			signatureValue = jws.getDetachedContentCompactSerialization();
+		} catch (JoseException ex) {
+
+			throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
+		}
 
 		// done
 
@@ -48,7 +57,7 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 	}
 
 	@Override
-	public String sign(String canonicalizedDocument) throws JoseException {
+	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
 		return sign(canonicalizedDocument, this.privateKey);
 	}

@@ -1,10 +1,8 @@
 package info.weboftrust.ldsignatures.signer;
 
 import java.net.URI;
-import java.text.ParseException;
+import java.security.GeneralSecurityException;
 import java.util.LinkedHashMap;
-
-import org.jose4j.lang.JoseException;
 
 import com.github.jsonldjava.core.JsonLdError;
 
@@ -29,9 +27,9 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		this.nonce = nonce;
 	}
 
-	public abstract String sign(String canonicalizedDocument) throws JoseException;
+	public abstract String sign(String canonicalizedDocument) throws GeneralSecurityException;
 
-	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject, boolean add) throws JsonLdError, JoseException {
+	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject, boolean add) throws JsonLdError, GeneralSecurityException {
 
 		// obtain the canonicalized document
 
@@ -63,7 +61,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		return ldSignature;
 	}
 
-	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, ParseException, JoseException {
+	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
 
 		return sign(jsonLdObject, true);
 	}

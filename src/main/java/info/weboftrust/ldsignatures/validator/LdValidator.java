@@ -1,8 +1,7 @@
 package info.weboftrust.ldsignatures.validator;
 
+import java.security.GeneralSecurityException;
 import java.util.LinkedHashMap;
-
-import org.jose4j.lang.JoseException;
 
 import com.github.jsonldjava.core.JsonLdError;
 
@@ -19,9 +18,9 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 		this.signatureSuite = signatureSuite;
 	}
 
-	public abstract boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws JoseException;
+	public abstract boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException;
 
-	public boolean validate(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, JoseException {
+	public boolean validate(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, GeneralSecurityException {
 
 		// obtain the canonicalized document
 
@@ -38,7 +37,7 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 		return validate;
 	}
 
-	public boolean validate(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, JoseException {
+	public boolean validate(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
 
 		// obtain the signature object
 

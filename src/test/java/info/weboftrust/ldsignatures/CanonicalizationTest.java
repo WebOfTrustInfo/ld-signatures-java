@@ -10,19 +10,19 @@ import junit.framework.TestCase;
 public class CanonicalizationTest extends TestCase {
 
 	@SuppressWarnings("unchecked")
-	public void testCanonicalizationSign() throws Exception {
+	public void testCanonicalizationInput() throws Exception {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(CanonicalizationTest.class.getResourceAsStream("sign.test.jsonld"));
-		String canonicalizedDocument = TestUtil.read(CanonicalizationTest.class.getResourceAsStream("sign.canonicalized.test"));
+		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(CanonicalizationTest.class.getResourceAsStream("input.jsonld"));
+		String canonicalizedDocument = TestUtil.read(CanonicalizationTest.class.getResourceAsStream("input.canonicalized"));
 
 		assertEquals(CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObject), canonicalizedDocument);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void testCanonicalizationValidate() throws Exception {
+	public void testCanonicalizationSigned() throws Exception {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(CanonicalizationTest.class.getResourceAsStream("validate.test.jsonld"));
-		String canonicalizedDocument = TestUtil.read(CanonicalizationTest.class.getResourceAsStream("validate.canonicalized.test"));
+		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(CanonicalizationTest.class.getResourceAsStream("signed.rsa.jsonld"));
+		String canonicalizedDocument = TestUtil.read(CanonicalizationTest.class.getResourceAsStream("signed.rsa.canonicalized"));
 
 		assertEquals(CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObject), canonicalizedDocument);
 	}

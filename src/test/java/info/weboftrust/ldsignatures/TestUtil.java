@@ -10,11 +10,14 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 class TestUtil {
 
 	static final RSAPrivateKey testRSAPrivateKey;
 	static final RSAPublicKey testRSAPublicKey;
+	static final byte[] testEd25519PrivateKey;
+	static final byte[] testEd25519PublicKey;
 
 	static {
 
@@ -45,6 +48,15 @@ class TestUtil {
 			PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(encoded);
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			testRSAPrivateKey = (RSAPrivateKey) keyFactory.generatePrivate(spec);
+		} catch (Exception ex) {
+
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+
+		try {
+
+			testEd25519PrivateKey = Hex.decodeHex("984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
+			testEd25519PublicKey = Hex.decodeHex("de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
 		} catch (Exception ex) {
 
 			throw new RuntimeException(ex.getMessage(), ex);
