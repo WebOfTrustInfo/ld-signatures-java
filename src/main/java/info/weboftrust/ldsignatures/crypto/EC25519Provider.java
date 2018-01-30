@@ -38,6 +38,7 @@ public abstract class EC25519Provider {
 	}
 
 	public abstract void generateEC25519KeyPair(byte[] publicKey, byte[] privateKey) throws GeneralSecurityException;
+	public abstract void generateEC25519KeyPairFromSeed(byte[] publicKey, byte[] privateKey, byte[] seed) throws GeneralSecurityException;
 	public abstract byte[] sign(byte[] message, byte[] privateKey) throws GeneralSecurityException;
 	public abstract boolean validate(byte[] message, byte[] signatureValue, byte[] publicKey) throws GeneralSecurityException;
 }
