@@ -10,7 +10,7 @@
   "image" : "https://manu.sporny.org/images/manu.png",
   "signature" : {
     "type" : "Ed25519Signature2018",
-    "creator" : "https://example.com/jdoe/keys/1",
+    "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
     "nonce" : null,

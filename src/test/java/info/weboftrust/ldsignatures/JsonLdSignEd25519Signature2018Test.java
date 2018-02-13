@@ -17,7 +17,7 @@ public class JsonLdSignEd25519Signature2018Test extends TestCase {
 
 		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld"));
 
-		URI creator = URI.create("https://example.com/jdoe/keys/1");
+		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
 		String created = "2017-10-24T05:33:31Z";
 		String domain = "example.com";
 		String nonce = null;
