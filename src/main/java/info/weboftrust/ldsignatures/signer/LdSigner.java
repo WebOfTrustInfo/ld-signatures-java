@@ -33,7 +33,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the canonicalized document
 
-		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<String, Object> (jsonLdObject);
+		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<>(jsonLdObject);
 		LdSignature.removeFromJsonLdObject(jsonLdObjectWithoutSignature);
 		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectWithoutSignature);
 

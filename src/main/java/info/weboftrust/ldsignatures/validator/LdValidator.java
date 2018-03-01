@@ -24,7 +24,7 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the canonicalized document
 
-		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<String, Object> (jsonLdObject);
+		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<>(jsonLdObject);
 		LdSignature.removeFromJsonLdObject(jsonLdObjectWithoutSignature);
 		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectWithoutSignature);
 

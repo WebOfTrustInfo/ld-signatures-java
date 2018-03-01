@@ -37,7 +37,7 @@ public class LdSignature {
 
 	public LdSignature() {
 
-		this.jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
+		this.jsonLdSignatureObject = new LinkedHashMap<>();
 	}
 
 	public static LdSignature fromJsonLdSignatureObject(LinkedHashMap<String, Object> jsonLdSignatureObject) {
@@ -61,7 +61,7 @@ public class LdSignature {
 			contexts = (ArrayList<Object>) context;
 		} else {
 
-			contexts = new ArrayList<Object> ();
+			contexts = new ArrayList<>();
 			contexts.add(context);
 			jsonLdObject.put(JsonLdConsts.CONTEXT, contexts);
 		}
