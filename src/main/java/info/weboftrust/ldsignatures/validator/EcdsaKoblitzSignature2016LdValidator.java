@@ -15,6 +15,11 @@ public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKobli
 
 	private ECKey publicKey;
 
+	public EcdsaKoblitzSignature2016LdValidator() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
+	}
+
 	public EcdsaKoblitzSignature2016LdValidator(ECKey publicKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);

@@ -18,6 +18,11 @@ public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017Signature
 
 	private RSAPrivateKey privateKey;
 
+	public RsaSignature2017LdSigner() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);
+	}
+
 	public RsaSignature2017LdSigner(URI creator, String created, String domain, String nonce, RSAPrivateKey privateKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017, creator, created, domain, nonce);

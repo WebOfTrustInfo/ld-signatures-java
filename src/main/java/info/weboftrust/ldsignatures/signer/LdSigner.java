@@ -8,6 +8,7 @@ import com.github.jsonldjava.core.JsonLdError;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
+import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
@@ -18,6 +19,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 	protected String domain;
 	protected String nonce;
 
+	protected LdSigner(SIGNATURESUITE signatureSuite) {
+
+		this.signatureSuite = signatureSuite;
+	}
+
 	protected LdSigner(SIGNATURESUITE signatureSuite, URI creator, String created, String domain, String nonce) {
 
 		this.signatureSuite = signatureSuite;
@@ -25,6 +31,15 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		this.created = created;
 		this.domain = domain;
 		this.nonce = nonce;
+	}
+
+	public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuite) {
+
+		if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getTerm().equals(signatureSuite)) return new RsaSignature2017LdSigner();
+		if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite)) return new Ed25519Signature2018LdSigner();
+		if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite)) return new EcdsaKoblitzSignature2016LdSigner();
+
+		throw new IllegalArgumentException();
 	}
 
 	public abstract String sign(String canonicalizedDocument) throws GeneralSecurityException;

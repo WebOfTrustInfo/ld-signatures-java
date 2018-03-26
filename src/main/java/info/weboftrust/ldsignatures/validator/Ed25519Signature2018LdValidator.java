@@ -14,6 +14,11 @@ public class Ed25519Signature2018LdValidator extends LdValidator<Ed25519Signatur
 
 	private byte[] publicKey;
 
+	public Ed25519Signature2018LdValidator() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018);
+	}
+
 	public Ed25519Signature2018LdValidator(byte[] publicKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018);

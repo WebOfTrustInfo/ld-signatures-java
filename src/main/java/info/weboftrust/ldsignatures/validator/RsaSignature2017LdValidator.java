@@ -18,6 +18,11 @@ public class RsaSignature2017LdValidator extends LdValidator<RsaSignature2017Sig
 
 	private RSAPublicKey publicKey;
 
+	public RsaSignature2017LdValidator() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);
+	}
+
 	public RsaSignature2017LdValidator(RSAPublicKey publicKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);

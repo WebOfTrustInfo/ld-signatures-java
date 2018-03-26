@@ -14,6 +14,11 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 
 	private byte[] privateKey;
 
+	public Ed25519Signature2018LdSigner() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018);
+	}
+
 	public Ed25519Signature2018LdSigner(URI creator, String created, String domain, String nonce, byte[] privateKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, creator, created, domain, nonce);

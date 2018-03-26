@@ -15,6 +15,11 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 
 	private ECKey privateKey;
 
+	public EcdsaKoblitzSignature2016LdSigner() {
+
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
+	}
+
 	public EcdsaKoblitzSignature2016LdSigner(URI creator, String created, String domain, String nonce, ECKey privateKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, creator, created, domain, nonce);
