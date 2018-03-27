@@ -28,6 +28,11 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 		throw new IllegalArgumentException();
 	}
 
+	public static LdValidator<? extends SignatureSuite> ldValidatorForSignatureSuite(SignatureSuite signatureSuite) {
+
+		return ldValidatorForSignatureSuite(signatureSuite.getTerm());
+	}
+
 	public abstract boolean validate(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException;
 
 	public boolean validate(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, GeneralSecurityException {

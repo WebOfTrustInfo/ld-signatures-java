@@ -42,6 +42,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		throw new IllegalArgumentException();
 	}
 
+	public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(SignatureSuite signatureSuite) {
+
+		return ldSignerForSignatureSuite(signatureSuite.getTerm());
+	}
+
 	public abstract String sign(String canonicalizedDocument) throws GeneralSecurityException;
 
 	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject, boolean add) throws JsonLdError, GeneralSecurityException {
