@@ -42,7 +42,7 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 	@Override
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
-		return sign(canonicalizedDocument, this.privateKey);
+		return sign(canonicalizedDocument, this.getPrivateKey());
 	}
 
 	/*
