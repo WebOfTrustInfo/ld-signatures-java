@@ -88,23 +88,9 @@
 		<dependency>
 			<groupId>com.github.jsonld-java</groupId>
 			<artifactId>jsonld-java</artifactId>
-			<version>0.12.0</version>
+			<version>0.12.3</version>
 			<scope>compile</scope>
-<!-- 			<exclusions>
-				<exclusion>
-					<artifactId>httpcore-osgi</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>httpclient-osgi</artifactId>
-				</exclusion>
-			</exclusions> -->
 		</dependency>
-<!--		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>nimbus-jose-jwt</artifactId>
-			<version>4.11</version>
-			<scope>compile</scope>
-		</dependency>-->
 		<dependency>
 			<groupId>org.bitbucket.b_c</groupId>
 			<artifactId>jose4j</artifactId>
@@ -114,13 +100,13 @@
 		<dependency>
 			<groupId>org.abstractj.kalium</groupId>
 			<artifactId>kalium</artifactId>
-			<version>0.7.0</version>
+			<version>0.8.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bitcoinj</groupId>
 			<artifactId>bitcoinj-core</artifactId>
-			<version>0.14.5</version>
+			<version>0.15.2</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
+import org.bitcoinj.core.SignatureDecodeException;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
@@ -33,7 +34,18 @@ public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKobli
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
 		byte[] signatureValueBytes = Base64.decodeBase64(ldSignature.getSignatureValue());
-		boolean validate = publicKey.verify(Sha256Hash.hash(canonicalizedDocumentBytes), signatureValueBytes);
+
+		// build the JWS and validate
+
+		boolean validate;
+
+		try {
+
+			validate = publicKey.verify(Sha256Hash.hash(canonicalizedDocumentBytes), signatureValueBytes);
+		} catch (SignatureDecodeException ex) {
+
+			throw new GeneralSecurityException("Signature decoding problem: " + ex.getMessage(), ex);
+		}
 
 		// done
 
