@@ -8,7 +8,7 @@
   "name" : "Manu Sporny",
   "homepage" : "https://manu.sporny.org/",
   "image" : "https://manu.sporny.org/images/manu.png",
-  "signature" : {
+  "proof" : {
     "type" : "RsaSignature2018",
     "creator" : "https://example.com/jdoe/keys/1",
     "created" : "2017-10-24T05:33:31Z",

@@ -19,7 +19,7 @@ public class LdSignature {
 	public static final URI URI_NONCE = URI.create("https://w3id.org/security#nonce");
 	public static final URI URI_SIGNATUREVALUE = URI.create("https://w3id.org/security#signatureValue");
 
-	public static final String JSONLD_TERM_SIGNATURE = "signature";
+	public static final String JSONLD_TERM_PROOF = "proof";
 
 	public static final String JSONLD_TERM_TYPE = "type";
 	public static final String JSONLD_TERM_CREATOR = "creator";
@@ -76,7 +76,7 @@ public class LdSignature {
 
 		addSecurityContextToJsonLdObject(jsonLdObject);
 
-		jsonLdObject.put(JSONLD_TERM_SIGNATURE, jsonLdSignatureObject);
+		jsonLdObject.put(JSONLD_TERM_PROOF, jsonLdSignatureObject);
 	}
 
 	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
@@ -86,13 +86,13 @@ public class LdSignature {
 
 	public static void removeFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
-		jsonLdObject.remove(JSONLD_TERM_SIGNATURE);
+		jsonLdObject.remove(JSONLD_TERM_PROOF);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static LdSignature getFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
-		LinkedHashMap<String, Object> jsonLdSignatureObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_SIGNATURE);
+		LinkedHashMap<String, Object> jsonLdSignatureObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_PROOF);
 		if (jsonLdSignatureObject == null) return null;
 
 		return new LdSignature(jsonLdSignatureObject);
