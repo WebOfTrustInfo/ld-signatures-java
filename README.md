@@ -4,7 +4,7 @@ Built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on A
 
 ### Information
 
-This is a work-in-progress implementation of the [2017 RSA Signature Suite](https://w3c-dvcg.github.io/lds-rsa2017/) for the Linked Data Signatures specification.
+This is a work-in-progress implementation of the [2018 RSA Signature Suite](https://w3c-dvcg.github.io/lds-rsa2018/) for the Linked Data Signatures specification.
 
 Highly experimental, incomplete, and not ready for production use! Use at your own risk! Pull requests welcome.
 
@@ -47,14 +47,14 @@ Example code:
 		String domain = "example.com";
 		String nonce = null;
 		
-		RsaSignature2017LdSigner signer = new RsaSignature2017LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
+		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
 		LdSignature ldSignature = signer.sign(jsonLdObject);
 		LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.getJsonLdSignatureObject();
 
 Example Linked Data Signature:
 
 	  "signature" : {
-	    "type" : "https://w3id.org/security#RsaSignature2017",
+	    "type" : "https://w3id.org/security#RsaSignature2018",
 	    "creator" : "https://example.com/jdoe/keys/1",
 	    "created" : "2017-10-24T05:33:31Z",
 	    "domain" : "example.com",

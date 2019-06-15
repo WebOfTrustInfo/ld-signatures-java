@@ -8,24 +8,24 @@ import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.lang.JoseException;
 
 import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
-import info.weboftrust.ldsignatures.suites.RsaSignature2017SignatureSuite;
+import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
-public class RsaSignature2017LdSigner extends LdSigner<RsaSignature2017SignatureSuite> {
+public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
 
 	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
 	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	private RSAPrivateKey privateKey;
 
-	public RsaSignature2017LdSigner() {
+	public RsaSignature2018LdSigner() {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
 	}
 
-	public RsaSignature2017LdSigner(URI creator, String created, String domain, String nonce, RSAPrivateKey privateKey) {
+	public RsaSignature2018LdSigner(URI creator, String created, String domain, String nonce, RSAPrivateKey privateKey) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017, creator, created, domain, nonce);
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, creator, created, domain, nonce);
 
 		this.privateKey = privateKey;
 	}

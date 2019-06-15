@@ -8,24 +8,24 @@ import org.jose4j.lang.JoseException;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
-import info.weboftrust.ldsignatures.suites.RsaSignature2017SignatureSuite;
+import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
-public class RsaSignature2017LdValidator extends LdValidator<RsaSignature2017SignatureSuite> {
+public class RsaSignature2018LdValidator extends LdValidator<RsaSignature2018SignatureSuite> {
 
 	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
 	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	private RSAPublicKey publicKey;
 
-	public RsaSignature2017LdValidator() {
+	public RsaSignature2018LdValidator() {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
 	}
 
-	public RsaSignature2017LdValidator(RSAPublicKey publicKey) {
+	public RsaSignature2018LdValidator(RSAPublicKey publicKey) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017);
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
 
 		this.publicKey = publicKey;
 	}

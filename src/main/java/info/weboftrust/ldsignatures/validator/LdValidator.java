@@ -21,7 +21,7 @@ public abstract class LdValidator <SIGNATURESUITE extends SignatureSuite> {
 
 	public static LdValidator<? extends SignatureSuite> ldValidatorForSignatureSuite(String signatureSuite) {
 
-		if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getTerm().equals(signatureSuite)) return new RsaSignature2017LdValidator();
+		if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite)) return new RsaSignature2018LdValidator();
 		if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite)) return new Ed25519Signature2018LdValidator();
 		if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite)) return new EcdsaKoblitzSignature2016LdValidator();
 

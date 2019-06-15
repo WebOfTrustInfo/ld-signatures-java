@@ -35,7 +35,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuite) {
 
-		if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2017.getTerm().equals(signatureSuite)) return new RsaSignature2017LdSigner();
+		if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite)) return new RsaSignature2018LdSigner();
 		if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite)) return new Ed25519Signature2018LdSigner();
 		if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite)) return new EcdsaKoblitzSignature2016LdSigner();
 
