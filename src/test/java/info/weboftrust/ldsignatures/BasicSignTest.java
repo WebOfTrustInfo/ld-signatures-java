@@ -1,14 +1,12 @@
 package info.weboftrust.ldsignatures;
 
 import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwx.HeaderParameterNames;
 
-import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
 import junit.framework.TestCase;
 
 public class BasicSignTest extends TestCase {
-
-	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
-	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	public void testSign() throws Exception {
 
@@ -16,17 +14,18 @@ public class BasicSignTest extends TestCase {
 
 		String unencodedPayload = "$.02";
 
-		// build the JWS header and payload
+		// build the JWS header and sign
 
-		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, unencodedPayload);
+		String signatureValue;
+
+		JsonWebSignature jws = new JsonWebSignature();
 		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
-		jws.setKnownCriticalHeaders(KNOWN_CRITICAL_HEADERS);
-
-		// sign the payload and build the JWS
+		jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
+		jws.setCriticalHeaderNames(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD);
+		jws.setPayload(unencodedPayload);
 
 		jws.setKey(TestUtil.testRSAPrivateKey);
-
-		String signatureValue = jws.getDetachedContentCompactSerialization();
+		signatureValue = jws.getDetachedContentCompactSerialization();
 
 		// done
 

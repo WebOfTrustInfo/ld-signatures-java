@@ -5,16 +5,14 @@ import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPrivateKey;
 
 import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwx.HeaderParameterNames;
 import org.jose4j.lang.JoseException;
 
-import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
-
-	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
-	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	private RSAPrivateKey privateKey;
 
@@ -36,20 +34,19 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 		String unencodedPayload = canonicalizedDocument;
 
-		// build the JWS header and payload
-
-		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, unencodedPayload);
-		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
-		jws.setKnownCriticalHeaders(KNOWN_CRITICAL_HEADERS);
-
-		// sign the payload and build the JWS
-
-		jws.setKey(privateKey);
+		// build the JWS and sign
 
 		String signatureValue;
 
 		try {
 
+			JsonWebSignature jws = new JsonWebSignature();
+			jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+			jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
+			jws.setCriticalHeaderNames(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD);
+			jws.setPayload(unencodedPayload);
+
+			jws.setKey(privateKey);
 			signatureValue = jws.getDetachedContentCompactSerialization();
 		} catch (JoseException ex) {
 

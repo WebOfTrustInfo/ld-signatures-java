@@ -3,18 +3,16 @@ package info.weboftrust.ldsignatures.validator;
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPublicKey;
 
+import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.lang.JoseException;
 
 import info.weboftrust.ldsignatures.LdSignature;
-import info.weboftrust.ldsignatures.jws.RFC7797JsonWebSignature;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class RsaSignature2018LdValidator extends LdValidator<RsaSignature2018SignatureSuite> {
-
-	private static String JWS_HEADER_STRING = "{\"alg\":\"RS256\",\"b64\":false,\"crit\":[\"b64\"]}";
-	private static String[] KNOWN_CRITICAL_HEADERS = new String[] { "b64" };
 
 	private RSAPublicKey publicKey;
 
@@ -36,22 +34,18 @@ public class RsaSignature2018LdValidator extends LdValidator<RsaSignature2018Sig
 
 		String unencodedPayload = canonicalizedDocument;
 
-		// build the JWS header and payload
-
-		RFC7797JsonWebSignature jws = new RFC7797JsonWebSignature(JWS_HEADER_STRING, unencodedPayload);
-		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
-		jws.setKnownCriticalHeaders(KNOWN_CRITICAL_HEADERS);
-
-		// validate the signature on the payload
-
-		jws.setKey(publicKey);
+		// build the JWS and validate
 
 		boolean validate;
 
 		try {
 
+			JsonWebSignature jws = new JsonWebSignature();
+			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
 			jws.setCompactSerialization(ldSignature.getSignatureValue());
+			jws.setPayload(unencodedPayload);
 
+			jws.setKey(publicKey);
 			validate = jws.verifySignature();
 		} catch (JoseException ex) {
 

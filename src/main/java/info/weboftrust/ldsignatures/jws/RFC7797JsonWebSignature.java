@@ -2,6 +2,11 @@ package info.weboftrust.ldsignatures.jws;
 
 import org.jose4j.jws.JsonWebSignature;
 
+/**
+ * @deprecated
+ * This is now natively supported by jose4j
+ */
+@Deprecated
 public class RFC7797JsonWebSignature extends JsonWebSignature {
 
 	private String fixedHeader;
