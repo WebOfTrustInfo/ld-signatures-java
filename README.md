@@ -1,4 +1,4 @@
-Built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
+Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
 
 ![RWoT Logo](https://github.com/WebOfTrustInfo/ld-signatures-java/blob/master/wot-logo.png?raw=true)
 
