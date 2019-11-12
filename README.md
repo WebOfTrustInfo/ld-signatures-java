@@ -19,7 +19,7 @@ Dependency:
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<version>0.1</version>
 		<scope>compile</scope>
 	</dependency>
 
