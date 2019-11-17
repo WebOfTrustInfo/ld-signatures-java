@@ -7,7 +7,7 @@ import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.signer.RsaSignature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.validator.RsaSignature2018LdValidator;
+import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
 import junit.framework.TestCase;
 
 public class JsonLdSignRsaSignature2018Test extends TestCase {
@@ -22,7 +22,11 @@ public class JsonLdSignRsaSignature2018Test extends TestCase {
 		String domain = "example.com";
 		String nonce = null;
 
-		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
+		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(TestUtil.testRSAPrivateKey);
+		signer.setCreator(creator);
+		signer.setCreated(created);
+		signer.setDomain(domain);
+		signer.setNonce(nonce);
 		LdSignature ldSignature = signer.sign(jsonLdObject);
 
 		assertEquals(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm(), ldSignature.getType());
@@ -30,10 +34,10 @@ public class JsonLdSignRsaSignature2018Test extends TestCase {
 		assertEquals(created, ldSignature.getCreated());
 		assertEquals(domain, ldSignature.getDomain());
 		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..d8wWxUJTpxAbYHLgFfaYYJJHdWido6wDMBeUhPL7e0m4vuj7xUePbnorf-YqlGZwaGI0zVI_-qJmGbqSB0bm8x20Z9nvawZS8lTk_4uLIPwSPeH8Cyu5bdUP1OIImBhm0gpUmAZfnDVhCgC81lJOaa4tqCjSr940cRUQ9agYjcOyhUBdBOwQgjd8jgkI7vmXqs2m7TmOVY7aAr-6X3AhJqX_a-iD5sdBsoTNulfTyPjEZcFXMvs6gx2078ftwYiUNQzV4qKwkhmUSAINWomKe_fUh4BpdPbsZax7iKYG1hSWRkmrd9R8FllotKQ_nMWZv0urn02F83US62F6ORRT0w", ldSignature.getSignatureValue());
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..Gr0tgKv6_xyvUeaoP2SFXmP1iOnU5Y3PxwGE58onOdLeHKu_6voUfv2sWiC2dplbFBIkALMpdFdW-2CE63TARv8djEZ6cu1cOaqercrNH1tMzk3xDBWskP70AQOCbhz8VpmF0o5iekgd7troNkxrMrYGS1EkFV9VqToySzQY3tWS9NpHYutE4KlaKq6ZKsfdHCUgmK-PmifgMcQJAK8vx8sPLDmln3nvz0pZl6lGYFwBaoXOiaK_6coZot9W413lo9jxOVpzj6jxW0zdxjwX5DzpRkhw7Dj3r-vSpbDi9ec7sM3LKiZsOT2S7QAOJ9UK6LzZXPbBxFDuWwEMJnvKkQ", ldSignature.getSignatureValue());
 
-		RsaSignature2018LdValidator validator = new RsaSignature2018LdValidator(TestUtil.testRSAPublicKey);
-		boolean validate = validator.validate(jsonLdObject, ldSignature);
-		assertTrue(validate);
+		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
+		boolean verify = verifier.verify(jsonLdObject, ldSignature);
+		assertTrue(verify);
 	}
 }

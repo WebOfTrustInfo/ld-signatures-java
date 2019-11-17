@@ -1,38 +1,42 @@
 package info.weboftrust.ldsignatures.signer;
 
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
-import org.jose4j.base64url.internal.apache.commons.codec.binary.Base64;
 
 import info.weboftrust.ldsignatures.suites.EcdsaSecp256k1Signature2019SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1Signature2019SignatureSuite> {
 
-	private ECKey privateKey;
+	private Signer signer;
+
+	public EcdsaSecp256k1Signature2019LdSigner(Signer signer) {
+
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019);
+
+		this.signer = signer;
+	}
+
+	public EcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
+
+		this(new PrivateKeySigner(privateKey));
+	}
 
 	public EcdsaSecp256k1Signature2019LdSigner() {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019);
+		this((Signer) null);
 	}
 
-	public EcdsaSecp256k1Signature2019LdSigner(URI creator, String created, String domain, String nonce, ECKey privateKey) {
-
-		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, creator, created, domain, nonce);
-
-		this.privateKey = privateKey;
-	}
-
-	public static String sign(String canonicalizedDocument, ECKey privateKey) throws GeneralSecurityException {
+	public static String sign(String canonicalizedDocument, Signer signer) throws GeneralSecurityException {
 
 		// sign
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureBytes = privateKey.sign(Sha256Hash.of(canonicalizedDocumentBytes)).encodeToDER();
+		byte[] signatureBytes = signer.sign(canonicalizedDocumentBytes);
 		String signatureString = Base64.encodeBase64String(signatureBytes);
 
 		// done
@@ -43,20 +47,44 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 	@Override
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
-		return sign(canonicalizedDocument, this.privateKey);
+		return sign(canonicalizedDocument, this.getSigner());
+	}
+
+	/*
+	 * Helper class
+	 */
+
+	public interface Signer {
+
+		public byte[] sign(byte[] content) throws GeneralSecurityException;
+	}
+
+	public static class PrivateKeySigner implements Signer {
+
+		private ECKey privateKey;
+
+		public PrivateKeySigner(ECKey privateKey) {
+
+			this.privateKey = privateKey;
+		}
+
+		public byte[] sign(byte[] content) throws GeneralSecurityException {
+
+			return this.privateKey.sign(Sha256Hash.of(content)).encodeToDER();
+		}
 	}
 
 	/*
 	 * Getters and setters
 	 */
 
-	public ECKey getPrivateKey() {
+	public Signer getSigner() {
 
-		return this.privateKey;
+		return this.signer;
 	}
 
-	public void setPrivateKey(ECKey privateKey) {
+	public void setSigner(Signer signer) {
 
-		this.privateKey = privateKey;
+		this.signer = signer;
 	}
 }

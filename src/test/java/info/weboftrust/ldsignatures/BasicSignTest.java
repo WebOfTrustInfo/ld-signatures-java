@@ -1,8 +1,13 @@
 package info.weboftrust.ldsignatures;
 
-import org.jose4j.jws.AlgorithmIdentifiers;
-import org.jose4j.jws.JsonWebSignature;
-import org.jose4j.jwx.HeaderParameterNames;
+import java.util.Collections;
+
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSObject;
+import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.Payload;
+import com.nimbusds.jose.crypto.RSASSASigner;
 
 import junit.framework.TestCase;
 
@@ -18,6 +23,20 @@ public class BasicSignTest extends TestCase {
 
 		String signatureValue;
 
+		JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256)
+				.customParam("b64", Boolean.FALSE)
+				.criticalParams(Collections.singleton("b64"))
+				.build();
+
+		Payload payload = new Payload(unencodedPayload);
+
+		JWSObject jwsObject = new JWSObject(jwsHeader, payload);
+
+		JWSSigner jwsSigner = new RSASSASigner(TestUtil.testRSAPrivateKey);
+		jwsObject.sign(jwsSigner);
+		signatureValue = jwsObject.serialize(true);
+
+		/*
 		JsonWebSignature jws = new JsonWebSignature();
 		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
 		jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
@@ -25,10 +44,10 @@ public class BasicSignTest extends TestCase {
 		jws.setPayload(unencodedPayload);
 
 		jws.setKey(TestUtil.testRSAPrivateKey);
-		signatureValue = jws.getDetachedContentCompactSerialization();
+		signatureValue = jws.getDetachedContentCompactSerialization();*/
 
 		// done
 
-		assertEquals("eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..fZRkjTTrcXdUovHjghM6JvlMhJuR1s8X1F4Uy_F4oMhZ9KtF2Zp78lYSOI7OxB5uoTu8FpQHvy-dz3N4nLhoSWAi2_HrxZG_2DyctUUB_8pRKYBmIdIgpOlEMjIreOvXyM6A32gR-PdbzoQq14yQbbfxk12jyZSwcaNu29gXnW_uO7ku1GSV_juWE5E_yIstvEB1GG8ApUGIuzRJDrAAa8KBkHN7Rdfhc8rJMOeSZI0dc_A-Y7t0M0RtrgvV_FhzM40K1pwr1YUZ5y1N4QV13M5u5qJ_lBK40WtWYL5MbJ58Qqk_-Q8l1dp6OCmoMvwdc7FmMsPigmyklqo46uyjjw", signatureValue);
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..XrdJ42-RRCvuErPRZvQ2NQ4d47npAGnTcM-bkgJHPYnLft08eLtICjqlfUPD31Kk1WO2HoPm6WfqEDhiq4-QGnm3mJ6YJfamGR5AJeP7guIdKR_m_-zuW8U-vXzzCTsiS6vSDG7lYVKjtE3rRYGyGFA1fGA-CgjkOkA3vD12EQcWMMqThP68jeH3j0cOoKgnvxnEL-EDZRzkbO2wARkiCBc11BJw6vDnn-WXe4xjvZTQpupbxDRT3BQG75oht_Ye9nc_J3vCJviRKItKAdfIOC0fjPJz9qcU4HMeSwqO-r3EchJV_kIJOLa5lU8Nq4L6DGGp1HOZb0neXIC9QHzkBA", signatureValue);
 	}
 }
