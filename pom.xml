@@ -20,6 +20,13 @@
 		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>sovrin</id>
+			<url>https://repo.sovrin.org/repository/maven-public</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
@@ -113,7 +120,7 @@
 		<dependency>
 			<groupId>org.hyperledger</groupId>
 			<artifactId>indy</artifactId>
-			<version>1.8.2</version>
+			<version>1.12.0</version>
 			<scope>compile</scope>
 		</dependency>
 
