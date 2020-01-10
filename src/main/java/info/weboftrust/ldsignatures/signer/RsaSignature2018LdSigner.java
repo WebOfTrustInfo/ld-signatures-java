@@ -93,7 +93,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 	public interface Signer {
 
-		public byte[] sign(String algorithm, byte[] content) throws GeneralSecurityException;
+		public byte[] sign(byte[] content) throws GeneralSecurityException;
 	}
 
 	public static class PrivateKeySigner extends RSASSASigner implements Signer {
@@ -103,9 +103,9 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 			super(privateKey);
 		}
 
-		public byte[] sign(String algorithm, byte[] content) throws GeneralSecurityException {
+		public byte[] sign(byte[] content) throws GeneralSecurityException {
 
-			JWSHeader jwsHeader = new JWSHeader(new JWSAlgorithm(algorithm));
+			JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.RS256);
 
 			try {
 
@@ -129,11 +129,11 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 		@Override
 		public Base64URL sign(final JWSHeader header, final byte[] signingInput) throws JOSEException {
 
-			String algorithm = header.getAlgorithm().getName();
+			if (! JWSAlgorithm.RS256.equals(header.getAlgorithm())) throw new JOSEException("Unexpected algorithm: " + header.getAlgorithm());
 
 			try {
 
-				return Base64URL.encode(this.signer.sign(algorithm, signingInput));
+				return Base64URL.encode(this.signer.sign(signingInput));
 			} catch (GeneralSecurityException ex) {
 
 				throw new JOSEException(ex.getMessage(), ex);
