@@ -10,18 +10,18 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.Payload;
-import com.nimbusds.jose.crypto.RSASSASigner;
-import com.nimbusds.jose.crypto.impl.RSASSAProvider;
-import com.nimbusds.jose.util.Base64URL;
 
+import info.weboftrust.ldsignatures.crypto.ByteSigner;
+import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
+import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
 
-	private Signer signer;
+	private ByteSigner signer;
 
-	public RsaSignature2018LdSigner(Signer signer) {
+	public RsaSignature2018LdSigner(ByteSigner signer) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
 
@@ -30,15 +30,15 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 	public RsaSignature2018LdSigner(RSAPrivateKey privateKey) {
 
-		this(new PrivateKeySigner(privateKey));
+		this(new RSA_RS256_PrivateKeySigner(privateKey));
 	}
 
 	public RsaSignature2018LdSigner() {
 
-		this((Signer) null);
+		this((ByteSigner) null);
 	}
 
-	public static String sign(String canonicalizedDocument, Signer signer) throws GeneralSecurityException {
+	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
 
 		// build the payload
 
@@ -59,7 +59,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 			JWSObject jwsObject = new JWSObject(jwsHeader, payload);
 
-			JWSSigner jwsSigner = new JWSSignerAdapter(signer);
+			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.RS256);
 			jwsObject.sign(jwsSigner);
 			signatureValue = jwsObject.serialize(true);
 
@@ -88,69 +88,15 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 	}
 
 	/*
-	 * Helper class
-	 */
-
-	public interface Signer {
-
-		public byte[] sign(byte[] content) throws GeneralSecurityException;
-	}
-
-	public static class PrivateKeySigner extends RSASSASigner implements Signer {
-
-		public PrivateKeySigner(RSAPrivateKey privateKey) {
-
-			super(privateKey);
-		}
-
-		public byte[] sign(byte[] content) throws GeneralSecurityException {
-
-			JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.RS256);
-
-			try {
-
-				return super.sign(jwsHeader, content).decode();
-			} catch (JOSEException ex) {
-
-				throw new GeneralSecurityException(ex.getMessage(), ex);
-			}
-		}
-	}
-
-	private static class JWSSignerAdapter extends RSASSAProvider implements JWSSigner {
-
-		private Signer signer;
-
-		private JWSSignerAdapter(Signer signer) {
-
-			this.signer = signer;
-		}
-
-		@Override
-		public Base64URL sign(final JWSHeader header, final byte[] signingInput) throws JOSEException {
-
-			if (! JWSAlgorithm.RS256.equals(header.getAlgorithm())) throw new JOSEException("Unexpected algorithm: " + header.getAlgorithm());
-
-			try {
-
-				return Base64URL.encode(this.signer.sign(signingInput));
-			} catch (GeneralSecurityException ex) {
-
-				throw new JOSEException(ex.getMessage(), ex);
-			}
-		}
-	}
-
-	/*
 	 * Getters and setters
 	 */
 
-	public Signer getSigner() {
+	public ByteSigner getSigner() {
 
 		return this.signer;
 	}
 
-	public void setSigner(Signer signer) {
+	public void setSigner(ByteSigner signer) {
 
 		this.signer = signer;
 	}

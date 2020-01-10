@@ -3,27 +3,25 @@ package info.weboftrust.ldsignatures.verifier;
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
-import java.util.Collections;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.nimbusds.jose.crypto.impl.RSASSAProvider;
-import com.nimbusds.jose.util.Base64URL;
 
 import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.crypto.ByteVerifier;
+import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
+import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.DetachedJWSObject;
 
 public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018SignatureSuite> {
 
-	private Verifier verifier;
+	private ByteVerifier verifier;
 
-	public RsaSignature2018LdVerifier(Verifier verifier) {
+	public RsaSignature2018LdVerifier(ByteVerifier verifier) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
 
@@ -32,15 +30,15 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
 	public RsaSignature2018LdVerifier(RSAPublicKey publicKey) {
 
-		this(new PublicKeyVerifier(publicKey));
+		this(new RSA_RS256_PublicKeyVerifier(publicKey));
 	}
 
 	public RsaSignature2018LdVerifier() {
 
-		this((Verifier) null);
+		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, Verifier verifier) throws GeneralSecurityException {
+	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// build the payload
 
@@ -57,7 +55,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
 			DetachedJWSObject jwsObject = DetachedJWSObject.parse(signatureValue, jwsPayload);
 
-			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier);
+			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
 			verify = jwsVerifier.verify(jwsObject.getHeader(), jwsObject.getSigningInput(), jwsObject.getParsedSignature());
 
 /*			JsonWebSignature jws = new JsonWebSignature();
@@ -84,70 +82,15 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 	}
 
 	/*
-	 * Helper class
-	 */
-
-	public interface Verifier {
-
-		public boolean verify(String algorithm, byte[] content, byte[] signature) throws GeneralSecurityException;
-	}
-
-	public static class PublicKeyVerifier extends RSASSAVerifier implements Verifier {
-
-		public PublicKeyVerifier(RSAPublicKey publicKey) {
-
-			super(publicKey, Collections.singleton("b64"));
-		}
-
-		@Override
-		public boolean verify(String algorithm, byte[] content, byte[] signature) throws GeneralSecurityException {
-
-			JWSHeader jwsHeader = new JWSHeader(new JWSAlgorithm(algorithm));
-
-			try {
-
-				return super.verify(jwsHeader, content, Base64URL.encode(signature));
-			} catch (JOSEException ex) {
-
-				throw new GeneralSecurityException(ex.getMessage(), ex);
-			}
-		}
-	}
-
-	private static class JWSVerifierAdapter extends RSASSAProvider implements JWSVerifier {
-
-		private Verifier verifier;
-
-		private JWSVerifierAdapter(Verifier verifier) {
-
-			this.verifier = verifier;
-		}
-
-		@Override
-		public boolean verify(JWSHeader header, byte[] signingInput, Base64URL signature) throws JOSEException {
-
-			String algorithm = header.getAlgorithm().getName();
-
-			try {
-
-				return this.verifier.verify(algorithm, signingInput, signature.decode());
-			} catch (GeneralSecurityException ex) {
-
-				throw new JOSEException(ex.getMessage(), ex);
-			}
-		}
-	}
-
-	/*
 	 * Getters and setters
 	 */
 
-	public Verifier getVerifier() {
+	public ByteVerifier getVerifier() {
 
 		return this.verifier;
 	}
 
-	public void setVerifier(Verifier verifier) {
+	public void setVerifier(ByteVerifier verifier) {
 
 		this.verifier = verifier;
 	}

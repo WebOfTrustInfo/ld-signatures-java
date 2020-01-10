@@ -1,11 +1,11 @@
-package info.weboftrust.ldsignatures.crypto.impl;
+package info.weboftrust.ldsignatures.crypto.provider.impl;
 
 import java.security.GeneralSecurityException;
 
 import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.NaCl.Sodium;
 
-import info.weboftrust.ldsignatures.crypto.SHA256Provider;
+import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 
 public class NaClSodiumSHA256Provider extends SHA256Provider {
 

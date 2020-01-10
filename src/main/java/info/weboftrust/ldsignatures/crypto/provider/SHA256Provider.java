@@ -1,4 +1,4 @@
-package info.weboftrust.ldsignatures.crypto;
+package info.weboftrust.ldsignatures.crypto.provider;
 
 import java.security.GeneralSecurityException;
 import java.util.Iterator;

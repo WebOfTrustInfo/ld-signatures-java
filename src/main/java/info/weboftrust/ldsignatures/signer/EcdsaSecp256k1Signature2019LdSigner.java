@@ -5,16 +5,17 @@ import java.security.GeneralSecurityException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
 
+import info.weboftrust.ldsignatures.crypto.ByteSigner;
+import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.EcdsaSecp256k1Signature2019SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1Signature2019SignatureSuite> {
 
-	private Signer signer;
+	private ByteSigner signer;
 
-	public EcdsaSecp256k1Signature2019LdSigner(Signer signer) {
+	public EcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019);
 
@@ -23,20 +24,20 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 
 	public EcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
 
-		this(new PrivateKeySigner(privateKey));
+		this(new P256K_ES256K_PrivateKeySigner(privateKey));
 	}
 
 	public EcdsaSecp256k1Signature2019LdSigner() {
 
-		this((Signer) null);
+		this((ByteSigner) null);
 	}
 
-	public static String sign(String canonicalizedDocument, Signer signer) throws GeneralSecurityException {
+	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
 
 		// sign
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureBytes = signer.sign(canonicalizedDocumentBytes);
+		byte[] signatureBytes = signer.sign(canonicalizedDocumentBytes, "ES256K");
 		String signatureString = Base64.encodeBase64String(signatureBytes);
 
 		// done
@@ -51,39 +52,15 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 	}
 
 	/*
-	 * Helper class
-	 */
-
-	public interface Signer {
-
-		public byte[] sign(byte[] content) throws GeneralSecurityException;
-	}
-
-	public static class PrivateKeySigner implements Signer {
-
-		private ECKey privateKey;
-
-		public PrivateKeySigner(ECKey privateKey) {
-
-			this.privateKey = privateKey;
-		}
-
-		public byte[] sign(byte[] content) throws GeneralSecurityException {
-
-			return this.privateKey.sign(Sha256Hash.of(content)).encodeToDER();
-		}
-	}
-
-	/*
 	 * Getters and setters
 	 */
 
-	public Signer getSigner() {
+	public ByteSigner getSigner() {
 
 		return this.signer;
 	}
 
-	public void setSigner(Signer signer) {
+	public void setSigner(ByteSigner signer) {
 
 		this.signer = signer;
 	}

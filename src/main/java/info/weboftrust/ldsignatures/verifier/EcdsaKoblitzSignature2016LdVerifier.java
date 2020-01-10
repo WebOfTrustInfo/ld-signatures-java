@@ -5,18 +5,18 @@ import java.security.GeneralSecurityException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.SignatureDecodeException;
 
 import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.crypto.ByteVerifier;
+import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitzSignature2016SignatureSuite> {
 
-	private Verifier verifier;
+	private ByteVerifier verifier;
 
-	public EcdsaKoblitzSignature2016LdVerifier(Verifier verifier) {
+	public EcdsaKoblitzSignature2016LdVerifier(ByteVerifier verifier) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
 
@@ -25,21 +25,21 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
 
 	public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
 
-		this(new PublicKeyVerifier(publicKey));
+		this(new P256K_ES256K_PublicKeyVerifier(publicKey));
 	}
 
 	public EcdsaKoblitzSignature2016LdVerifier() {
 
-		this((Verifier) null);
+		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, Verifier verifier) throws GeneralSecurityException {
+	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// verify
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
 		byte[] signatureValueBytes = Base64.decodeBase64(ldSignature.getSignatureValue());
-		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes);
+		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes, "ES256K");
 
 		// done
 
@@ -53,46 +53,15 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
 	}
 
 	/*
-	 * Helper class
-	 */
-
-	public interface Verifier {
-
-		public boolean verify(byte[] content, byte[] signature) throws GeneralSecurityException;
-	}
-
-	public static class PublicKeyVerifier implements Verifier {
-
-		private ECKey publicKey;
-
-		public PublicKeyVerifier(ECKey publicKey) {
-
-			this.publicKey = publicKey;
-		}
-
-		@Override
-		public boolean verify(byte[] content, byte[] signature) throws GeneralSecurityException {
-
-			try {
-
-				return this.publicKey.verify(Sha256Hash.hash(content), signature);
-			} catch (SignatureDecodeException ex) {
-
-				throw new GeneralSecurityException(ex.getMessage(), ex);
-			}
-		}
-	}
-
-	/*
 	 * Getters and setters
 	 */
 
-	public Verifier getVerifier() {
+	public ByteVerifier getVerifier() {
 
 		return this.verifier;
 	}
 
-	public void setVerifier(Verifier verifier) {
+	public void setVerifier(ByteVerifier verifier) {
 
 		this.verifier = verifier;
 	}
