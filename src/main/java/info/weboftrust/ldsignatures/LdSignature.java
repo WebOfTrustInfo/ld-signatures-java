@@ -107,7 +107,10 @@ public class LdSignature {
 	}
 
 	public URI getCreator() {
-		return (URI) this.jsonLdSignatureObject.get(JSONLD_TERM_CREATOR);
+		Object object = this.jsonLdSignatureObject.get(JSONLD_TERM_CREATOR);
+		if (object instanceof URI) return (URI) object;
+		if (object instanceof String) return URI.create((String) object);
+		return null;
 	}
 
 	public void setCreator(URI creator) {
