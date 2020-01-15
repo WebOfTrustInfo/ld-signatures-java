@@ -13,13 +13,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSignature2016SignatureSuite> {
 
-	private ByteSigner signer;
-
 	public EcdsaKoblitzSignature2016LdSigner(ByteSigner signer) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
-
-		this.signer = signer;
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, signer);
 	}
 
 	public EcdsaKoblitzSignature2016LdSigner(ECKey privateKey) {
@@ -49,19 +45,5 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
 		return sign(canonicalizedDocument, this.getSigner());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteSigner getSigner() {
-
-		return this.signer;
-	}
-
-	public void setSigner(ByteSigner signer) {
-
-		this.signer = signer;
 	}
 }

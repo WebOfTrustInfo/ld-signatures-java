@@ -19,13 +19,9 @@ import info.weboftrust.ldsignatures.util.DetachedJWSObject;
 
 public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018SignatureSuite> {
 
-	private ByteVerifier verifier;
-
 	public RsaSignature2018LdVerifier(ByteVerifier verifier) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
-
-		this.verifier = verifier;
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, verifier);
 	}
 
 	public RsaSignature2018LdVerifier(RSAPublicKey publicKey) {
@@ -58,7 +54,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
 			verify = jwsVerifier.verify(jwsObject.getHeader(), jwsObject.getSigningInput(), jwsObject.getParsedSignature());
 
-/*			JsonWebSignature jws = new JsonWebSignature();
+			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
 			jws.setCompactSerialization(ldSignature.getSignatureValue());
 			jws.setPayload(unencodedPayload);
@@ -79,19 +75,5 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 	public boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
 
 		return verify(canonicalizedDocument, ldSignature, this.getVerifier());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteVerifier getVerifier() {
-
-		return this.verifier;
-	}
-
-	public void setVerifier(ByteVerifier verifier) {
-
-		this.verifier = verifier;
 	}
 }

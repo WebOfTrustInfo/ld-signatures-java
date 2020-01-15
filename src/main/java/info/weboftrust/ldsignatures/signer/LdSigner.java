@@ -7,27 +7,32 @@ import java.util.LinkedHashMap;
 import com.github.jsonldjava.core.JsonLdError;
 
 import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
-	protected final SIGNATURESUITE signatureSuite;
+	private final SIGNATURESUITE signatureSuite;
 
-	protected URI creator;
-	protected String created;
-	protected String domain;
-	protected String nonce;
+	private ByteSigner signer;
 
-	protected LdSigner(SIGNATURESUITE signatureSuite) {
+	private URI creator;
+	private String created;
+	private String domain;
+	private String nonce;
+
+	protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer) {
 
 		this.signatureSuite = signatureSuite;
+		this.signer = signer;
 	}
 
-	protected LdSigner(SIGNATURESUITE signatureSuite, URI creator, String created, String domain, String nonce) {
+	protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, String created, String domain, String nonce) {
 
 		this.signatureSuite = signatureSuite;
+		this.signer = signer;
 		this.creator = creator;
 		this.created = created;
 		this.domain = domain;
@@ -91,6 +96,20 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 	public SignatureSuite getSignatureSuite() {
 
 		return this.signatureSuite;
+	}
+
+	/*
+	 * Getters and setters
+	 */
+
+	public ByteSigner getSigner() {
+
+		return this.signer;
+	}
+
+	public void setSigner(ByteSigner signer) {
+
+		this.signer = signer;
 	}
 
 	public URI getCreator() {

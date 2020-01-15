@@ -19,13 +19,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
 
-	private ByteSigner signer;
-
 	public RsaSignature2018LdSigner(ByteSigner signer) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018);
-
-		this.signer = signer;
+		super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, signer);
 	}
 
 	public RsaSignature2018LdSigner(RSAPrivateKey privateKey) {
@@ -85,19 +81,5 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
 		return sign(canonicalizedDocument, this.getSigner());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteSigner getSigner() {
-
-		return this.signer;
-	}
-
-	public void setSigner(ByteSigner signer) {
-
-		this.signer = signer;
 	}
 }

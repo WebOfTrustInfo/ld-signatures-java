@@ -14,13 +14,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitzSignature2016SignatureSuite> {
 
-	private ByteVerifier verifier;
-
 	public EcdsaKoblitzSignature2016LdVerifier(ByteVerifier verifier) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
-
-		this.verifier = verifier;
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, verifier);
 	}
 
 	public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
@@ -50,19 +46,5 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
 	public boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
 
 		return verify(canonicalizedDocument, ldSignature, this.getVerifier());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteVerifier getVerifier() {
-
-		return this.verifier;
-	}
-
-	public void setVerifier(ByteVerifier verifier) {
-
-		this.verifier = verifier;
 	}
 }

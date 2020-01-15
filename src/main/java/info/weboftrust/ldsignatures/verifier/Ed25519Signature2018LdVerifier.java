@@ -13,13 +13,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2018SignatureSuite> {
 
-	private ByteVerifier verifier;
-
 	public Ed25519Signature2018LdVerifier(ByteVerifier verifier) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018);
-
-		this.verifier = verifier;
+		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, verifier);
 	}
 
 	public Ed25519Signature2018LdVerifier(byte[] publicKey) {
@@ -49,19 +45,5 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
 	public boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
 
 		return verify(canonicalizedDocument, ldSignature, this.getVerifier());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteVerifier getVerifier() {
-
-		return this.verifier;
-	}
-
-	public void setVerifier(ByteVerifier verifier) {
-
-		this.verifier = verifier;
 	}
 }

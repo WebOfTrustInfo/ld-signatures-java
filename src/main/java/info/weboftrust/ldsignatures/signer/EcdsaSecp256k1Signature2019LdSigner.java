@@ -13,13 +13,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1Signature2019SignatureSuite> {
 
-	private ByteSigner signer;
-
 	public EcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019);
-
-		this.signer = signer;
+		super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, signer);
 	}
 
 	public EcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
@@ -49,19 +45,5 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
 		return sign(canonicalizedDocument, this.getSigner());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteSigner getSigner() {
-
-		return this.signer;
-	}
-
-	public void setSigner(ByteSigner signer) {
-
-		this.signer = signer;
 	}
 }

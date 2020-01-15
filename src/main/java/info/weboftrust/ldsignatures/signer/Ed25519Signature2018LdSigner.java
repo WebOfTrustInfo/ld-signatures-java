@@ -12,13 +12,9 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018SignatureSuite> {
 
-	private ByteSigner signer;
-
 	public Ed25519Signature2018LdSigner(ByteSigner signer) {
 
-		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018);
-
-		this.signer = signer;
+		super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, signer);
 	}
 
 	public Ed25519Signature2018LdSigner(byte[] privateKey) {
@@ -48,19 +44,5 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
 		return sign(canonicalizedDocument, this.getSigner());
-	}
-
-	/*
-	 * Getters and setters
-	 */
-
-	public ByteSigner getSigner() {
-
-		return this.signer;
-	}
-
-	public void setSigner(ByteSigner signer) {
-
-		this.signer = signer;
 	}
 }

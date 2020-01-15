@@ -6,17 +6,21 @@ import java.util.LinkedHashMap;
 import com.github.jsonldjava.core.JsonLdError;
 
 import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
-	protected final SIGNATURESUITE signatureSuite;
+	private final SIGNATURESUITE signatureSuite;
 
-	protected LdVerifier(SIGNATURESUITE signatureSuite) {
+	private ByteVerifier verifier;
+
+	protected LdVerifier(SIGNATURESUITE signatureSuite, ByteVerifier verifier) {
 
 		this.signatureSuite = signatureSuite;
+		this.verifier = verifier;
 	}
 
 	public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuite) {
@@ -72,5 +76,19 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 	public SignatureSuite getSignatureSuite() {
 
 		return this.signatureSuite;
+	}
+
+	/*
+	 * Getters and setters
+	 */
+
+	public ByteVerifier getVerifier() {
+
+		return this.verifier;
+	}
+
+	public void setVerifier(ByteVerifier verifier) {
+
+		this.verifier = verifier;
 	}
 }
