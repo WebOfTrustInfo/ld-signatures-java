@@ -53,7 +53,7 @@ public class NaClSodiumEC25519Provider extends EC25519Provider {
 	@Override
 	public byte[] sign(byte[] content, byte[] privateKey) throws GeneralSecurityException {
 
-		if (privateKey.length != Sodium.CRYPTO_SIGN_ED25519_SECRETKEYBYTES && privateKey.length != Sodium.CRYPTO_SIGN_ED25519_SECRETKEYBYTES - Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES) throw new GeneralSecurityException("Invalid private key length: " + privateKey.length);
+		if (privateKey.length != Sodium.CRYPTO_SIGN_ED25519_SECRETKEYBYTES) throw new GeneralSecurityException("Invalid private key length: " + privateKey.length);
 
 		byte[] signatureValue = new byte[Sodium.CRYPTO_SIGN_ED25519_BYTES + content.length];
 		Arrays.fill(signatureValue, 0, Sodium.CRYPTO_SIGN_ED25519_BYTES, (byte) 0);
