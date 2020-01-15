@@ -12,7 +12,7 @@ import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
-	protected SIGNATURESUITE signatureSuite;
+	protected final SIGNATURESUITE signatureSuite;
 
 	protected LdVerifier(SIGNATURESUITE signatureSuite) {
 
@@ -44,6 +44,10 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		LdSignature.removeFromJsonLdObject(jsonLdObjectWithoutSignature);
 		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectWithoutSignature);
 
+		// check the signature object
+
+		if (! this.getSignatureSuite().getTerm().equals(ldSignature.getType())) throw new GeneralSecurityException("Unexpected signature type: " + ldSignature.getType() + " is not " + this.getSignatureSuite().getTerm());
+
 		// verify
 
 		boolean verify = this.verify(canonicalizedDocument, ldSignature);
@@ -63,5 +67,10 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		// done
 
 		return this.verify(jsonLdObject, ldSignature);
+	}
+
+	public SignatureSuite getSignatureSuite() {
+
+		return this.signatureSuite;
 	}
 }

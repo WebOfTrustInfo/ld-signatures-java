@@ -13,7 +13,8 @@ import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
-	protected SIGNATURESUITE signatureSuite;
+	protected final SIGNATURESUITE signatureSuite;
+
 	protected URI creator;
 	protected String created;
 	protected String domain;
@@ -66,11 +67,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		LdSignature ldSignature = new LdSignature();
 
-		ldSignature.setType(this.signatureSuite.getTerm());
-		ldSignature.setCreator(this.creator);
-		ldSignature.setCreated(this.created);
-		ldSignature.setDomain(this.domain);
-		ldSignature.setNonce(this.nonce);
+		ldSignature.setType(this.getSignatureSuite().getTerm());
+		ldSignature.setCreator(this.getCreator());
+		ldSignature.setCreated(this.getCreated());
+		ldSignature.setDomain(this.getDomain());
+		ldSignature.setNonce(this.getNonce());
 		ldSignature.setSignatureValue(signatureValue);
 
 		// add signature to JSON-LD?
@@ -85,6 +86,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
 
 		return sign(jsonLdObject, true);
+	}
+
+	public SignatureSuite getSignatureSuite() {
+
+		return this.signatureSuite;
 	}
 
 	public URI getCreator() {
