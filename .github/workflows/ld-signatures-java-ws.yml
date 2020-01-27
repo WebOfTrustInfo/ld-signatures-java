@@ -11,3 +11,5 @@ jobs:
       uses: philpotisk/github-action-maven@master
     - name: Build with Maven
       run: mvn install
+    - name: Run Tests
+      run: mvn test
