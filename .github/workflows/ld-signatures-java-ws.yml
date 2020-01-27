@@ -8,8 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
+      uses: philpotisk/github-action-maven@master
     - name: Build with Maven
       run: mvn install
