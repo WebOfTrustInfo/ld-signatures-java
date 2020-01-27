@@ -1,4 +1,4 @@
-image: phil21/maven-danubetech
+image: registry.gitlab.com/danubetech/devops/docker-maven-danubetech:latest
 
 stages:
   - build
