@@ -1,4 +1,4 @@
-image: phil21/maven:latest
+image: phil21/maven-danubetech
 
 stages:
   - build
