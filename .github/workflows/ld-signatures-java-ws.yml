@@ -1,12 +1,6 @@
 name: CI/CD Workflow for ld-signatures-java
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push]
 
 jobs:
   build:
