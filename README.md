@@ -63,9 +63,20 @@ Example Linked Data Signature:
 
 Example Usage of `PrivateKeySignerFactory`:
 
-      JWK jsonWebKey = JWK.parse(new JSONObject((Map<String, Object>) key.getKey()));
-      String keyType = JWKKeyTypes.keyTypeForJWK(jsonWebKey);
-      Object privateKey = JWKToPrivateKey.JWKToAnyPrivateKey(jsonWebKey);
+      // keytype must be one of the following
+      String keyType = "RSA";
+      String keyType = "P-256K";
+      String keyType = "Ed25519";
+      
+      // algorithm must be one of the following
+      String algorithm = "RS256";
+      String algorithm = "ES256K";
+      String algorithm = "EdDSA";
+      
+      // privateKey must be one of the following
+      Object privateKey = rsaPrivateKey; // implementation of java.security.interfaces.RSAPrivateKey
+      Object privateKey = ecPrivateKey; // implementation of org.bitcoinj.core.ECKey
+      Object privateKey = privateKeyAsByteArray; // a com.nimbusds.jose.jwk.JWK converted to a byte[]
       
       PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(keyType, algorithm, privateKey);
       signature = privateKeySigner.sign(body, algorithm);
