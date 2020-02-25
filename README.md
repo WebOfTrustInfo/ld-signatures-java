@@ -61,6 +61,26 @@ Example Linked Data Signature:
 	    "signatureValue" : "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..d8wWxUJTpxAbYHLgFfaYYJJHdWido6wDMBeUhPL7e0m4vuj7xUePbnorf-YqlGZwaGI0zVI_-qJmGbqSB0bm8x20Z9nvawZS8lTk_4uLIPwSPeH8Cyu5bdUP1OIImBhm0gpUmAZfnDVhCgC81lJOaa4tqCjSr940cRUQ9agYjcOyhUBdBOwQgjd8jgkI7vmXqs2m7TmOVY7aAr-6X3AhJqX_a-iD5sdBsoTNulfTyPjEZcFXMvs6gx2078ftwYiUNQzV4qKwkhmUSAINWomKe_fUh4BpdPbsZax7iKYG1hSWRkmrd9R8FllotKQ_nMWZv0urn02F83US62F6ORRT0w"
 	  }
 
+Example Usage of `PrivateKeySignerFactory`:
+
+      // keytype must be one of the following
+      String keyType = "RSA";
+      String keyType = "P-256K";
+      String keyType = "Ed25519";
+      
+      // algorithm must be one of the following
+      String algorithm = "RS256";
+      String algorithm = "ES256K";
+      String algorithm = "EdDSA";
+      
+      // privateKey must be one of the following
+      Object privateKey = rsaPrivateKey; // implementation of java.security.interfaces.RSAPrivateKey
+      Object privateKey = ecPrivateKey; // implementation of org.bitcoinj.core.ECKey
+      Object privateKey = privateKeyAsByteArray; // an Ed25519 key as a byte[]
+      
+      PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(keyType, algorithm, privateKey);
+      signature = privateKeySigner.sign(body, algorithm);
+
 ### About
 
 Rebooting Web-of-Trust - http://www.weboftrust.info/
