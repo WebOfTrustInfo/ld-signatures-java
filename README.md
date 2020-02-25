@@ -76,7 +76,7 @@ Example Usage of `PrivateKeySignerFactory`:
       // privateKey must be one of the following
       Object privateKey = rsaPrivateKey; // implementation of java.security.interfaces.RSAPrivateKey
       Object privateKey = ecPrivateKey; // implementation of org.bitcoinj.core.ECKey
-      Object privateKey = privateKeyAsByteArray; // a com.nimbusds.jose.jwk.JWK converted to a byte[]
+      Object privateKey = privateKeyAsByteArray; // an Ed25519 key as a byte[]
       
       PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(keyType, algorithm, privateKey);
       signature = privateKeySigner.sign(body, algorithm);
