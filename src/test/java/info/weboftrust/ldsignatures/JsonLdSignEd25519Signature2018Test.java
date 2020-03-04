@@ -34,7 +34,7 @@ public class JsonLdSignEd25519Signature2018Test extends TestCase {
 		assertEquals(created, ldSignature.getCreated());
 		assertEquals(domain, ldSignature.getDomain());
 		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("if8ooA+32YZc4SQBvIDDY9tgTatPoq4IZ8Kr+We1t38LR2RuURmaVu9D4shbi4VvND87PUqq5/0vsNFEGIIEDA==", ldSignature.getSignatureValue());
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..xuj9osgec5or-U1x0gSXuaqE5MgJdBnBVueKw2w_JDRu4kt5BURAJwbyxtuV5Sfu3W1duTAUIczmaqRtWjbyCg", ldSignature.getJws());
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, ldSignature);

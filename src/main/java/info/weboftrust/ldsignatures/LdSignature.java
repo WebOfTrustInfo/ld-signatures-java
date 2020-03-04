@@ -26,7 +26,10 @@ public class LdSignature {
 	public static final String JSONLD_TERM_CREATED = "created";
 	public static final String JSONLD_TERM_DOMAIN = "domain";
 	public static final String JSONLD_TERM_NONCE = "nonce";
+	public static final String JSONLD_TERM_PROOFPURPOSE = "proofPurpose";
+	public static final String JSONLD_TERM_ASSERTIONMETHOD = "assertionMethod";
 	public static final String JSONLD_TERM_SIGNATUREVALUE = "signatureValue";
+	public static final String JSONLD_TERM_JWS = "jws";
 
 	private final LinkedHashMap<String, Object> jsonLdSignatureObject;
 
@@ -141,12 +144,28 @@ public class LdSignature {
 		this.jsonLdSignatureObject.put(JSONLD_TERM_NONCE, nonce);
 	}
 
+	public String getProofPurpose() {
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_PROOFPURPOSE);
+	}
+
+	public void setProofPurpose(String proofPurpose) {
+		this.jsonLdSignatureObject.put(JSONLD_TERM_PROOFPURPOSE, proofPurpose);
+	}
+
 	public String getSignatureValue() {
 		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_SIGNATUREVALUE);
 	}
 
 	public void setSignatureValue(String signatureValue) {
 		this.jsonLdSignatureObject.put(JSONLD_TERM_SIGNATUREVALUE, signatureValue);
+	}
+
+	public String getJws() {
+		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_JWS);
+	}
+
+	public void setJws(String jws) {
+		this.jsonLdSignatureObject.put(JSONLD_TERM_JWS, jws);
 	}
 
 	@Override

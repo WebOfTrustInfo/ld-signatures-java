@@ -42,7 +42,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 		// build the JWS and sign
 
-		String signatureValue;
+		String jws;
 
 		try {
 
@@ -57,7 +57,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.RS256);
 			jwsObject.sign(jwsSigner);
-			signatureValue = jwsObject.serialize(true);
+			jws = jwsObject.serialize(true);
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
@@ -74,7 +74,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 		// done
 
-		return signatureValue;
+		return jws;
 	}
 
 	@Override

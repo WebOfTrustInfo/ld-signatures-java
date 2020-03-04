@@ -18,6 +18,17 @@ public class CanonicalizationTest extends TestCase {
 		assertEquals(CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObject), canonicalizedDocument);
 	}
 
+	/*	@SuppressWarnings("unchecked")
+	public void testCanonicalizationFixImplicitGraph() throws Exception {
+
+		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(CanonicalizationTest.class.getResourceAsStream("input.vc.jsonld"));
+		String canonicalizedDocument = TestUtil.read(CanonicalizationTest.class.getResourceAsStream("input.vc.canonicalized"));
+
+		CanonicalizationUtil.fixImplicitGraph(jsonLdObject, "proof");
+
+		assertEquals(CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObject), canonicalizedDocument);
+	}*/
+
 	@SuppressWarnings("unchecked")
 	public void testCanonicalizationSigned() throws Exception {
 

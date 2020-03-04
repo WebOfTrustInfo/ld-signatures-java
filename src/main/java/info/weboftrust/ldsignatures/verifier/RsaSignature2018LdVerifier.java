@@ -42,21 +42,21 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
 		// build the JWS and verify
 
-		String signatureValue = ldSignature.getSignatureValue();
+		String jws = ldSignature.getJws();
 		boolean verify;
 
 		try {
 
 			Payload jwsPayload = new Payload(unencodedPayload);
 
-			DetachedJWSObject jwsObject = DetachedJWSObject.parse(signatureValue, jwsPayload);
+			DetachedJWSObject jwsObject = DetachedJWSObject.parse(jws, jwsPayload);
 
 			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
 			verify = jwsVerifier.verify(jwsObject.getHeader(), jwsObject.getSigningInput(), jwsObject.getParsedSignature());
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
-			jws.setCompactSerialization(ldSignature.getSignatureValue());
+			jws.setCompactSerialization(ldSignature.getJws());
 			jws.setPayload(unencodedPayload);
 
 			jws.setKey(publicKey);

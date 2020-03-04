@@ -66,7 +66,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		// sign
 
-		String signatureValue = this.sign(canonicalizedDocument);
+		String jws = this.sign(canonicalizedDocument);
 
 		// build the signature object
 
@@ -77,7 +77,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		ldSignature.setCreated(this.getCreated());
 		ldSignature.setDomain(this.getDomain());
 		ldSignature.setNonce(this.getNonce());
-		ldSignature.setSignatureValue(signatureValue);
+		ldSignature.setJws(jws);
 
 		// add signature to JSON-LD?
 
@@ -90,7 +90,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
 
-		return sign(jsonLdObject, true);
+		return sign(jsonLdObject, false);
 	}
 
 	public SignatureSuite getSignatureSuite() {
