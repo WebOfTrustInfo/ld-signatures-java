@@ -1,6 +1,7 @@
 package info.weboftrust.ldsignatures;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import com.github.jsonldjava.utils.JsonUtils;
@@ -18,7 +19,7 @@ public class JsonLdSignRsaSignature2018Test extends TestCase {
 		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld"));
 
 		URI creator = URI.create("https://example.com/jdoe/keys/1");
-		String created = "2017-10-24T05:33:31Z";
+		Date created = LdSignature.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		String domain = "example.com";
 		String nonce = null;
 
@@ -34,7 +35,7 @@ public class JsonLdSignRsaSignature2018Test extends TestCase {
 		assertEquals(created, ldSignature.getCreated());
 		assertEquals(domain, ldSignature.getDomain());
 		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..Gr0tgKv6_xyvUeaoP2SFXmP1iOnU5Y3PxwGE58onOdLeHKu_6voUfv2sWiC2dplbFBIkALMpdFdW-2CE63TARv8djEZ6cu1cOaqercrNH1tMzk3xDBWskP70AQOCbhz8VpmF0o5iekgd7troNkxrMrYGS1EkFV9VqToySzQY3tWS9NpHYutE4KlaKq6ZKsfdHCUgmK-PmifgMcQJAK8vx8sPLDmln3nvz0pZl6lGYFwBaoXOiaK_6coZot9W413lo9jxOVpzj6jxW0zdxjwX5DzpRkhw7Dj3r-vSpbDi9ec7sM3LKiZsOT2S7QAOJ9UK6LzZXPbBxFDuWwEMJnvKkQ", ldSignature.getJws());
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..q7KR0217QFEUFF6q-vbCMcyBgANJCQCP9nCDPPbQHUSgOnnr7iN-8gil3FN2v-NNrBAxSh2J8WCZAttxYUahSosVPIFE6wPnvsaHtk1oLizMeitPthsle_Rvr8qwEagOzlQyP2NmDQsDiCOToQyqJ1rH6Cg3-chxgyitvZ2Odts4b9EW93zZuMMu3JQ_r0RNHVfmFGsTz-I9SCsrHePWHrrZH4eeVoGsRf4H8GSOQ_MC8hDH_EPNqGwqwNirO8qQve57rSfVqFCTDQwZAQP8U6pFApwSapTFIlG3oW6ULKOfwWsg3vi1btbgGBMI-1KGzOVt5MTfjdJVTw8SDIgJiA", ldSignature.getJws());
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject, ldSignature);

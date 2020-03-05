@@ -6,8 +6,8 @@ import java.text.ParseException;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.Payload;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
@@ -15,7 +15,7 @@ import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.util.DetachedJWSObject;
+import info.weboftrust.ldsignatures.util.JWSUtil;
 
 public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018SignatureSuite> {
 
@@ -34,11 +34,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
-
-		// build the payload
-
-		String unencodedPayload = canonicalizedDocument;
+	public static boolean verify(byte[] signingInput, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// build the JWS and verify
 
@@ -47,12 +43,11 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
 		try {
 
-			Payload jwsPayload = new Payload(unencodedPayload);
-
-			DetachedJWSObject jwsObject = DetachedJWSObject.parse(jws, jwsPayload);
+			JWSObject detachedJwsObject = JWSObject.parse(jws);
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
 
 			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
-			verify = jwsVerifier.verify(jwsObject.getHeader(), jwsObject.getSigningInput(), jwsObject.getParsedSignature());
+			verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
@@ -72,8 +67,8 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 	}
 
 	@Override
-	public boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
+	public boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException {
 
-		return verify(canonicalizedDocument, ldSignature, this.getVerifier());
+		return verify(signingInput, ldSignature, this.getVerifier());
 	}
 }

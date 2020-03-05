@@ -7,15 +7,15 @@ import java.util.Collections;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSSigner;
-import com.nimbusds.jose.Payload;
+import com.nimbusds.jose.util.Base64URL;
 
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import info.weboftrust.ldsignatures.util.JWSUtil;
 
 public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
 
@@ -34,11 +34,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 		this((ByteSigner) null);
 	}
 
-	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
-
-		// build the payload
-
-		String unencodedPayload = canonicalizedDocument;
+	public static String sign(byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
 		// build the JWS and sign
 
@@ -46,18 +42,12 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 		try {
 
-			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256)
-					.customParam("b64", Boolean.FALSE)
-					.criticalParams(Collections.singleton("b64"))
-					.build();
-
-			Payload payload = new Payload(unencodedPayload);
-
-			JWSObject jwsObject = new JWSObject(jwsHeader, payload);
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.RS256);
-			jwsObject.sign(jwsSigner);
-			jws = jwsObject.serialize(true);
+			Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
+			jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
@@ -78,8 +68,8 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 	}
 
 	@Override
-	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
+	public String sign(byte[] signingInput) throws GeneralSecurityException {
 
-		return sign(canonicalizedDocument, this.getSigner());
+		return sign(signingInput, this.getSigner());
 	}
 }
