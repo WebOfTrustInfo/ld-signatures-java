@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../btc-tx-lookup-java/btc-tx-lookup-java.iml" filepath="$PROJECT_DIR$/../btc-tx-lookup-java/btc-tx-lookup-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../key-formats-java/key-formats-java.iml" filepath="$PROJECT_DIR$/../key-formats-java/key-formats-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ld-signatures-java.iml" filepath="$PROJECT_DIR$/ld-signatures-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../verifiable-credentials-java/verifiable-credentials-java.iml" filepath="$PROJECT_DIR$/../verifiable-credentials-java/verifiable-credentials-java.iml" />
+    </modules>
+  </component>
+</project>
