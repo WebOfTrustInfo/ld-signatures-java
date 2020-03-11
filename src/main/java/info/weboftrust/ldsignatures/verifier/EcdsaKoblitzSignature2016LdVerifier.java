@@ -1,16 +1,22 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
+
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSObject;
+import com.nimbusds.jose.JWSVerifier;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
+import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import info.weboftrust.ldsignatures.util.JWSUtil;
 
 public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitzSignature2016SignatureSuite> {
 
@@ -29,22 +35,54 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
 		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
+	public static boolean verify(byte[] signingInput, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
 
-		// verify
+		// build the JWS and verify
 
-		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureValueBytes = Base64.decodeBase64(ldSignature.getSignatureValue());
-		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes, "ES256K");
+		String jws = ldSignature.getJws();
+		boolean verify;
+
+		try {
+
+			JWSObject detachedJwsObject = JWSObject.parse(jws);
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
+
+			JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.ES256K);
+			verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
+
+			/*			JsonWebSignature jws = new JsonWebSignature();
+			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
+			jws.setCompactSerialization(ldSignature.getJws());
+			jws.setPayload(unencodedPayload);
+
+			jws.setKey(publicKey);
+			verify = jws.verifySignature();*/
+		} catch (JOSEException | ParseException ex) {
+
+			throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);
+		}
 
 		// done
 
 		return verify;
 	}
 
-	@Override
-	public boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException {
+	/*	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
 
-		return verify(canonicalizedDocument, ldSignature, this.getVerifier());
+		// verify
+
+		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
+		byte[] signatureValueBytes = Base64.decodeBase64(ldSignature.getJws());
+		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes, "ES256K");
+
+		// done
+
+		return verify;
+	}*/
+
+	@Override
+	public boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException {
+
+		return verify(signingInput, ldSignature, this.getVerifier());
 	}
 }

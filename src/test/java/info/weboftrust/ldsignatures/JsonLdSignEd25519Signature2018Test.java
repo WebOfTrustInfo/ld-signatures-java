@@ -1,6 +1,7 @@
 package info.weboftrust.ldsignatures;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import com.github.jsonldjava.utils.JsonUtils;
@@ -18,7 +19,7 @@ public class JsonLdSignEd25519Signature2018Test extends TestCase {
 		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld"));
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
-		String created = "2017-10-24T05:33:31Z";
+		Date created = LdSignature.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		String domain = "example.com";
 		String nonce = null;
 
@@ -34,7 +35,7 @@ public class JsonLdSignEd25519Signature2018Test extends TestCase {
 		assertEquals(created, ldSignature.getCreated());
 		assertEquals(domain, ldSignature.getDomain());
 		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("if8ooA+32YZc4SQBvIDDY9tgTatPoq4IZ8Kr+We1t38LR2RuURmaVu9D4shbi4VvND87PUqq5/0vsNFEGIIEDA==", ldSignature.getSignatureValue());
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..VHW2KVx5CBBc51axDENuP94cVWc2-To0Ik-_UCx6vIQKZtLAP_1CZJsOKG7OWufPeeIuFG_lq67tutWAUgyyDA", ldSignature.getJws());
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, ldSignature);

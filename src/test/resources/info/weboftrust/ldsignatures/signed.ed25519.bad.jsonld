@@ -14,6 +14,6 @@
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
     "nonce" : null,
-    "signatureValue" : "if8ooA+32YZc4SQBvIDDY9tgTatPoq4IZ8Kr+We1t38LR2RuURmaVu9D4shbi4VvND87PUqq5/0vsNFEGIIEDA=="
+    "jws" : "eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..VHW2KVx5CBBc51axDENuP94cVWc2-To0Ik-_UCx6vIQKZtLAP_1CZJsOKG7OWufPeeIuFG_lq67tutWAUgyyDA"
   }
 }
