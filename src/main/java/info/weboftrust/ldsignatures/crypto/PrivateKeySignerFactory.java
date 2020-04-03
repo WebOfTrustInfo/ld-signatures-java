@@ -10,7 +10,7 @@ import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.KeyType;
 
 import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PrivateKeySigner;
+import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_PS256_PrivateKeySigner;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PrivateKeySigner;
 
@@ -26,9 +26,9 @@ public class PrivateKeySignerFactory {
 
 			if (JWSAlgorithm.RS256.getName().equals(algorithm)) return new RSA_RS256_PrivateKeySigner((RSAPrivateKey) privateKey);
 			if (JWSAlgorithm.PS256.getName().equals(algorithm)) return new RSA_PS256_PrivateKeySigner((RSAPrivateKey) privateKey);
-		} else if (Curve.P_256K.getName().equals(keyType)) {
+		} else if (Curve.SECP256K1.getName().equals(keyType)) {
 
-			if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new P256K_ES256K_PrivateKeySigner((ECKey) privateKey);
+			if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new secp256k1_ES256K_PrivateKeySigner((ECKey) privateKey);
 		} else if (Curve.Ed25519.getName().equals(keyType)) {
 
 			if (JWSAlgorithm.EdDSA.getName().equals(algorithm)) return new Ed25519_EdDSA_PrivateKeySigner((byte[]) privateKey);

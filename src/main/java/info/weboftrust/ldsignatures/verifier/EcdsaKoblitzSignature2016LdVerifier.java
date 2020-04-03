@@ -13,7 +13,7 @@ import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
-import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PublicKeyVerifier;
+import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -27,7 +27,7 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
 
 	public EcdsaKoblitzSignature2016LdVerifier(ECKey publicKey) {
 
-		this(new P256K_ES256K_PublicKeyVerifier(publicKey));
+		this(new secp256k1_ES256K_PublicKeyVerifier(publicKey));
 	}
 
 	public EcdsaKoblitzSignature2016LdVerifier() {

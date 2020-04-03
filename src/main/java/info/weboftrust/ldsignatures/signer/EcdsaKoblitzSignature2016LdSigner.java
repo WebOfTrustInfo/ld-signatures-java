@@ -13,7 +13,7 @@ import com.nimbusds.jose.util.Base64URL;
 
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
-import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PrivateKeySigner;
+import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -27,7 +27,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 
 	public EcdsaKoblitzSignature2016LdSigner(ECKey privateKey) {
 
-		this(new P256K_ES256K_PrivateKeySigner(privateKey));
+		this(new secp256k1_ES256K_PrivateKeySigner(privateKey));
 	}
 
 	public EcdsaKoblitzSignature2016LdSigner() {

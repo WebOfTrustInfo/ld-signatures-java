@@ -65,7 +65,7 @@ Example Usage of `PrivateKeySignerFactory`:
 
       // keytype must be one of the following
       String keyType = "RSA";
-      String keyType = "P-256K";
+      String keyType = "secp256k1";
       String keyType = "Ed25519";
       
       // algorithm must be one of the following

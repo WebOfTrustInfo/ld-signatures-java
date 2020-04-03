@@ -10,7 +10,7 @@ import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.KeyType;
 
 import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
-import info.weboftrust.ldsignatures.crypto.impl.P256K_ES256K_PublicKeyVerifier;
+import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_PS256_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
 
@@ -26,9 +26,9 @@ public class PublicKeyVerifierFactory {
 
 			if (JWSAlgorithm.RS256.getName().equals(algorithm)) return new RSA_RS256_PublicKeyVerifier((RSAPublicKey) publicKey);
 			if (JWSAlgorithm.PS256.getName().equals(algorithm)) return new RSA_PS256_PublicKeyVerifier((RSAPublicKey) publicKey);
-		} else if (Curve.P_256K.getName().equals(keyType)) {
+		} else if (Curve.SECP256K1.getName().equals(keyType)) {
 
-			if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new P256K_ES256K_PublicKeyVerifier((ECKey) publicKey);
+			if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new secp256k1_ES256K_PublicKeyVerifier((ECKey) publicKey);
 		} else if (Curve.Ed25519.getName().equals(keyType)) {
 
 			if (JWSAlgorithm.EdDSA.getName().equals(algorithm)) return new Ed25519_EdDSA_PublicKeyVerifier((byte[]) publicKey);
