@@ -15,19 +15,19 @@ import org.bitcoinj.core.ECKey;
 
 class TestUtil {
 
-	public static final String testEd25519PrivateKeyString =
+	static final String testEd25519PrivateKeyString =
 			"984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
 
-	public static final String testEd25519PublicKeyString =
+	static final String testEd25519PublicKeyString =
 			"de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
 
-	public static final String testSecp256k1PrivateKeyString =
+	static final String testSecp256k1PrivateKeyString =
 			"2ff4e6b73bc4c4c185c68b2c378f6b233978a88d3c8ed03df536f707f084e24e";
 
-	public static final String testSecp256k1PublicKeyString =
+	static final String testSecp256k1PublicKeyString =
 			"0343f9455cd248e24c262b1341bbe37cea360e1c5ce526e5d1a71373ba6e557018";
 
-	public static final String testRSAPrivateKeyString =
+	static final String testRSAPrivateKeyString =
 			"-----BEGIN PRIVATE KEY-----\n" +
 					"MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC2lLVmZ9UpU/kq\n" +
 					"h8iEwE/S1JZziqWHp+baWtlKS4rFSMRpaPNlLOzvaAQgbGtpa6wx2hG5XnjGxZHJ\n" +
@@ -57,7 +57,7 @@ class TestUtil {
 					"2AwFhUAPK203T2oShq/w6w==\n" +
 					"-----END PRIVATE KEY-----\n";
 
-	public static final String testRSAPublicKeyString =
+	static final String testRSAPublicKeyString =
 			"-----BEGIN PUBLIC KEY-----\n" +
 					"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtpS1ZmfVKVP5KofIhMBP\n" +
 					"0tSWc4qlh6fm2lrZSkuKxUjEaWjzZSzs72gEIGxraWusMdoRuV54xsWRyf5KeZT0\n" +
@@ -68,12 +68,12 @@ class TestUtil {
 					"swIDAQAB\n" +
 					"-----END PUBLIC KEY-----\n";
 
-	static final byte[] testEd25519PrivateKey;
-	static final byte[] testEd25519PublicKey;
-	static final ECKey testSecp256k1PrivateKey;
-	static final ECKey testSecp256k1PublicKey;
-	static final RSAPrivateKey testRSAPrivateKey;
-	static final RSAPublicKey testRSAPublicKey;
+	public static final byte[] testEd25519PrivateKey;
+	public static final byte[] testEd25519PublicKey;
+	public static final ECKey testSecp256k1PrivateKey;
+	public static final ECKey testSecp256k1PublicKey;
+	public static final RSAPrivateKey testRSAPrivateKey;
+	public static final RSAPublicKey testRSAPublicKey;
 
 	static {
 
