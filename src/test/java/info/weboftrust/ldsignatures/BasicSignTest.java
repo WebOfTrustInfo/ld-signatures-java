@@ -1,6 +1,10 @@
 package info.weboftrust.ldsignatures;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -9,10 +13,9 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSASigner;
 
-import junit.framework.TestCase;
+public class BasicSignTest {
 
-public class BasicSignTest extends TestCase {
-
+	@Test
 	public void testSign() throws Exception {
 
 		// build the payload
