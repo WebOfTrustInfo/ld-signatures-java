@@ -11,8 +11,21 @@ import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.bitcoinj.core.ECKey;
 
 class TestUtil {
+
+	public static final String testEd25519PrivateKeyString =
+			"984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
+
+	public static final String testEd25519PublicKeyString =
+			"de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
+
+	public static final String testSecp256k1PrivateKeyString =
+			"2ff4e6b73bc4c4c185c68b2c378f6b233978a88d3c8ed03df536f707f084e24e";
+
+	public static final String testSecp256k1PublicKeyString =
+			"0343f9455cd248e24c262b1341bbe37cea360e1c5ce526e5d1a71373ba6e557018";
 
 	public static final String testRSAPrivateKeyString =
 			"-----BEGIN PRIVATE KEY-----\n" +
@@ -55,18 +68,32 @@ class TestUtil {
 					"swIDAQAB\n" +
 					"-----END PUBLIC KEY-----\n";
 
-	public static final String testEd25519PrivateKeyString =
-			"984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
-
-	public static final String testEd25519PublicKeyString =
-			"de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580";
-
-	static final RSAPrivateKey testRSAPrivateKey;
-	static final RSAPublicKey testRSAPublicKey;
 	static final byte[] testEd25519PrivateKey;
 	static final byte[] testEd25519PublicKey;
+	static final ECKey testSecp256k1PrivateKey;
+	static final ECKey testSecp256k1PublicKey;
+	static final RSAPrivateKey testRSAPrivateKey;
+	static final RSAPublicKey testRSAPublicKey;
 
 	static {
+
+		try {
+
+			testEd25519PrivateKey = Hex.decodeHex(testEd25519PrivateKeyString.toCharArray());
+			testEd25519PublicKey = Hex.decodeHex(testEd25519PublicKeyString.toCharArray());
+		} catch (Exception ex) {
+
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+
+		try {
+
+			testSecp256k1PrivateKey = ECKey.fromPrivate(Hex.decodeHex(testSecp256k1PrivateKeyString.toCharArray()));
+			testSecp256k1PublicKey = ECKey.fromPublicOnly(Hex.decodeHex(testSecp256k1PublicKeyString.toCharArray()));
+		} catch (Exception ex) {
+
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
 
 		try {
 
@@ -95,15 +122,6 @@ class TestUtil {
 			PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(encoded);
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			testRSAPrivateKey = (RSAPrivateKey) keyFactory.generatePrivate(spec);
-		} catch (Exception ex) {
-
-			throw new RuntimeException(ex.getMessage(), ex);
-		}
-
-		try {
-
-			testEd25519PrivateKey = Hex.decodeHex(testEd25519PrivateKeyString.toCharArray());
-			testEd25519PublicKey = Hex.decodeHex(testEd25519PublicKeyString.toCharArray());
 		} catch (Exception ex) {
 
 			throw new RuntimeException(ex.getMessage(), ex);
