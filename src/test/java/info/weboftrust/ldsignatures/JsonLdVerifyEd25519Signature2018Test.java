@@ -2,13 +2,16 @@ package info.weboftrust.ldsignatures;
 
 import java.util.LinkedHashMap;
 
+import org.junit.jupiter.api.Test;
+
 import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonLdVerifyEd25519Signature2018Test extends TestCase {
+public class JsonLdVerifyEd25519Signature2018Test {
 
+	@Test
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Exception {
 

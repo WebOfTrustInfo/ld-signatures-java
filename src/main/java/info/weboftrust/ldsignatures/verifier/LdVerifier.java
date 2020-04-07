@@ -10,6 +10,7 @@ import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
+import info.weboftrust.ldsignatures.util.SHAUtil;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
@@ -38,23 +39,34 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		return ldVerifierForSignatureSuite(signatureSuite.getTerm());
 	}
 
-	public abstract boolean verify(String canonicalizedDocument, LdSignature ldSignature) throws GeneralSecurityException;
+	public abstract boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException;
 
 	public boolean verify(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, GeneralSecurityException {
-
-		// obtain the canonicalized document
-
-		LinkedHashMap<String, Object> jsonLdObjectWithoutSignature = new LinkedHashMap<String, Object> (jsonLdObject);
-		LdSignature.removeFromJsonLdObject(jsonLdObjectWithoutSignature);
-		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectWithoutSignature);
 
 		// check the signature object
 
 		if (! this.getSignatureSuite().getTerm().equals(ldSignature.getType())) throw new GeneralSecurityException("Unexpected signature type: " + ldSignature.getType() + " is not " + this.getSignatureSuite().getTerm());
 
+		// obtain the canonicalized proof options
+
+		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdSignatureObject());
+		LdSignature.removeLdSignatureValues(jsonLdObjectProofOptions);
+		LdSignature.addSecurityContextToJsonLdObject(jsonLdObjectProofOptions);
+		String canonicalizedProofOptions = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectProofOptions);
+
+		// obtain the canonicalized document
+
+		LinkedHashMap<String, Object> jsonLdDocument = new LinkedHashMap<String, Object> (jsonLdObject);
+		LdSignature.removeFromJsonLdObject(jsonLdDocument);
+		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdDocument);
+
 		// verify
 
-		boolean verify = this.verify(canonicalizedDocument, ldSignature);
+		byte[] signingInput = new byte[64];
+		System.arraycopy(SHAUtil.sha256(canonicalizedProofOptions), 0, signingInput, 0, 32);
+		System.arraycopy(SHAUtil.sha256(canonicalizedDocument), 0, signingInput, 32, 32);
+
+		boolean verify = this.verify(signingInput, ldSignature);
 
 		// done
 

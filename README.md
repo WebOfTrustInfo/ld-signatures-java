@@ -4,7 +4,11 @@ Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in
 
 ### Information
 
-This is a work-in-progress implementation of the [2018 RSA Signature Suite](https://w3c-dvcg.github.io/lds-rsa2018/) for the Linked Data Signatures specification.
+This is a work-in-progress implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+
+ - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
+ - [EcdsaSecp256k1Signature2019](https://w3c-dvcg.github.io/lds-ecdsa-secp256k1-2019/)
+ - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
 
 Highly experimental, incomplete, and not ready for production use! Use at your own risk! Pull requests welcome.
 
@@ -19,7 +23,7 @@ Dependency:
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>0.3-SNAPSHOT</version>
 		<scope>compile</scope>
 	</dependency>
 
@@ -41,45 +45,35 @@ Example JSON-LD document:
 
 Example code:
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromString(TestUtil.read(JsonLdSignTest.class.getResourceAsStream("sign.test.jsonld")));
-		URI creator = URI.create("https://example.com/jdoe/keys/1");
-		String created = "2017-10-24T05:33:31Z";
-		String domain = "example.com";
-		String nonce = null;
-		
-		RsaSignature2018LdSigner signer = new RsaSignature2018LdSigner(creator, created, domain, nonce, TestUtil.testRSAPrivateKey);
-		LdSignature ldSignature = signer.sign(jsonLdObject);
-		LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.getJsonLdSignatureObject();
+	byte[] testEd25519PrivateKey = Hex.decodeHex("984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
+	
+	LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromReader(new FileReader("sign.test.jsonld"));
+	String verificationMethod = "https://example.com/jdoe/keys/1";
+	String domain = "example.com";
+	String nonce = null;
+	
+	Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(testEd25519PrivateKey);
+	signer.setCreated(new Date());
+	signer.setProofPurpose(LdSignature.JSONLD_TERM_ASSERTIONMETHOD);
+	signer.setVerificationMethod(verificationMethod);
+	signer.setDomain(domain);
+	signer.setNonce(nonce);
+	LdSignature ldSignature = signer.sign(jsonLdObject);
+	
+	LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.getJsonLdSignatureObject();
+	
+	System.out.println(JsonUtils.toPrettyString(jsonLdSignatureObject));
 
 Example Linked Data Signature:
 
-	  "signature" : {
-	    "type" : "https://w3id.org/security#RsaSignature2018",
-	    "creator" : "https://example.com/jdoe/keys/1",
-	    "created" : "2017-10-24T05:33:31Z",
-	    "domain" : "example.com",
-	    "signatureValue" : "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..d8wWxUJTpxAbYHLgFfaYYJJHdWido6wDMBeUhPL7e0m4vuj7xUePbnorf-YqlGZwaGI0zVI_-qJmGbqSB0bm8x20Z9nvawZS8lTk_4uLIPwSPeH8Cyu5bdUP1OIImBhm0gpUmAZfnDVhCgC81lJOaa4tqCjSr940cRUQ9agYjcOyhUBdBOwQgjd8jgkI7vmXqs2m7TmOVY7aAr-6X3AhJqX_a-iD5sdBsoTNulfTyPjEZcFXMvs6gx2078ftwYiUNQzV4qKwkhmUSAINWomKe_fUh4BpdPbsZax7iKYG1hSWRkmrd9R8FllotKQ_nMWZv0urn02F83US62F6ORRT0w"
-	  }
-
-Example Usage of `PrivateKeySignerFactory`:
-
-      // keytype must be one of the following
-      String keyType = "RSA";
-      String keyType = "P-256K";
-      String keyType = "Ed25519";
-      
-      // algorithm must be one of the following
-      String algorithm = "RS256";
-      String algorithm = "ES256K";
-      String algorithm = "EdDSA";
-      
-      // privateKey must be one of the following
-      Object privateKey = rsaPrivateKey; // implementation of java.security.interfaces.RSAPrivateKey
-      Object privateKey = ecPrivateKey; // implementation of org.bitcoinj.core.ECKey
-      Object privateKey = privateKeyAsByteArray; // an Ed25519 key as a byte[]
-      
-      PrivateKeySigner<?> privateKeySigner = PrivateKeySignerFactory.privateKeySignerForKey(keyType, algorithm, privateKey);
-      signature = privateKeySigner.sign(body, algorithm);
+	{
+	  "type" : "Ed25519Signature2018",
+	  "created" : "2020-04-06T11:31:27Z",
+	  "domain" : "example.com",
+	  "proofPurpose" : "assertionMethod",
+	  "verificationMethod" : "https://example.com/jdoe/keys/1",
+	  "jws" : "eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..0DsZDTVnGwMypMH33__VCOYXoKvEumBlty-vuqib9YtkCms9bVSap4PWxzFg26B_U04hWoV6qcZnfaBXMSFZAg"
+	}
 
 ### About
 

@@ -7,9 +7,9 @@ import org.bitcoinj.core.Sha256Hash;
 
 import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
 
-public class P256K_ES256K_PrivateKeySigner extends PrivateKeySigner<ECKey> {
+public class secp256k1_ES256K_PrivateKeySigner extends PrivateKeySigner<ECKey> {
 
-	public P256K_ES256K_PrivateKeySigner(ECKey privateKey) {
+	public secp256k1_ES256K_PrivateKeySigner(ECKey privateKey) {
 
 		super(privateKey, "ES256K");
 	}

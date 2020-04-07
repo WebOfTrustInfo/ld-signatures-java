@@ -1,14 +1,20 @@
 package info.weboftrust.ldsignatures.signer;
 
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
 
-import org.apache.commons.codec.binary.Base64;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.util.Base64URL;
 
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
+import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import info.weboftrust.ldsignatures.util.JWSUtil;
 
 public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018SignatureSuite> {
 
@@ -27,7 +33,40 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 		this((ByteSigner) null);
 	}
 
-	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
+	public static String sign(byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+
+		// build the JWS and sign
+
+		String jws;
+
+		try {
+
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
+
+			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.EdDSA);
+			Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
+			jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
+
+			/*			JsonWebSignature jws = new JsonWebSignature();
+			jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+			jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
+			jws.setCriticalHeaderNames(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD);
+			jws.setPayload(unencodedPayload);
+
+			jws.setKey(privateKey);
+			signatureValue = jws.getDetachedContentCompactSerialization();*/
+		} catch (JOSEException ex) {
+
+			throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
+		}
+
+		// done
+
+		return jws;
+	}
+
+	/*	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
 
 		// sign
 
@@ -38,11 +77,11 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 		// done
 
 		return signatureString;
-	}
+	}*/
 
 	@Override
-	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
+	public String sign(byte[] signingInput) throws GeneralSecurityException {
 
-		return sign(canonicalizedDocument, this.getSigner());
+		return sign(signingInput, this.getSigner());
 	}
 }

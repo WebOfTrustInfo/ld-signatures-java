@@ -1,0 +1,12 @@
+<did:example:ebfeb1f712ebc6f1c276e12ec21> <http://schema.org/familyName> "Sporny" .
+<did:example:ebfeb1f712ebc6f1c276e12ec21> <http://schema.org/givenName> "Manu" .
+<did:example:ebfeb1f712ebc6f1c276e12ec21> <https://example.org/examples#college> <did:example:c276e12ec21ebfeb1f712ebc6f1> .
+<http://example.edu/credentials/1872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://json-ld.org/playground/UniversityDegreeCredential> .
+<http://example.edu/credentials/1872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .
+<http://example.edu/credentials/1872> <https://w3id.org/security#proof> _:c14n1 .
+<http://example.edu/credentials/1872> <https://www.w3.org/2018/credentials#credentialSubject> <did:example:ebfeb1f712ebc6f1c276e12ec21> .
+<http://example.edu/credentials/1872> <https://www.w3.org/2018/credentials#issuanceDate> "2010-01-01T19:73:24Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://example.edu/credentials/1872> <https://www.w3.org/2018/credentials#issuer> <https://example.edu/issuers/565049> .
+_:c14n0 <http://purl.org/dc/terms/created> "2017-06-18T21:19:10Z"^^<xsd:dateTime> _:c14n1 .
+_:c14n0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/security#RsaSignature2018> _:c14n1 .
+_:c14n0 <sec:jws> "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5XsITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUcX16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtjPAYuNzVBAh4vGHSrQyHUdBBPM" _:c14n1 .

@@ -8,9 +8,9 @@ import org.bitcoinj.core.SignatureDecodeException;
 
 import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
 
-public class P256K_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
+public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
 
-	public P256K_ES256K_PublicKeyVerifier(ECKey publicKey) {
+	public secp256k1_ES256K_PublicKeyVerifier(ECKey publicKey) {
 
 		super(publicKey, "ES256K");
 	}

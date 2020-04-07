@@ -1,14 +1,19 @@
 package info.weboftrust.ldsignatures;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.LinkedHashMap;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
-import junit.framework.TestCase;
 
-public class JsonLdVerifyRsaSignature2018Test extends TestCase {
+public class JsonLdVerifyRsaSignature2018Test {
 
+	@Test
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Exception {
 

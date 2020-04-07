@@ -1,16 +1,20 @@
 package info.weboftrust.ldsignatures;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
 
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 
 import info.weboftrust.ldsignatures.util.DetachedJWSObject;
-import junit.framework.TestCase;
 
-public class BasicVerifyTest extends TestCase {
+public class BasicVerifyTest {
 
+	@Test
 	public void testVerify() throws Exception {
 
 		// build the payload

@@ -1,13 +1,17 @@
 package info.weboftrust.ldsignatures;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import info.weboftrust.ldsignatures.verifier.EcdsaKoblitzSignature2016LdVerifier;
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
 import info.weboftrust.ldsignatures.verifier.LdVerifier;
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
-import junit.framework.TestCase;
 
-public class LdVerifiersTest extends TestCase {
+public class LdVerifiersTest {
 
+	@Test
 	public void testLdVerifiers() throws Exception {
 
 		assertEquals(LdVerifier.ldVerifierForSignatureSuite("Ed25519Signature2018").getClass(), Ed25519Signature2018LdVerifier.class);
