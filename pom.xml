@@ -4,7 +4,7 @@
 	<groupId>info.weboftrust</groupId>
 	<artifactId>ld-signatures-java</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<name>ld-signatures-java</name>
 
 	<issueManagement>
@@ -24,7 +24,8 @@
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
 		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
 		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
-	</scm>
+	  <tag>v0.2.1</tag>
+  </scm>
 
 	<repositories>
 		<repository>
