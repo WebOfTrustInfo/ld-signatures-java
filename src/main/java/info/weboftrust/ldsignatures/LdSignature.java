@@ -15,17 +15,7 @@ public class LdSignature {
 	public static final String JSONLD_CONTEXT_SECURITY_V1 = "https://w3id.org/security/v1";
 	public static final String JSONLD_CONTEXT_SECURITY_V2 = "https://w3id.org/security/v2";
 
-	public static final URI URI_SIGNATURE = URI.create("https://w3id.org/security#signature");
-
-	public static final URI URI_TYPE = URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
-	public static final URI URI_CREATOR = URI.create("http://purl.org/dc/terms/creator");
-	public static final URI URI_CREATED = URI.create("http://purl.org/dc/terms/created");
-	public static final URI URI_DOMAIN = URI.create("https://w3id.org/security#domain");
-	public static final URI URI_NONCE = URI.create("https://w3id.org/security#nonce");
-	public static final URI URI_SIGNATUREVALUE = URI.create("https://w3id.org/security#signatureValue");
-
 	public static final String JSONLD_TERM_PROOF = "proof";
-
 	public static final String JSONLD_TERM_TYPE = "type";
 	public static final String JSONLD_TERM_CREATOR = "creator";
 	public static final String JSONLD_TERM_CREATED = "created";
@@ -33,15 +23,14 @@ public class LdSignature {
 	public static final String JSONLD_TERM_NONCE = "nonce";
 	public static final String JSONLD_TERM_PROOFPURPOSE = "proofPurpose";
 	public static final String JSONLD_TERM_VERIFICATIONMETHOD = "verificationMethod";
-	public static final String JSONLD_TERM_SIGNATUREVALUE = "signatureValue";
+	public static final String JSONLD_TERM_PROOFVALUE = "proofValue";
 	public static final String JSONLD_TERM_JWS = "jws";
-
 	public static final String JSONLD_TERM_ASSERTIONMETHOD = "assertionMethod";
 
 	public static final SimpleDateFormat DATE_FORMAT;
 	public static final SimpleDateFormat DATE_FORMAT_MILLIS;
 
-	private final LinkedHashMap<String, Object> jsonLdSignatureObject;
+	private final LinkedHashMap<String, Object> jsonLdProofObject;
 
 	static {
 
@@ -52,31 +41,41 @@ public class LdSignature {
 		DATE_FORMAT_MILLIS.setTimeZone(TimeZone.getTimeZone("UTC"));
 	}
 
-	private LdSignature(LinkedHashMap<String, Object> jsonLdSignatureObject) { 
+	protected LdSignature(LinkedHashMap<String, Object> jsonLdProofObject) {
 
-		this.jsonLdSignatureObject = jsonLdSignatureObject;
+		this.jsonLdProofObject = jsonLdProofObject;
 	}
 
 	public LdSignature() {
 
-		this.jsonLdSignatureObject = new LinkedHashMap<String, Object> ();
+		this.jsonLdProofObject = new LinkedHashMap<String, Object> ();
 	}
 
-	public static LdSignature fromJsonLdSignatureObject(LinkedHashMap<String, Object> jsonLdSignatureObject) {
+	public static LdSignature fromJsonLdProofObject(LinkedHashMap<String, Object> jsonLdProofObject) {
 
-		return new LdSignature(jsonLdSignatureObject);
+		return new LdSignature(jsonLdProofObject);
 	}
 
-	public LinkedHashMap<String, Object> getJsonLdSignatureObject() {
+	public LinkedHashMap<String, Object> getJsonLdProofObject() {
 
-		return this.jsonLdSignatureObject;
+		return this.jsonLdProofObject;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void addSecurityContextToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
+	public static void addContextToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
 		Object context = jsonLdObject.get(JsonLdConsts.CONTEXT);
 		ArrayList<Object> contexts;
+
+		// add as single value
+
+		if (context == null) {
+
+			jsonLdObject.put(JsonLdConsts.CONTEXT, JSONLD_CONTEXT_SECURITY_V2);
+			return;
+		}
+
+		// add as array member
 
 		if (context instanceof ArrayList<?>) {
 
@@ -94,26 +93,48 @@ public class LdSignature {
 		}
 	}
 
-	public static void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, LinkedHashMap<String, Object> jsonLdSignatureObject, boolean addSecurityContext) {
+	public static void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, LinkedHashMap<String, Object> jsonLdProofObject) {
 
-		if (addSecurityContext) addSecurityContextToJsonLdObject(jsonLdObject);
+		Object proof = jsonLdObject.get(JSONLD_TERM_PROOF);
 
-		jsonLdObject.put(JSONLD_TERM_PROOF, jsonLdSignatureObject);
+		// add as single value
+
+		if (proof == null) {
+
+			jsonLdObject.put(JSONLD_TERM_PROOF, jsonLdProofObject);
+			return;
+		}
+
+		// add as array member
+
+		ArrayList<Object> proofs;
+
+		if (proof instanceof ArrayList<?>) {
+
+			proofs = (ArrayList<Object>) proof;
+		} else {
+
+			proofs = new ArrayList<Object> ();
+			proofs.add(proof);
+			jsonLdObject.put(JSONLD_TERM_PROOF, jsonLdProofObject);
+		}
+
+		if (! proofs.contains(jsonLdProofObject)) {
+
+			proofs.add(jsonLdProofObject);
+		}
 	}
 
-	public static void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, LinkedHashMap<String, Object> jsonLdSignatureObject) {
+	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, boolean addContext) {
 
-		addToJsonLdObject(jsonLdObject, jsonLdSignatureObject, false);
-	}
+		if (addContext) addContextToJsonLdObject(jsonLdObject);
 
-	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject, boolean addSecurityContext) {
-
-		addToJsonLdObject(jsonLdObject, this.getJsonLdSignatureObject(), addSecurityContext);
+		addToJsonLdObject(jsonLdObject, this.getJsonLdProofObject());
 	}
 
 	public void addToJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
-		addToJsonLdObject(jsonLdObject, this.getJsonLdSignatureObject());
+		this.addToJsonLdObject(jsonLdObject, false);
 	}
 
 	public static void removeFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
@@ -121,42 +142,42 @@ public class LdSignature {
 		jsonLdObject.remove(JSONLD_TERM_PROOF);
 	}
 
-	public static void removeLdSignatureValues(LinkedHashMap<String, Object> jsonLdObject) {
+	public static void removeLdProofValues(LinkedHashMap<String, Object> jsonLdObject) {
 
-		jsonLdObject.remove(JSONLD_TERM_SIGNATUREVALUE);
+		jsonLdObject.remove(JSONLD_TERM_PROOFVALUE);
 		jsonLdObject.remove(JSONLD_TERM_JWS);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static LdSignature getFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
-		LinkedHashMap<String, Object> jsonLdSignatureObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_PROOF);
-		if (jsonLdSignatureObject == null) return null;
+		LinkedHashMap<String, Object> jsonLdProofObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_PROOF);
+		if (jsonLdProofObject == null) return null;
 
-		return new LdSignature(jsonLdSignatureObject);
+		return new LdSignature(jsonLdProofObject);
 	}
 
 	public String getType() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_TYPE);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_TYPE);
 	}
 
 	public void setType(String type) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_TYPE, type);
+		this.jsonLdProofObject.put(JSONLD_TERM_TYPE, type);
 	}
 
 	public URI getCreator() {
-		Object object = this.jsonLdSignatureObject.get(JSONLD_TERM_CREATOR);
+		Object object = this.jsonLdProofObject.get(JSONLD_TERM_CREATOR);
 		if (object instanceof URI) return (URI) object;
 		if (object instanceof String) return URI.create((String) object);
 		return null;
 	}
 
 	public void setCreator(URI creator) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_CREATOR, creator);
+		this.jsonLdProofObject.put(JSONLD_TERM_CREATOR, creator);
 	}
 
 	public Date getCreated() {
-		String createdString = (String) this.jsonLdSignatureObject.get(JSONLD_TERM_CREATED);
+		String createdString = (String) this.jsonLdProofObject.get(JSONLD_TERM_CREATED);
 		if (createdString == null) return null;
 		try {
 			return DATE_FORMAT.parse(createdString);
@@ -170,62 +191,62 @@ public class LdSignature {
 	}
 
 	public void setCreated(Date created) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_CREATED, DATE_FORMAT.format(created));
+		this.jsonLdProofObject.put(JSONLD_TERM_CREATED, DATE_FORMAT.format(created));
 	}
 
 	public String getDomain() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_DOMAIN);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_DOMAIN);
 	}
 
 	public void setDomain(String domain) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_DOMAIN, domain);
+		this.jsonLdProofObject.put(JSONLD_TERM_DOMAIN, domain);
 	}
 
 	public String getNonce() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_NONCE);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_NONCE);
 	}
 
 	public void setNonce(String nonce) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_NONCE, nonce);
+		this.jsonLdProofObject.put(JSONLD_TERM_NONCE, nonce);
 	}
 
 	public String getProofPurpose() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_PROOFPURPOSE);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_PROOFPURPOSE);
 	}
 
 	public void setProofPurpose(String proofPurpose) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_PROOFPURPOSE, proofPurpose);
+		this.jsonLdProofObject.put(JSONLD_TERM_PROOFPURPOSE, proofPurpose);
 	}
 
 	public String getVerificationMethod() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_VERIFICATIONMETHOD);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_VERIFICATIONMETHOD);
 	}
 
 	public void setVerificationMethod(String verificationMethod) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_VERIFICATIONMETHOD, verificationMethod);
+		this.jsonLdProofObject.put(JSONLD_TERM_VERIFICATIONMETHOD, verificationMethod);
 	}
 
-	public String getSignatureValue() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_SIGNATUREVALUE);
+	public String getProofValue() {
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_PROOFVALUE);
 	}
 
-	public void setSignatureValue(String signatureValue) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_SIGNATUREVALUE, signatureValue);
+	public void setProofValue(String proofValue) {
+		this.jsonLdProofObject.put(JSONLD_TERM_PROOFVALUE, proofValue);
 	}
 
 	public String getJws() {
-		return (String) this.jsonLdSignatureObject.get(JSONLD_TERM_JWS);
+		return (String) this.jsonLdProofObject.get(JSONLD_TERM_JWS);
 	}
 
 	public void setJws(String jws) {
-		this.jsonLdSignatureObject.put(JSONLD_TERM_JWS, jws);
+		this.jsonLdProofObject.put(JSONLD_TERM_JWS, jws);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((jsonLdSignatureObject == null) ? 0 : jsonLdSignatureObject.hashCode());
+		result = prime * result + ((jsonLdProofObject == null) ? 0 : jsonLdProofObject.hashCode());
 		return result;
 	}
 
@@ -238,16 +259,16 @@ public class LdSignature {
 		if (getClass() != obj.getClass())
 			return false;
 		LdSignature other = (LdSignature) obj;
-		if (jsonLdSignatureObject == null) {
-			if (other.jsonLdSignatureObject != null)
+		if (jsonLdProofObject == null) {
+			if (other.jsonLdProofObject != null)
 				return false;
-		} else if (!jsonLdSignatureObject.equals(other.jsonLdSignatureObject))
+		} else if (!jsonLdProofObject.equals(other.jsonLdProofObject))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "LdSignature [jsonLdSignatureObject=" + jsonLdSignatureObject + "]";
+		return "LdSignature [jsonLdProofObject=" + jsonLdProofObject + "]";
 	}
 }

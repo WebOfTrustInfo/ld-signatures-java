@@ -78,9 +78,9 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the canonicalized proof options
 
-		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdSignatureObject());
-		LdSignature.removeLdSignatureValues(jsonLdObjectProofOptions);
-		LdSignature.addSecurityContextToJsonLdObject(jsonLdObjectProofOptions);
+		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdProofObject());
+		LdSignature.removeLdProofValues(jsonLdObjectProofOptions);
+		LdSignature.addContextToJsonLdObject(jsonLdObjectProofOptions);
 		String canonicalizedProofOptions = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectProofOptions);
 
 		// obtain the canonicalized document
