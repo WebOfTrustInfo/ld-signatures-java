@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.TimeZone;
 
 import com.github.jsonldjava.core.JsonLdConsts;
@@ -151,10 +152,24 @@ public class LdSignature {
 	@SuppressWarnings("unchecked")
 	public static LdSignature getFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
 
-		LinkedHashMap<String, Object> jsonLdProofObject = (LinkedHashMap<String, Object>) jsonLdObject.get(JSONLD_TERM_PROOF);
-		if (jsonLdProofObject == null) return null;
+		Object jsonLdProofObjectEntry = jsonLdObject.get(JSONLD_TERM_PROOF);
 
-		return new LdSignature(jsonLdProofObject);
+		if (jsonLdProofObjectEntry instanceof List) {
+
+			List<LinkedHashMap<String, Object>> jsonLdProofObjectList = (List<LinkedHashMap<String, Object>>) jsonLdProofObjectEntry;
+
+			for (LinkedHashMap<String, Object> jsonLdProofObject : jsonLdProofObjectList) {
+
+				if (((String) jsonLdProofObject.get("type")).contains("Signature")) return LdSignature.fromJsonLdProofObject(jsonLdProofObject);
+			}
+		} else if (jsonLdProofObjectEntry instanceof LinkedHashMap) {
+
+			LinkedHashMap<String, Object> jsonLdProofObject = (LinkedHashMap<String, Object>) jsonLdProofObjectEntry;
+
+			if (((String) jsonLdProofObject.get("type")).contains("Signature")) return LdSignature.fromJsonLdProofObject(jsonLdProofObject);
+		}
+
+		return null;
 	}
 
 	public String getType() {
