@@ -116,7 +116,7 @@ public class LdSignature {
 
 			proofs = new ArrayList<Object> ();
 			proofs.add(proof);
-			jsonLdObject.put(JSONLD_TERM_PROOF, jsonLdProofObject);
+			jsonLdObject.put(JSONLD_TERM_PROOF, proofs);
 		}
 
 		if (! proofs.contains(jsonLdProofObject)) {
