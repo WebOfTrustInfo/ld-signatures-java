@@ -23,6 +23,13 @@
 		</repository>
 	</distributionManagement>
 
+	<scm>
+		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
+		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
+		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
 	<repositories>
 		<repository>
 			<id>sovrin</id>
