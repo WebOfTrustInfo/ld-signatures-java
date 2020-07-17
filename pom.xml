@@ -9,16 +9,16 @@
 	<version>0.3-SNAPSHOT</version>
 	<name>ld-signatures-java</name>
 
-	<issueManagement>
-		<url>https://github.com/WebOfTrustInfo/ld-signatures-java/issues</url>
-		<system>GitHub Issues</system>
-	</issueManagement>
-
 	<scm>
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
 		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
 		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
 	</scm>
+
+	<issueManagement>
+		<url>https://github.com/WebOfTrustInfo/ld-signatures-java/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
 	<distributionManagement>
 		<snapshotRepository>
@@ -44,7 +44,6 @@
 	</properties>
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -93,7 +92,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
 	</build>
 
 	<dependencyManagement>
@@ -107,7 +105,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -163,7 +160,6 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-
 	</dependencies>
 
 </project>
