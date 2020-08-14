@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import com.github.jsonldjava.utils.JsonUtils;
 
-import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
-
 public class CanonicalizationTest {
 
 	@Test

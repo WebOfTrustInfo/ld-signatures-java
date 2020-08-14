@@ -1,16 +1,19 @@
 package info.weboftrust.ldsignatures.verifier;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.LinkedHashMap;
 
-import com.github.jsonldjava.core.JsonLdError;
+import com.apicatalog.jsonld.api.JsonLdError;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
+import info.weboftrust.ldsignatures.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 import info.weboftrust.ldsignatures.util.SHAUtil;
+
+import javax.json.Json;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
@@ -41,7 +44,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException;
 
-	public boolean verify(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, GeneralSecurityException {
+	public boolean verify(JsonLDObject jsonLdObject, LdSignature ldSignature) throws GeneralSecurityException, IOException, JsonLdError {
 
 		// check the signature object
 
@@ -49,16 +52,17 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the canonicalized proof options
 
-		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdProofObject());
+		JsonLDObject jsonLdObjectProofOptions = JsonLDObject.builder().contexts(LdSignature.DEFAULT_CONTEXTS).build();
+		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), ldSignature.getJsonObject());
 		LdSignature.removeLdProofValues(jsonLdObjectProofOptions);
-		LdSignature.addContextToJsonLdObject(jsonLdObjectProofOptions);
-		String canonicalizedProofOptions = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectProofOptions);
+		String canonicalizedProofOptions = jsonLdObjectProofOptions.toRDF();
 
 		// obtain the canonicalized document
 
-		LinkedHashMap<String, Object> jsonLdDocument = new LinkedHashMap<String, Object> (jsonLdObject);
-		LdSignature.removeFromJsonLdObject(jsonLdDocument);
-		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdDocument);
+		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
+		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof.getJsonObjectBuilder(), jsonLdObject.getJsonObject());
+		LdSignature.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
+		String canonicalizedDocument = jsonLdDocumentWithoutProof.toRDF();
 
 		// verify
 
@@ -73,7 +77,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		return verify;
 	}
 
-	public boolean verify(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
+	public boolean verify(JsonLDObject jsonLdObject) throws GeneralSecurityException, IOException, JsonLdError {
 
 		// obtain the signature object
 

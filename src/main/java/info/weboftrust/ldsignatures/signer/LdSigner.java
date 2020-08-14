@@ -1,17 +1,18 @@
 package info.weboftrust.ldsignatures.signer;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
-import java.util.LinkedHashMap;
 
-import com.github.jsonldjava.core.JsonLdError;
+import com.apicatalog.jsonld.api.JsonLdError;
 
 import info.weboftrust.ldsignatures.LdSignature;
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
+import info.weboftrust.ldsignatures.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
@@ -62,32 +63,33 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract String sign(byte[] bytes) throws GeneralSecurityException;
 
-	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject, boolean addToJsonLdObject, boolean addSecurityContext) throws JsonLdError, GeneralSecurityException {
+	public LdSignature sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean addSecurityContext) throws GeneralSecurityException, IOException, JsonLdError {
 
 		// build the signature object
 
-		LdSignature ldSignature = new LdSignature();
+		LdSignature.Builder builder = LdSignature.builder();
 
-		ldSignature.setType(this.getSignatureSuite().getTerm());
-		if (this.getCreator() != null) ldSignature.setCreator(this.getCreator());
-		if (this.getCreated() != null) ldSignature.setCreated(this.getCreated());
-		if (this.getDomain() != null) ldSignature.setDomain(this.getDomain());
-		if (this.getNonce() != null) ldSignature.setNonce(this.getNonce());
-		if (this.getProofPurpose() != null) ldSignature.setProofPurpose(this.getProofPurpose());
-		if (this.getVerificationMethod() != null) ldSignature.setVerificationMethod(this.getVerificationMethod());
+		if (addSecurityContext) builder.contexts(LdSignature.DEFAULT_CONTEXTS);
+		builder.type(this.getSignatureSuite().getTerm());
+		if (this.getCreator() != null) builder.creator(this.getCreator());
+		if (this.getCreated() != null) builder.created(this.getCreated());
+		if (this.getDomain() != null) builder.domain(this.getDomain());
+		if (this.getNonce() != null) builder.nonce(this.getNonce());
+		if (this.getProofPurpose() != null) builder.proofPurpose(this.getProofPurpose());
+		if (this.getVerificationMethod() != null) builder.verificationMethod(this.getVerificationMethod());
 
 		// obtain the canonicalized proof options
 
-		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdProofObject());
-		LdSignature.removeLdProofValues(jsonLdObjectProofOptions);
-		LdSignature.addContextToJsonLdObject(jsonLdObjectProofOptions);
-		String canonicalizedProofOptions = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectProofOptions);
+		JsonLDObject jsonLdObjectProofOptions = JsonLDObject.builder().build();
+		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), builder.build().getJsonObject());
+		String canonicalizedProofOptions = jsonLdObjectProofOptions.toRDF();
 
 		// obtain the canonicalized document
 
-		LinkedHashMap<String, Object> jsonLdDocument = new LinkedHashMap<String, Object> (jsonLdObject);
-		LdSignature.removeFromJsonLdObject(jsonLdDocument);
-		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdDocument);
+		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
+		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof.getJsonObjectBuilder(), jsonLdObject.getJsonObject());
+		LdSignature.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
+		String canonicalizedDocument = jsonLdDocumentWithoutProof.toRDF();
 
 		// sign
 
@@ -96,20 +98,22 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		System.arraycopy(SHAUtil.sha256(canonicalizedDocument), 0, signingInput, 32, 32);
 
 		String jws = this.sign(signingInput);
-		ldSignature.setJws(jws);
+		builder.jws(jws);
+
+		LdSignature ldSignature = builder.build();
 
 		// add signature to JSON-LD?
 
-		if (addToJsonLdObject) ldSignature.addToJsonLdObject(jsonLdObject, addSecurityContext);
+		if (addToJsonLdObject) ldSignature.addToJsonLdObject(jsonLdObject);
 
 		// done
 
 		return ldSignature;
 	}
 
-	public LdSignature sign(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
+	public LdSignature sign(JsonLDObject jsonLdObject) throws GeneralSecurityException, IOException, JsonLdError {
 
-		return sign(jsonLdObject, false, false);
+		return this.sign(jsonLdObject, false, false);
 	}
 
 	public SignatureSuite getSignatureSuite() {
