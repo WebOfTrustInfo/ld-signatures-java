@@ -9,7 +9,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 
-import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
@@ -34,11 +34,11 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(byte[] signingInput, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
+	public static boolean verify(byte[] signingInput, LdProof ldProof, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// build the JWS and verify
 
-		String jws = ldSignature.getJws();
+		String jws = ldProof.getJws();
 		boolean verify;
 
 		try {
@@ -51,7 +51,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
-			jws.setCompactSerialization(ldSignature.getJws());
+			jws.setCompactSerialization(ldProof.getJws());
 			jws.setPayload(unencodedPayload);
 
 			jws.setKey(publicKey);
@@ -67,8 +67,8 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 	}
 
 	@Override
-	public boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException {
+	public boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException {
 
-		return verify(signingInput, ldSignature, this.getVerifier());
+		return verify(signingInput, ldProof, this.getVerifier());
 	}
 }

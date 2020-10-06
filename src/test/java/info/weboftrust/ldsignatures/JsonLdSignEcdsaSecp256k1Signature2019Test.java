@@ -3,13 +3,15 @@ package info.weboftrust.ldsignatures;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.Test;
-
-import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.signer.EcdsaSecp256k1Signature2019LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
@@ -19,12 +21,12 @@ public class JsonLdSignEcdsaSecp256k1Signature2019Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSignEcdsaSecp256k1Signature2019() throws Exception {
+	public void testSignEcdsaSecp256k1Signature2019() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdSignEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("input.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("input.jsonld")));
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
-		Date created = LdSignature.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
+		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		String domain = "example.com";
 		String nonce = null;
 
@@ -33,17 +35,17 @@ public class JsonLdSignEcdsaSecp256k1Signature2019Test {
 		signer.setCreated(created);
 		signer.setDomain(domain);
 		signer.setNonce(nonce);
-		LdSignature ldSignature = signer.sign(jsonLdObject);
+		LdProof ldProof = signer.sign(jsonLdObject);
 
-		assertEquals(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm(), ldSignature.getType());
-		assertEquals(creator, ldSignature.getCreator());
-		assertEquals(created, ldSignature.getCreated());
-		assertEquals(domain, ldSignature.getDomain());
-		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFUzI1NksifQ..MEQCIBB3xgG8ClzUR_NmKb3wiiGrr3051QruS14hFIpgXFRwAiB8AMwGJg66Tw07HNPonK36YjOVNDzAW7PLzrgZPc9oEA", ldSignature.getJws());
+		assertEquals(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm(), ldProof.getType());
+		assertEquals(creator, ldProof.getCreator());
+		assertEquals(created, ldProof.getCreated());
+		assertEquals(domain, ldProof.getDomain());
+		assertEquals(nonce, ldProof.getNonce());
+		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFUzI1NksifQ..MEUCIQD5sFr7spXzzTxm_dm1H2tdisVIEjfZqHOEk2ylVqwOuAIgZe5lND_c3i5_gxb2oDeRdNp7ce_JnAdwAnlr2HCw9Ps", ldProof.getJws());
 
 		EcdsaSecp256k1Signature2019LdVerifier verifier = new EcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
-		boolean verify = verifier.verify(jsonLdObject, ldSignature);
+		boolean verify = verifier.verify(jsonLdObject, ldProof);
 		assertTrue(verify);
 	}
 }

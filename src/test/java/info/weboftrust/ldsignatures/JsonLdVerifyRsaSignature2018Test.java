@@ -3,11 +3,10 @@ package info.weboftrust.ldsignatures;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.LinkedHashMap;
+import java.io.InputStreamReader;
 
+import foundation.identity.jsonld.JsonLDObject;
 import org.junit.jupiter.api.Test;
-
-import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
 
@@ -15,9 +14,9 @@ public class JsonLdVerifyRsaSignature2018Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testVerify() throws Exception {
+	public void testVerify() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.rsa.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.rsa.jsonld")));
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -25,10 +24,11 @@ public class JsonLdVerifyRsaSignature2018Test {
 		assertTrue(verify);
 	}
 
+	@Test
 	@SuppressWarnings("unchecked")
-	public void testBadVerify() throws Exception {
+	public void testBadVerify() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.rsa.bad.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.rsa.bad.jsonld")));
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

@@ -33,6 +33,10 @@
 
 	<repositories>
 		<repository>
+			<id>danubetech-maven-public</id>
+			<url>https://repo.danubetech.com/repository/maven-public/</url>
+		</repository>
+		<repository>
 			<id>sovrin</id>
 			<url>https://repo.sovrin.org/repository/maven-public</url>
 		</repository>
@@ -130,16 +134,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.apicatalog</groupId>
-			<artifactId>titanium-json-ld</artifactId>
-			<version>0.8.4</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>jakarta.json</artifactId>
-			<version>1.1.6</version>
-			<scope>compile</scope>
+			<groupId>decentralized-identity</groupId>
+			<artifactId>jsonld-common-java</artifactId>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
@@ -151,6 +148,12 @@
 			<groupId>org.abstractj.kalium</groupId>
 			<artifactId>kalium</artifactId>
 			<version>0.8.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bitcoinj</groupId>
+			<artifactId>bitcoinj-core</artifactId>
+			<version>0.15.8</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

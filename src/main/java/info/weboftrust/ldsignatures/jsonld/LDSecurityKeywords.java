@@ -3,7 +3,6 @@ package info.weboftrust.ldsignatures.jsonld;
 public class LDSecurityKeywords {
 
     public static final String JSONLD_TERM_PROOF = "proof";
-    public static final String JSONLD_TERM_TYPE = "type";
     public static final String JSONLD_TERM_CREATOR = "creator";
     public static final String JSONLD_TERM_CREATED = "created";
     public static final String JSONLD_TERM_DOMAIN = "domain";

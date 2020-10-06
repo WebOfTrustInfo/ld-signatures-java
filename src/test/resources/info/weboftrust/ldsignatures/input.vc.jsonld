@@ -4,6 +4,7 @@
 		{
 			"schema": "http://schema.org/",
 			"ex": "https://example.org/examples#",
+            "UniversityDegreeCredential": "ex:UniversityDegreeCredential",
 			"givenName": "schema:givenName",
 			"familyName": "schema:familyName",
 			"college": "ex:college"

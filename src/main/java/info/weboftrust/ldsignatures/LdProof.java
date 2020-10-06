@@ -3,29 +3,30 @@ package info.weboftrust.ldsignatures;
 import java.net.URI;
 import java.util.*;
 
-import info.weboftrust.ldsignatures.jsonld.JsonLDObject;
-import info.weboftrust.ldsignatures.jsonld.JsonLDUtils;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityKeywords;
 
 import javax.json.JsonObject;
 
-public class LdSignature extends JsonLDObject {
+public class LdProof extends JsonLDObject {
 
-	public static final List<String> DEFAULT_CONTEXTS = Collections.singletonList("https://w3id.org/security/v2");
+	public static final String DEFAULT_JSONLD_CONTEXT = "https://w3id.org/security/v2";
 
-	private LdSignature() {
-		super();
+	private LdProof() {
+		super(LDSecurityContexts.DOCUMENT_LOADER);
 	}
 
-	public LdSignature(JsonObject jsonObject) {
-		super(jsonObject);
+	public LdProof(JsonObject jsonObject) {
+		super(LDSecurityContexts.DOCUMENT_LOADER, jsonObject);
 	}
 
 	/*
 	 * Factory methods
 	 */
 
-	public static class Builder extends JsonLDObject.Builder<Builder, LdSignature> {
+	public static class Builder extends JsonLDObject.Builder<Builder, LdProof> {
 
 		private URI creator;
 		private Date created;
@@ -37,24 +38,24 @@ public class LdSignature extends JsonLDObject {
 		private String jws;
 
 		public Builder() {
-			super(new LdSignature());
+			super(new LdProof());
 		}
 
-		public LdSignature build() {
+		public LdProof build() {
 
-			LdSignature ldSignature = new LdSignature();
+			super.build();
 
 			// add JSON-LD properties
-			if (this.creator != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
-			if (this.created != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.domain != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.nonce != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
-			if (this.proofValue != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAddString(ldSignature.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
+			if (this.creator != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
+			if (this.created != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			if (this.domain != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.nonce != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			if (this.proofPurpose != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
+			if (this.proofValue != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			if (this.jws != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
-			return ldSignature;
+			return this.jsonLDObject;
 		}
 
 		public Builder creator(URI creator) {
@@ -118,15 +119,15 @@ public class LdSignature extends JsonLDObject {
 		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS);
 	}
 
-	public static LdSignature getFromJsonLdObject(JsonLDObject jsonLdObject) {
+	public static LdProof getFromJsonLdObject(JsonLDObject jsonLdObject) {
 
 		JsonObject jsonObject = JsonLDUtils.jsonLdGetJsonObject(jsonLdObject.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PROOF);
-		return jsonObject == null ? null : new LdSignature(jsonObject);
+		return jsonObject == null ? null : new LdProof(jsonObject);
 	}
 
 	public void addToJsonLdObject(JsonLDObject jsonLdObject) {
 
-		JsonLDUtils.jsonLdAddJsonValue(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS, jsonLdObject.getJsonObject());
+		JsonLDUtils.jsonLdAddJsonValue(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOF, jsonLdObject.getJsonObject());
 	}
 
 	/*
