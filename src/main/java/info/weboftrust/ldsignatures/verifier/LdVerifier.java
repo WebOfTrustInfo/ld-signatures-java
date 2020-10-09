@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 
 import com.apicatalog.jsonld.api.JsonLdError;
 
+import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
@@ -43,7 +44,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException;
 
-	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws GeneralSecurityException, IOException, JsonLdError {
+	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws GeneralSecurityException, JsonLDException {
 
 		// check the signature object
 
@@ -51,7 +52,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the normalized proof options
 
-		JsonLDObject jsonLdObjectProofOptions = JsonLDObject.builder().context(LdProof.DEFAULT_JSONLD_CONTEXT).build();
+		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
 		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), ldProof.getJsonObject());
 		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
@@ -76,11 +77,11 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		return verify;
 	}
 
-	public boolean verify(JsonLDObject jsonLdObject) throws GeneralSecurityException, IOException, JsonLdError {
+	public boolean verify(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
 
 		// obtain the signature object
 
-		LdProof ldProof = LdProof.getFromJsonLdObject(jsonLdObject);
+		LdProof ldProof = LdProof.getFromJsonLDObject(jsonLdObject);
 		if (ldProof == null) return false;
 
 		// done

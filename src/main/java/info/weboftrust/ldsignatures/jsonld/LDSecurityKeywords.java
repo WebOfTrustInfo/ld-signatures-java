@@ -2,7 +2,12 @@ package info.weboftrust.ldsignatures.jsonld;
 
 public class LDSecurityKeywords {
 
+    /*
+     * https://w3id.org/security/v2
+     */
+
     public static final String JSONLD_TERM_PROOF = "proof";
+
     public static final String JSONLD_TERM_CREATOR = "creator";
     public static final String JSONLD_TERM_CREATED = "created";
     public static final String JSONLD_TERM_DOMAIN = "domain";

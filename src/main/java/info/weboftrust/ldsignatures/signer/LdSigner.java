@@ -7,6 +7,7 @@ import java.util.Date;
 
 import com.apicatalog.jsonld.api.JsonLdError;
 
+import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
@@ -64,12 +65,12 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract String sign(byte[] bytes) throws GeneralSecurityException;
 
-	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean addSecurityContext) throws GeneralSecurityException, IOException, JsonLdError {
+	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws GeneralSecurityException, JsonLDException {
 
 		// build the signature object
 
 		LdProof.Builder ldProofBuilder = LdProof.builder();
-		if (addSecurityContext) ldProofBuilder.context(LdProof.DEFAULT_JSONLD_CONTEXT);
+		ldProofBuilder.defaultContexts(defaultContexts);
 		ldProofBuilder.type(this.getSignatureSuite().getTerm());
 		if (this.getCreator() != null) ldProofBuilder.creator(this.getCreator());
 		if (this.getCreated() != null) ldProofBuilder.created(this.getCreated());
@@ -80,7 +81,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the normalized proof options
 
-		JsonLDObject jsonLdObjectProofOptions = JsonLDObject.builder().context(LdProof.DEFAULT_JSONLD_CONTEXT).build();
+		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
 		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), ldProofBuilder.build().getJsonObject());
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
@@ -104,14 +105,14 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		// add proof to JSON-LD?
 
-		if (addToJsonLdObject) ldProof.addToJsonLdObject(jsonLdObject);
+		if (addToJsonLdObject) ldProof.addToJsonLDObject(jsonLdObject);
 
 		// done
 
 		return ldProof;
 	}
 
-	public LdProof sign(JsonLDObject jsonLdObject) throws GeneralSecurityException, IOException, JsonLdError {
+	public LdProof sign(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
 
 		return this.sign(jsonLdObject, false, false);
 	}

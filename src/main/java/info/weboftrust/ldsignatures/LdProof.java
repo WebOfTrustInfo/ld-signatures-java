@@ -1,5 +1,7 @@
 package info.weboftrust.ldsignatures;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URI;
 import java.util.*;
 
@@ -8,11 +10,14 @@ import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityKeywords;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 public class LdProof extends JsonLDObject {
 
-	public static final String DEFAULT_JSONLD_CONTEXT = "https://w3id.org/security/v2";
+	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V2 };
+	public static final String[] DEFAULT_JSONLD_TYPES = { };
+	public static final String DEFAULT_JSONLD_PREDICATE = LDSecurityKeywords.JSONLD_TERM_PROOF;
 
 	private LdProof() {
 		super(LDSecurityContexts.DOCUMENT_LOADER);
@@ -37,10 +42,11 @@ public class LdProof extends JsonLDObject {
 		private String proofValue;
 		private String jws;
 
-		public Builder() {
-			super(new LdProof());
+		public Builder(LdProof jsonLDObject) {
+			super(jsonLDObject);
 		}
 
+		@Override
 		public LdProof build() {
 
 			super.build();
@@ -100,34 +106,40 @@ public class LdProof extends JsonLDObject {
 	}
 
 	public static Builder builder() {
+		return new Builder(new LdProof());
+	}
 
-		return new Builder();
+	/*
+	 * Reading the JSON-LD object
+	 */
+
+	public static LdProof fromJson(Reader reader) {
+		return JsonLDObject.fromJson(LdProof.class, reader);
+	}
+
+	public static LdProof fromJson(String json) {
+		return JsonLDObject.fromJson(LdProof.class, json);
+	}
+
+	/*
+	 * Adding, getting, and removing the JSON-LD object
+	 */
+
+	public static LdProof getFromJsonLDObject(JsonLDObject jsonLdObject) {
+		return JsonLDObject.getFromJsonLDObject(LdProof.class, jsonLdObject);
+	}
+
+	public static void removeFromJsonLdObject(JsonLDObject jsonLdObject) {
+		JsonLDObject.removeFromJsonLdObject(LdProof.class, jsonLdObject);
 	}
 
 	/*
 	 * Helper methods
 	 */
 
-	public static void removeFromJsonLdObject(JsonLDObject jsonLdObject) {
-
-		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOF);
-	}
-
 	public static void removeLdProofValues(JsonLDObject jsonLdObject) {
-
 		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
 		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS);
-	}
-
-	public static LdProof getFromJsonLdObject(JsonLDObject jsonLdObject) {
-
-		JsonObject jsonObject = JsonLDUtils.jsonLdGetJsonObject(jsonLdObject.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PROOF);
-		return jsonObject == null ? null : new LdProof(jsonObject);
-	}
-
-	public void addToJsonLdObject(JsonLDObject jsonLdObject) {
-
-		JsonLDUtils.jsonLdAddJsonValue(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOF, jsonLdObject.getJsonObject());
 	}
 
 	/*
