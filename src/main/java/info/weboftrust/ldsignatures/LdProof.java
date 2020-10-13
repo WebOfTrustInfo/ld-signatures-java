@@ -52,14 +52,14 @@ public class LdProof extends JsonLDObject {
 			super.build();
 
 			// add JSON-LD properties
-			if (this.creator != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
-			if (this.created != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.domain != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.nonce != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
-			if (this.proofValue != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
+			if (this.creator != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
+			if (this.created != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			if (this.domain != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.nonce != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			if (this.proofPurpose != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
+			if (this.proofValue != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			if (this.jws != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
 			return this.jsonLDObject;
 		}
@@ -138,8 +138,8 @@ public class LdProof extends JsonLDObject {
 	 */
 
 	public static void removeLdProofValues(JsonLDObject jsonLdObject) {
-		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
-		JsonLDUtils.jsonLdRemove(jsonLdObject.getJsonObjectBuilder(), LDSecurityKeywords.JSONLD_TERM_JWS);
+		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
+		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_JWS);
 	}
 
 	/*

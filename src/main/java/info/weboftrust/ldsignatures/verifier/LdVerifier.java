@@ -46,21 +46,21 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws GeneralSecurityException, JsonLDException {
 
-		// check the signature object
+		// check the proof object
 
 		if (! this.getSignatureSuite().getTerm().equals(ldProof.getType())) throw new GeneralSecurityException("Unexpected signature type: " + ldProof.getType() + " is not " + this.getSignatureSuite().getTerm());
 
 		// obtain the normalized proof options
 
 		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
-		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), ldProof.getJsonObject());
+		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions, ldProof.getJsonObject());
 		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
 		// obtain the normalized document
 
 		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
-		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof.getJsonObjectBuilder(), jsonLdObject.getJsonObject());
+		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof, jsonLdObject.getJsonObject());
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
 		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
 

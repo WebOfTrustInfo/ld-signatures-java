@@ -3,12 +3,9 @@ package info.weboftrust.ldsignatures.signer;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import com.nimbusds.jose.*;
 import org.bitcoinj.core.ECKey;
 
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
@@ -43,7 +40,7 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 
 		try {
 
-			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.ES256K).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.ES256K).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
 			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.ES256K);

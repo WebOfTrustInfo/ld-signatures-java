@@ -67,28 +67,35 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws GeneralSecurityException, JsonLDException {
 
-		// build the signature object
+		// build the proof object
 
-		LdProof.Builder ldProofBuilder = LdProof.builder();
-		ldProofBuilder.defaultContexts(defaultContexts);
-		ldProofBuilder.type(this.getSignatureSuite().getTerm());
-		if (this.getCreator() != null) ldProofBuilder.creator(this.getCreator());
-		if (this.getCreated() != null) ldProofBuilder.created(this.getCreated());
-		if (this.getDomain() != null) ldProofBuilder.domain(this.getDomain());
-		if (this.getNonce() != null) ldProofBuilder.nonce(this.getNonce());
-		if (this.getProofPurpose() != null) ldProofBuilder.proofPurpose(this.getProofPurpose());
-		if (this.getVerificationMethod() != null) ldProofBuilder.verificationMethod(this.getVerificationMethod());
+		LdProof ldProofWithoutProofValues = LdProof.builder()
+				.defaultContexts(defaultContexts)
+				.defaultTypes(false)
+				.type(this.getSignatureSuite().getTerm())
+				.creator(this.getCreator())
+				.created(this.getCreated())
+				.domain(this.getDomain())
+				.nonce(this.getNonce())
+				.proofPurpose(this.getProofPurpose())
+				.verificationMethod(this.getVerificationMethod())
+				.build();
 
 		// obtain the normalized proof options
 
-		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
-		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions.getJsonObjectBuilder(), ldProofBuilder.build().getJsonObject());
+		JsonLDObject jsonLdObjectProofOptions = LdProof.builder()
+				.base(ldProofWithoutProofValues)
+				.defaultContexts(true)
+				.build();
+
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
 		// obtain the normalized document
 
-		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
-		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof.getJsonObjectBuilder(), jsonLdObject.getJsonObject());
+		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
+				.base(jsonLdObject)
+				.build();
+
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
 		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
@@ -99,9 +106,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
 
 		String jws = this.sign(signingInput);
-		ldProofBuilder.jws(jws);
 
-		LdProof ldProof = ldProofBuilder.build();
+		LdProof ldProof = LdProof.builder()
+				.base(ldProofWithoutProofValues)
+				.jws(jws)
+				.build();
 
 		// add proof to JSON-LD?
 
