@@ -14,6 +14,6 @@
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
     "nonce" : null,
-    "jws" : "eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFUzI1NksifQ..MEUCIQD5sFr7spXzzTxm_dm1H2tdisVIEjfZqHOEk2ylVqwOuAIgZe5lND_c3i5_gxb2oDeRdNp7ce_JnAdwAnlr2HCw9Ps"
+    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFUzI1NksifQ..MEUCIQC3t0NSkMxEAGwLjhhE-G__-Ok5CZGcT9GBbKqVvozh-AIgBg6mqSDiJoKcK6aLN88Gorlb8qR-yv9VtDfUM9qQZUY"
   }
 }
