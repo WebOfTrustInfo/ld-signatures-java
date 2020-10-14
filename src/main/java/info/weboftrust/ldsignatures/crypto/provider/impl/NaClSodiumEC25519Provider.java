@@ -1,15 +1,14 @@
 package info.weboftrust.ldsignatures.crypto.provider.impl;
 
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-
-import org.abstractj.kalium.NaCl;
-import org.abstractj.kalium.NaCl.Sodium;
-
 import info.weboftrust.ldsignatures.crypto.provider.EC25519Provider;
 import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
 import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 import jnr.ffi.byref.LongLongByReference;
+import org.abstractj.kalium.NaCl;
+import org.abstractj.kalium.NaCl.Sodium;
+
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
 
 public class NaClSodiumEC25519Provider extends EC25519Provider {
 

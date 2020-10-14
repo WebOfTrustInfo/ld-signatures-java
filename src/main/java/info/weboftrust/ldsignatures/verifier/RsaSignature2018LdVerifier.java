@@ -1,14 +1,9 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAPublicKey;
-import java.text.ParseException;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
@@ -16,6 +11,10 @@ import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
+
+import java.security.GeneralSecurityException;
+import java.security.interfaces.RSAPublicKey;
+import java.text.ParseException;
 
 public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018SignatureSuite> {
 

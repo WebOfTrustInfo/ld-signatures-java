@@ -1,15 +1,9 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import java.security.GeneralSecurityException;
-import java.text.ParseException;
-
-import org.bitcoinj.core.ECKey;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
@@ -17,6 +11,10 @@ import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifi
 import info.weboftrust.ldsignatures.suites.EcdsaSecp256k1Signature2019SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
+import org.bitcoinj.core.ECKey;
+
+import java.security.GeneralSecurityException;
+import java.text.ParseException;
 
 public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp256k1Signature2019SignatureSuite> {
 

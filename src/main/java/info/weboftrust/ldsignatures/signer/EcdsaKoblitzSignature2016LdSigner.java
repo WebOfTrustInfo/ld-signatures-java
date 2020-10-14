@@ -1,22 +1,20 @@
 package info.weboftrust.ldsignatures.signer;
 
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-
-import org.bitcoinj.core.ECKey;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
-
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
+import org.bitcoinj.core.ECKey;
+
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSignature2016SignatureSuite> {
 

@@ -1,11 +1,10 @@
 package info.weboftrust.ldsignatures.crypto.provider.impl;
 
-import java.security.GeneralSecurityException;
-
+import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
 import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.NaCl.Sodium;
 
-import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
+import java.security.GeneralSecurityException;
 
 public class NaClSodiumRandomProvider extends RandomProvider {
 

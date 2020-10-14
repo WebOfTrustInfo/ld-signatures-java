@@ -1,17 +1,12 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import org.junit.jupiter.api.Test;
-
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.JWSSigner;
-import com.nimbusds.jose.Payload;
-import com.nimbusds.jose.crypto.RSASSASigner;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BasicSignTest {
 

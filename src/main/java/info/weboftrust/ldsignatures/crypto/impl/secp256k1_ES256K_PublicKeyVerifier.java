@@ -1,12 +1,11 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
-import java.security.GeneralSecurityException;
-
+import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.SignatureDecodeException;
 
-import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
+import java.security.GeneralSecurityException;
 
 public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
 

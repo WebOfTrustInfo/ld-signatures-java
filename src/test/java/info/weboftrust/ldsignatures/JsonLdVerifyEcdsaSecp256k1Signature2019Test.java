@@ -1,14 +1,13 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import foundation.identity.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
+import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
 
-import foundation.identity.jsonld.JsonLDObject;
-import org.junit.jupiter.api.Test;
-
-import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonLdVerifyEcdsaSecp256k1Signature2019Test {
 

@@ -1,12 +1,13 @@
 package info.weboftrust.ldsignatures;
 
-import java.io.InputStreamReader;
-
 import foundation.identity.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
 import org.junit.jupiter.api.Test;
 
-import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.InputStreamReader;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonLdVerifyEd25519Signature2018Test {
 

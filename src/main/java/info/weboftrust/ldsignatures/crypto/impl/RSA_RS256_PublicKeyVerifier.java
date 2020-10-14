@@ -1,10 +1,10 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
+import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
+
 import java.security.GeneralSecurityException;
 import java.security.Signature;
 import java.security.interfaces.RSAPublicKey;
-
-import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
 
 public class RSA_RS256_PublicKeyVerifier extends PublicKeyVerifier<RSAPublicKey> {
 

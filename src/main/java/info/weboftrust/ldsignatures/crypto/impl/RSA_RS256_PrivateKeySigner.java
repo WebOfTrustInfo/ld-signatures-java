@@ -1,10 +1,10 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
+import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
+
 import java.security.GeneralSecurityException;
 import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
-
-import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
 
 public class RSA_RS256_PrivateKeySigner extends PrivateKeySigner<RSAPrivateKey> {
 

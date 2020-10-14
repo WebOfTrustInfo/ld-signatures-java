@@ -1,10 +1,5 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
-import com.apicatalog.jsonld.api.JsonLdError;
-
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
@@ -14,6 +9,8 @@ import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.SHAUtil;
+
+import java.security.GeneralSecurityException;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 

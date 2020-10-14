@@ -1,18 +1,16 @@
 package info.weboftrust.ldsignatures.crypto;
 
-import java.security.interfaces.RSAPublicKey;
-
-import org.bitcoinj.core.ECKey;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.KeyType;
-
 import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
-import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_PS256_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PublicKeyVerifier;
+import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
+import org.bitcoinj.core.ECKey;
+
+import java.security.interfaces.RSAPublicKey;
 
 public class PublicKeyVerifierFactory {
 

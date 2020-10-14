@@ -1,11 +1,10 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import info.weboftrust.ldsignatures.util.SHAUtil;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.jupiter.api.Test;
 
-import info.weboftrust.ldsignatures.util.SHAUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SHATest {
 

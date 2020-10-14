@@ -1,17 +1,14 @@
 package info.weboftrust.ldsignatures;
 
-import java.io.Reader;
-import java.io.StringReader;
-import java.net.URI;
-import java.util.*;
-
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityKeywords;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import java.io.Reader;
+import java.net.URI;
+import java.util.Date;
+import java.util.Map;
 
 public class LdProof extends JsonLDObject {
 
@@ -23,7 +20,7 @@ public class LdProof extends JsonLDObject {
 		super(LDSecurityContexts.DOCUMENT_LOADER);
 	}
 
-	public LdProof(JsonObject jsonObject) {
+	public LdProof(Map<String, Object> jsonObject) {
 		super(LDSecurityContexts.DOCUMENT_LOADER, jsonObject);
 	}
 
@@ -52,14 +49,14 @@ public class LdProof extends JsonLDObject {
 			super.build();
 
 			// add JSON-LD properties
-			if (this.creator != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
-			if (this.created != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.domain != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.nonce != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
-			if (this.proofValue != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAddString(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
+			if (this.creator != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
+			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
+			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
 			return this.jsonLDObject;
 		}

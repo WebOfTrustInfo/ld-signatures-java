@@ -1,20 +1,19 @@
 package info.weboftrust.ldsignatures.signer;
 
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
-
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
+
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018SignatureSuite> {
 

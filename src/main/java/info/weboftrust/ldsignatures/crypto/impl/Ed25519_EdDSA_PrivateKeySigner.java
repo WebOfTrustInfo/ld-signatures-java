@@ -1,9 +1,9 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
-import java.security.GeneralSecurityException;
-
 import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
 import info.weboftrust.ldsignatures.crypto.provider.EC25519Provider;
+
+import java.security.GeneralSecurityException;
 
 public class Ed25519_EdDSA_PrivateKeySigner extends PrivateKeySigner<byte[]> {
 

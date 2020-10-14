@@ -1,13 +1,9 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import java.security.GeneralSecurityException;
-import java.text.ParseException;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
-
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
@@ -15,6 +11,9 @@ import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
+
+import java.security.GeneralSecurityException;
+import java.text.ParseException;
 
 public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2018SignatureSuite> {
 

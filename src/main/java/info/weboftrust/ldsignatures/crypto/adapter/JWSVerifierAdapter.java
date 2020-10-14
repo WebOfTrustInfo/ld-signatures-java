@@ -1,16 +1,15 @@
 package info.weboftrust.ldsignatures.crypto.adapter;
 
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.impl.BaseJWSProvider;
 import com.nimbusds.jose.util.Base64URL;
-
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
+
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 public class JWSVerifierAdapter extends BaseJWSProvider implements JWSVerifier {
 

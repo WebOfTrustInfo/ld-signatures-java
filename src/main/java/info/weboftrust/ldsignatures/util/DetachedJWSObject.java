@@ -1,11 +1,11 @@
 package info.weboftrust.ldsignatures.util;
 
-import java.text.ParseException;
-
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.util.Base64URL;
+
+import java.text.ParseException;
 
 public class DetachedJWSObject extends JWSObject {
 

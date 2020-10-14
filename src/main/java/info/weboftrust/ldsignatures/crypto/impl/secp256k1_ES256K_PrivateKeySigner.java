@@ -1,11 +1,10 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
-import java.security.GeneralSecurityException;
-
+import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
 
-import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
+import java.security.GeneralSecurityException;
 
 public class secp256k1_ES256K_PrivateKeySigner extends PrivateKeySigner<ECKey> {
 

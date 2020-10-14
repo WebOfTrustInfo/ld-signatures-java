@@ -1,19 +1,18 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
+import info.weboftrust.ldsignatures.signer.RsaSignature2018LdSigner;
+import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
+import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
 
-import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
-import org.junit.jupiter.api.Test;
-
-import info.weboftrust.ldsignatures.signer.RsaSignature2018LdSigner;
-import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonLdSignRsaSignature2018Test {
 

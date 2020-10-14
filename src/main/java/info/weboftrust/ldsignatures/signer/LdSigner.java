@@ -1,21 +1,17 @@
 package info.weboftrust.ldsignatures.signer;
 
-import java.io.IOException;
-import java.net.URI;
-import java.security.GeneralSecurityException;
-import java.util.Date;
-
-import com.apicatalog.jsonld.api.JsonLdError;
-
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
 import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.SHAUtil;
+
+import java.net.URI;
+import java.security.GeneralSecurityException;
+import java.util.Date;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 

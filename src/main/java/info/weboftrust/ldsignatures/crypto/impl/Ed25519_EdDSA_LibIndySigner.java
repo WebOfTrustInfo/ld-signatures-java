@@ -1,13 +1,12 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
-import java.security.GeneralSecurityException;
-import java.util.concurrent.ExecutionException;
-
+import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import org.hyperledger.indy.sdk.IndyException;
 import org.hyperledger.indy.sdk.crypto.Crypto;
 import org.hyperledger.indy.sdk.wallet.Wallet;
 
-import info.weboftrust.ldsignatures.crypto.ByteSigner;
+import java.security.GeneralSecurityException;
+import java.util.concurrent.ExecutionException;
 
 public class Ed25519_EdDSA_LibIndySigner extends ByteSigner {
 

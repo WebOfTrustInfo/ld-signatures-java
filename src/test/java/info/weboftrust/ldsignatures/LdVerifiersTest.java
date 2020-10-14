@@ -1,13 +1,12 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
-
 import info.weboftrust.ldsignatures.verifier.EcdsaKoblitzSignature2016LdVerifier;
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
 import info.weboftrust.ldsignatures.verifier.LdVerifier;
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LdVerifiersTest {
 

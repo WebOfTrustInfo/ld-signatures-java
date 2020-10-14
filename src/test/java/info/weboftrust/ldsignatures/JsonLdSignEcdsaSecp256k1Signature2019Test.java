@@ -1,21 +1,18 @@
 package info.weboftrust.ldsignatures;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
+import info.weboftrust.ldsignatures.signer.EcdsaSecp256k1Signature2019LdSigner;
+import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
+import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
-import java.util.LinkedHashMap;
 
-import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.junit.jupiter.api.Test;
-
-import info.weboftrust.ldsignatures.signer.EcdsaSecp256k1Signature2019LdSigner;
-import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonLdSignEcdsaSecp256k1Signature2019Test {
 

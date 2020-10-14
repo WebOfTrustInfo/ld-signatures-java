@@ -1,9 +1,9 @@
 package info.weboftrust.ldsignatures.util;
 
-import java.nio.charset.StandardCharsets;
-
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.util.Base64URL;
+
+import java.nio.charset.StandardCharsets;
 
 public class JWSUtil {
 
