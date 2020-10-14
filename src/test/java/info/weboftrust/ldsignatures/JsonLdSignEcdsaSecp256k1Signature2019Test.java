@@ -2,17 +2,9 @@ package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
-import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
-import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
-import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
 import info.weboftrust.ldsignatures.signer.EcdsaSecp256k1Signature2019LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;

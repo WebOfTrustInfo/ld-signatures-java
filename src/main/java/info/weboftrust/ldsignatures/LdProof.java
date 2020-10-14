@@ -1,5 +1,7 @@
 package info.weboftrust.ldsignatures;
 
+import com.apicatalog.jsonld.loader.DocumentLoader;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
@@ -15,20 +17,22 @@ public class LdProof extends JsonLDObject {
 	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V2 };
 	public static final String[] DEFAULT_JSONLD_TYPES = { };
 	public static final String DEFAULT_JSONLD_PREDICATE = LDSecurityKeywords.JSONLD_TERM_PROOF;
+	public static final DocumentLoader DEFAULT_DOCUMENT_LOADER = LDSecurityContexts.DOCUMENT_LOADER;
 
-	private LdProof() {
-		super(LDSecurityContexts.DOCUMENT_LOADER);
+	@JsonCreator
+	public LdProof() {
+		super();
 	}
 
-	public LdProof(Map<String, Object> jsonObject) {
-		super(LDSecurityContexts.DOCUMENT_LOADER, jsonObject);
+	protected LdProof(Map<String, Object> jsonObject) {
+		super(jsonObject);
 	}
 
 	/*
 	 * Factory methods
 	 */
 
-	public static class Builder extends JsonLDObject.Builder<Builder, LdProof> {
+	public static class Builder<B extends Builder<B>> extends JsonLDObject.Builder<B> {
 
 		private URI creator;
 		private Date created;
@@ -58,64 +62,64 @@ public class LdProof extends JsonLDObject {
 			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
 			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
-			return this.jsonLDObject;
+			return (LdProof) this.jsonLDObject;
 		}
 
-		public Builder creator(URI creator) {
+		public B creator(URI creator) {
 			this.creator = creator;
-			return this;
+			return (B) this;
 		}
 
-		public Builder created(Date created) {
+		public B created(Date created) {
 			this.created = created;
-			return this;
+			return (B) this;
 		}
 
-		public Builder domain(String domain) {
+		public B domain(String domain) {
 			this.domain = domain;
-			return this;
+			return (B) this;
 		}
 
-		public Builder nonce(String nonce) {
+		public B nonce(String nonce) {
 			this.nonce = nonce;
-			return this;
+			return (B) this;
 		}
 
-		public Builder proofPurpose(String proofPurpose) {
+		public B proofPurpose(String proofPurpose) {
 			this.proofPurpose = proofPurpose;
-			return this;
+			return (B) this;
 		}
 
-		public Builder verificationMethod(String verificationMethod) {
+		public B verificationMethod(String verificationMethod) {
 			this.verificationMethod = verificationMethod;
-			return this;
+			return (B) this;
 		}
 
-		public Builder proofValue(String proofValue) {
+		public B proofValue(String proofValue) {
 			this.proofValue = proofValue;
-			return this;
+			return (B) this;
 		}
 
-		public Builder jws(String jws) {
+		public B jws(String jws) {
 			this.jws = jws;
-			return this;
+			return (B) this;
 		}
 	}
 
-	public static Builder builder() {
+	public static Builder<? extends Builder<?>> builder() {
 		return new Builder(new LdProof());
 	}
 
-	/*
-	 * Reading the JSON-LD object
-	 */
+	public static LdProof fromJsonObject(Map<String, Object> jsonObject) {
+		return new LdProof(jsonObject);
+	}
 
 	public static LdProof fromJson(Reader reader) {
-		return JsonLDObject.fromJson(LdProof.class, reader);
+		return new LdProof(readJson(reader));
 	}
 
 	public static LdProof fromJson(String json) {
-		return JsonLDObject.fromJson(LdProof.class, json);
+		return new LdProof(readJson(json));
 	}
 
 	/*

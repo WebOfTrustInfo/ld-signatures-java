@@ -6,7 +6,6 @@ import com.google.crypto.tink.signature.Ed25519PrivateKeyManager;
 import com.google.crypto.tink.subtle.Ed25519Sign;
 import com.google.crypto.tink.subtle.Ed25519Verify;
 import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
-import org.apache.commons.codec.binary.Hex;
 
 import java.security.GeneralSecurityException;
 

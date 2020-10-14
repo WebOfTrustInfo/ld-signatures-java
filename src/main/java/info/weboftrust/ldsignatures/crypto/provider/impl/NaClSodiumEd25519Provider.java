@@ -6,7 +6,6 @@ import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.NaCl.Sodium;
-import org.apache.commons.codec.binary.Hex;
 
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
