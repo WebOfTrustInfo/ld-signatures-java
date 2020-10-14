@@ -57,19 +57,6 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 		return jws;
 	}
 
-	/*	public static String sign(String canonicalizedDocument, ByteSigner signer) throws GeneralSecurityException {
-
-		// sign
-
-		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureBytes = signer.sign(canonicalizedDocumentBytes, "ES256K");
-		String signatureString = Base64.encodeBase64String(signatureBytes);
-
-		// done
-
-		return signatureString;
-	}*/
-
 	@Override
 	public String sign(byte[] signingInput) throws GeneralSecurityException {
 

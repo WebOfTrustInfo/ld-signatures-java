@@ -32,7 +32,7 @@ public abstract class RandomProvider {
 		return result;
 	}
 
-	public void set(RandomProvider instance) {
+	public static void set(RandomProvider instance) {
 
 		RandomProvider.instance = instance;
 	}

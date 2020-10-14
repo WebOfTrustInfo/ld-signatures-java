@@ -164,6 +164,12 @@
 			<version>1.14.0</version>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.google.crypto.tink</groupId>
+			<artifactId>tink</artifactId>
+			<version>1.4.0</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 </project>

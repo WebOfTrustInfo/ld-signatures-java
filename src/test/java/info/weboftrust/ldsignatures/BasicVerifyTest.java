@@ -3,7 +3,15 @@ package info.weboftrust.ldsignatures;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
+import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
+import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
+import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
 import info.weboftrust.ldsignatures.util.DetachedJWSObject;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

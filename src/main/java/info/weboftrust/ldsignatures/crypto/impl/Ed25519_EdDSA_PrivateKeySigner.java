@@ -1,7 +1,7 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
 import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.provider.EC25519Provider;
+import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
 
 import java.security.GeneralSecurityException;
 
@@ -15,6 +15,6 @@ public class Ed25519_EdDSA_PrivateKeySigner extends PrivateKeySigner<byte[]> {
 	@Override
 	public byte[] sign(byte[] content) throws GeneralSecurityException {
 
-		return EC25519Provider.get().sign(content, this.getPrivateKey());
+		return Ed25519Provider.get().sign(content, this.getPrivateKey());
 	}
 }

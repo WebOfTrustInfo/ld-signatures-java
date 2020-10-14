@@ -1,23 +1,24 @@
 package info.weboftrust.ldsignatures.crypto.provider.impl;
 
-import info.weboftrust.ldsignatures.crypto.provider.EC25519Provider;
+import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
 import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
 import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 import jnr.ffi.byref.LongLongByReference;
 import org.abstractj.kalium.NaCl;
 import org.abstractj.kalium.NaCl.Sodium;
+import org.apache.commons.codec.binary.Hex;
 
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
-public class NaClSodiumEC25519Provider extends EC25519Provider {
+public class NaClSodiumEd25519Provider extends Ed25519Provider {
 
-	private Sodium sodium;
+	private static final Sodium SODIUM;
 
-	public NaClSodiumEC25519Provider() {
+	static {
 
 		NaCl.init();
-		this.sodium = NaCl.sodium();
+		SODIUM = NaCl.sodium();
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class NaClSodiumEC25519Provider extends EC25519Provider {
 
 		// create key pair
 
-		sodium.crypto_sign_ed25519_seed_keypair(publicKey, privateKey, seed);
+		SODIUM.crypto_sign_ed25519_seed_keypair(publicKey, privateKey, seed);
 		System.arraycopy(publicKey, 0, privateKey, Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES, Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES);
 	}
 
@@ -45,7 +46,7 @@ public class NaClSodiumEC25519Provider extends EC25519Provider {
 
 		// create key pair
 
-		sodium.crypto_sign_ed25519_seed_keypair(publicKey, privateKey, seed);
+		SODIUM.crypto_sign_ed25519_seed_keypair(publicKey, privateKey, seed);
 		System.arraycopy(publicKey, 0, privateKey, Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES, Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES);
 	}
 
@@ -60,7 +61,7 @@ public class NaClSodiumEC25519Provider extends EC25519Provider {
 
 		LongLongByReference bufferLen = new LongLongByReference();
 
-		int ret = sodium.crypto_sign_ed25519(signatureValue, bufferLen, content, content.length, privateKey);
+		int ret = SODIUM.crypto_sign_ed25519(signatureValue, bufferLen, content, content.length, privateKey);
 		if (ret != 0) throw new GeneralSecurityException("Signing error: " + ret);
 
 		signatureValue = Arrays.copyOfRange(signatureValue, 0, Sodium.CRYPTO_SIGN_ED25519_BYTES);

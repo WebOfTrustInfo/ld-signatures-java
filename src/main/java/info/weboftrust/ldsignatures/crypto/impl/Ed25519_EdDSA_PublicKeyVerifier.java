@@ -1,7 +1,7 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
 import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
-import info.weboftrust.ldsignatures.crypto.provider.EC25519Provider;
+import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
 
 import java.security.GeneralSecurityException;
 
@@ -15,6 +15,6 @@ public class Ed25519_EdDSA_PublicKeyVerifier extends PublicKeyVerifier<byte[]> {
 	@Override
 	public boolean verify(byte[] content, byte[] signature) throws GeneralSecurityException {
 
-		return EC25519Provider.get().verify(content, signature, this.getPublicKey());
+		return Ed25519Provider.get().verify(content, signature, this.getPublicKey());
 	}
 }

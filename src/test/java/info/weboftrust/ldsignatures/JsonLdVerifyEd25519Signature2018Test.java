@@ -1,7 +1,14 @@
 package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
+import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
+import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
+import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
@@ -10,6 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonLdVerifyEd25519Signature2018Test {
+
+	@BeforeEach
+	public void before() {
+
+		RandomProvider.set(new JavaRandomProvider());
+		SHA256Provider.set(new JavaSHA256Provider());
+		Ed25519Provider.set(new TinkEd25519Provider());
+	}
 
 	@Test
 	@SuppressWarnings("unchecked")
