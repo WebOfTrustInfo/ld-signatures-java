@@ -3,13 +3,13 @@ package info.weboftrust.ldsignatures;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
-import java.util.LinkedHashMap;
 
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import org.junit.jupiter.api.Test;
-
-import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.signer.Ed25519Signature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
@@ -19,12 +19,12 @@ public class JsonLdSignEd25519Signature2018Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSignEd25519Signature2018() throws Exception {
+	public void testSignEd25519Signature2018() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld")));
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
-		Date created = LdSignature.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
+		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");
 		String domain = "example.com";
 		String nonce = null;
 
@@ -33,17 +33,17 @@ public class JsonLdSignEd25519Signature2018Test {
 		signer.setCreated(created);
 		signer.setDomain(domain);
 		signer.setNonce(nonce);
-		LdSignature ldSignature = signer.sign(jsonLdObject);
+		LdProof ldProof = signer.sign(jsonLdObject);
 
-		assertEquals(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm(), ldSignature.getType());
-		assertEquals(creator, ldSignature.getCreator());
-		assertEquals(created, ldSignature.getCreated());
-		assertEquals(domain, ldSignature.getDomain());
-		assertEquals(nonce, ldSignature.getNonce());
-		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..VHW2KVx5CBBc51axDENuP94cVWc2-To0Ik-_UCx6vIQKZtLAP_1CZJsOKG7OWufPeeIuFG_lq67tutWAUgyyDA", ldSignature.getJws());
+		assertEquals(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm(), ldProof.getType());
+		assertEquals(creator, ldProof.getCreator());
+		assertEquals(created, ldProof.getCreated());
+		assertEquals(domain, ldProof.getDomain());
+		assertEquals(nonce, ldProof.getNonce());
+		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..5VI99nGh5wrAJRub5likTa5lLQ2Dmfiv-ByTRfd1D4WmnOSo3N1eSLemCYlXG95VY6Na-FuEHpjofI8iz8iPBQ", ldProof.getJws());
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
-		boolean verify = verifier.verify(jsonLdObject, ldSignature);
+		boolean verify = verifier.verify(jsonLdObject, ldProof);
 		assertTrue(verify);
 	}
 }

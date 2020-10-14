@@ -27,7 +27,7 @@ public class BasicSignTest {
 		String signatureValue;
 
 		JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256)
-				.customParam("b64", Boolean.FALSE)
+				.base64URLEncodePayload(false)
 				.criticalParams(Collections.singleton("b64"))
 				.build();
 
@@ -39,18 +39,8 @@ public class BasicSignTest {
 		jwsObject.sign(jwsSigner);
 		signatureValue = jwsObject.serialize(true);
 
-		/*
-		JsonWebSignature jws = new JsonWebSignature();
-		jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
-		jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
-		jws.setCriticalHeaderNames(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD);
-		jws.setPayload(unencodedPayload);
-
-		jws.setKey(TestUtil.testRSAPrivateKey);
-		signatureValue = jws.getDetachedContentCompactSerialization();*/
-
 		// done
 
-		assertEquals("eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..XrdJ42-RRCvuErPRZvQ2NQ4d47npAGnTcM-bkgJHPYnLft08eLtICjqlfUPD31Kk1WO2HoPm6WfqEDhiq4-QGnm3mJ6YJfamGR5AJeP7guIdKR_m_-zuW8U-vXzzCTsiS6vSDG7lYVKjtE3rRYGyGFA1fGA-CgjkOkA3vD12EQcWMMqThP68jeH3j0cOoKgnvxnEL-EDZRzkbO2wARkiCBc11BJw6vDnn-WXe4xjvZTQpupbxDRT3BQG75oht_Ye9nc_J3vCJviRKItKAdfIOC0fjPJz9qcU4HMeSwqO-r3EchJV_kIJOLa5lU8Nq4L6DGGp1HOZb0neXIC9QHzkBA", signatureValue);
+		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..tV8_yJKmBG6Efl6tQSW-0I3h1yubQAez3FMYuBg57oloZ8EdMZJ7EcHiyreNgXbRhJZ55bp92UwNUA98INACJvqrykm_-mwmEtltrHM6GkijyufyEOPMVh9JOlvVps7oS8h1EftlX6tvwYBhmn9iHGxOcYJvrJPbWDVt3rPRJf7Mn_wdGodFuZMCPKhEcserC6-xUSeV_aZTKHBklNbkNmL3Q1nbcTQvrMg4RLKwf4X6y3QRvb1vd0BAfmqA0H5HJ2ZAHvCLxIPlUHz8DN7kCRJa8lzoIbb4mAyYa8MAVgeuSyHJ89kF5UOZtVsMQayW6St2dSQR27dv3e4zRgk1Ig", signatureValue);
 	}
 }

@@ -45,35 +45,33 @@ Example JSON-LD document:
 
 Example code:
 
-	byte[] testEd25519PrivateKey = Hex.decodeHex("984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
-	
-	LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromReader(new FileReader("sign.test.jsonld"));
-	String verificationMethod = "https://example.com/jdoe/keys/1";
-	String domain = "example.com";
-	String nonce = null;
-	
-	Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(testEd25519PrivateKey);
-	signer.setCreated(new Date());
-	signer.setProofPurpose(LdSignature.JSONLD_TERM_ASSERTIONMETHOD);
-	signer.setVerificationMethod(verificationMethod);
-	signer.setDomain(domain);
-	signer.setNonce(nonce);
-	LdSignature ldSignature = signer.sign(jsonLdObject);
-	
-	LinkedHashMap<String, Object> jsonLdSignatureObject = ldSignature.getJsonLdSignatureObject();
-	
-	System.out.println(JsonUtils.toPrettyString(jsonLdSignatureObject));
+    JsonLDObject jsonLdObject = JsonLDObject.fromJson(new FileReader("input.jsonld"));
+    String verificationMethod = "https://example.com/jdoe/keys/1";
+    String domain = "example.com";
+    String nonce = null;
 
-Example Linked Data Signature:
+    byte[] testEd25519PrivateKey = Hex.decodeHex("984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
+
+    Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(testEd25519PrivateKey);
+    signer.setCreated(new Date());
+    signer.setProofPurpose(LDSecurityKeywords.JSONLD_TERM_ASSERTIONMETHOD);
+    signer.setVerificationMethod(verificationMethod);
+    signer.setDomain(domain);
+    signer.setNonce(nonce);
+    LdProof ldProof = signer.sign(jsonLdObject);
+
+    System.out.println(ldProof.toJson(true));
+
+Example Linked Data Proof:
 
 	{
-	  "type" : "Ed25519Signature2018",
-	  "created" : "2020-04-06T11:31:27Z",
-	  "domain" : "example.com",
-	  "proofPurpose" : "assertionMethod",
-	  "verificationMethod" : "https://example.com/jdoe/keys/1",
-	  "jws" : "eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJFZERTQSJ9..0DsZDTVnGwMypMH33__VCOYXoKvEumBlty-vuqib9YtkCms9bVSap4PWxzFg26B_U04hWoV6qcZnfaBXMSFZAg"
-	}
+        "type": "Ed25519Signature2018",
+        "created": "2020-10-13T13:10:48Z",
+        "domain": "example.com",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://example.com/jdoe/keys/1",
+        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..p13-5CBxueMExUH8mIadvF0tQPFpmCWni9a3FiyUhSFfygSYRxhmJmDmqzU12UgRDsB-V_2g5Zxev6KUWm19Cw"
+    }
 
 ### About
 

@@ -42,7 +42,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
 		try {
 
-			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.RS256).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
 			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.RS256);

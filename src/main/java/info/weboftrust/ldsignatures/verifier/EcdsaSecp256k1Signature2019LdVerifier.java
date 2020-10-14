@@ -10,7 +10,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 
-import info.weboftrust.ldsignatures.LdSignature;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSVerifierAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PublicKeyVerifier;
@@ -35,11 +35,11 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 		this((ByteVerifier) null);
 	}
 
-	public static boolean verify(byte[] signingInput, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
+	public static boolean verify(byte[] signingInput, LdProof ldProof, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// build the JWS and verify
 
-		String jws = ldSignature.getJws();
+		String jws = ldProof.getJws();
 		boolean verify;
 
 		try {
@@ -52,7 +52,7 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 
 			/*			JsonWebSignature jws = new JsonWebSignature();
 			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
-			jws.setCompactSerialization(ldSignature.getJws());
+			jws.setCompactSerialization(ldProof.getJws());
 			jws.setPayload(unencodedPayload);
 
 			jws.setKey(publicKey);
@@ -67,12 +67,12 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 		return verify;
 	}
 
-	/*	public static boolean verify(String canonicalizedDocument, LdSignature ldSignature, ByteVerifier verifier) throws GeneralSecurityException {
+	/*	public static boolean verify(String canonicalizedDocument, LdSignature ldProof, ByteVerifier verifier) throws GeneralSecurityException {
 
 		// verify
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureValueBytes = Base64.decodeBase64(ldSignature.getJws());
+		byte[] signatureValueBytes = Base64.decodeBase64(ldProof.getJws());
 		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes, "ES256K");
 
 		// done
@@ -81,8 +81,8 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 	}*/
 
 	@Override
-	public boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException {
+	public boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException {
 
-		return verify(signingInput, ldSignature, this.getVerifier());
+		return verify(signingInput, ldProof, this.getVerifier());
 	}
 }

@@ -5,7 +5,7 @@
 		"homepage": "schema:url",
 		"image": "schema:image"
 	}, "https://w3id.org/security/v2"],
-	"name": "Evil Hacker",
+	"name": "Manu Sporny",
 	"homepage": "https://manu.sporny.org/",
 	"image": "https://manu.sporny.org/images/manu.png",
 	"proof": {
@@ -14,6 +14,6 @@
 		"created": "2017-10-24T05:33:31Z",
 		"domain": "example.com",
 		"nonce": null,
-		"jws": "eyJjcml0IjpbImI2NCJdLCJiNjQiOmZhbHNlLCJhbGciOiJSUzI1NiJ9..q7KR0217QFEUFF6q-vbCMcyBgANJCQCP9nCDPPbQHUSgOnnr7iN-8gil3FN2v-NNrBAxSh2J8WCZAttxYUahSosVPIFE6wPnvsaHtk1oLizMeitPthsle_Rvr8qwEagOzlQyP2NmDQsDiCOToQyqJ1rH6Cg3-chxgyitvZ2Odts4b9EW93zZuMMu3JQ_r0RNHVfmFGsTz-I9SCsrHePWHrrZH4eeVoGsRf4H8GSOQ_MC8hDH_EPNqGwqwNirO8qQve57rSfVqFCTDQwZAQP8U6pFApwSapTFIlG3oW6ULKOfwWsg3vi1btbgGBMI-1KGzOVt5MTfjdJVTw8SDIgJiA"
+		"jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..Re15jwVmt168oDUXs76hCX3shLHkaNvZNrLSxwDvyfTvkFvmxy3u9bdlFCKBOUqYQefu7AC1qMEFmOn5nHme5SIa9OlO8_7vnwFo7DHf2JJajI40JllkVNxQ4hIhjqceD8tS5_J6fpt0RkhpX6AWRMj5wB60JenL0oONcF0G5EWR_s1g4R8w8benOTNFT53TZGmku6QQib6fOEzqOo_SVJVvBZYhim8UEHcVNOc2iCre0eobnXrGWxhdL0sUiltb0apkyWveJAdJ9ENHK6ef8zZC3NlWZKK5QzMBjbKm_wMDbPOI3e7mWarihM7bqjTdrHHeOifWEK_Cx9iuWJMx_A"
 	}
 }

@@ -1,10 +1,9 @@
 package info.weboftrust.ldsignatures;
 
-import java.util.LinkedHashMap;
+import java.io.InputStreamReader;
 
+import foundation.identity.jsonld.JsonLDObject;
 import org.junit.jupiter.api.Test;
-
-import com.github.jsonldjava.utils.JsonUtils;
 
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,24 +12,23 @@ public class JsonLdVerifyEd25519Signature2018Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testVerify() throws Exception {
+	public void testVerify() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.ed25519.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.good.ed25519.jsonld")));
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
-
 		assertTrue(verify);
 	}
 
+	@Test
 	@SuppressWarnings("unchecked")
-	public void testBadVerify() throws Exception {
+	public void testBadVerify() throws Throwable {
 
-		LinkedHashMap<String, Object> jsonLdObject = (LinkedHashMap<String, Object>) JsonUtils.fromInputStream(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.ed25519.bad.jsonld"));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.bad.ed25519.jsonld")));
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
-
 		assertFalse(verify);
 	}
 }

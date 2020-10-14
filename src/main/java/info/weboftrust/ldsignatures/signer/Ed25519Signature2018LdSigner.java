@@ -41,7 +41,7 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 
 		try {
 
-			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+			JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
 			byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.EdDSA);

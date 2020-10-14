@@ -1,15 +1,18 @@
 package info.weboftrust.ldsignatures.verifier;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.LinkedHashMap;
 
-import com.github.jsonldjava.core.JsonLdError;
+import com.apicatalog.jsonld.api.JsonLdError;
 
-import info.weboftrust.ldsignatures.LdSignature;
+import foundation.identity.jsonld.JsonLDException;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
+import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.util.CanonicalizationUtil;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
@@ -39,50 +42,51 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		return ldVerifierForSignatureSuite(signatureSuite.getTerm());
 	}
 
-	public abstract boolean verify(byte[] signingInput, LdSignature ldSignature) throws GeneralSecurityException;
+	public abstract boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException;
 
-	public boolean verify(LinkedHashMap<String, Object> jsonLdObject, LdSignature ldSignature) throws JsonLdError, GeneralSecurityException {
+	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws GeneralSecurityException, JsonLDException {
 
-		// check the signature object
+		// check the proof object
 
-		if (! this.getSignatureSuite().getTerm().equals(ldSignature.getType())) throw new GeneralSecurityException("Unexpected signature type: " + ldSignature.getType() + " is not " + this.getSignatureSuite().getTerm());
+		if (! this.getSignatureSuite().getTerm().equals(ldProof.getType())) throw new GeneralSecurityException("Unexpected signature type: " + ldProof.getType() + " is not " + this.getSignatureSuite().getTerm());
 
-		// obtain the canonicalized proof options
+		// obtain the normalized proof options
 
-		LinkedHashMap<String, Object> jsonLdObjectProofOptions = new LinkedHashMap<String, Object> (ldSignature.getJsonLdProofObject());
-		LdSignature.removeLdProofValues(jsonLdObjectProofOptions);
-		LdSignature.addContextToJsonLdObject(jsonLdObjectProofOptions);
-		String canonicalizedProofOptions = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdObjectProofOptions);
+		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
+		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions, ldProof.getJsonObject());
+		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
+		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
-		// obtain the canonicalized document
+		// obtain the normalized document
 
-		LinkedHashMap<String, Object> jsonLdDocument = new LinkedHashMap<String, Object> (jsonLdObject);
-		LdSignature.removeFromJsonLdObject(jsonLdDocument);
-		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(jsonLdDocument);
+		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
+		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof, jsonLdObject.getJsonObject());
+		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
+		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
 		// verify
 
 		byte[] signingInput = new byte[64];
-		System.arraycopy(SHAUtil.sha256(canonicalizedProofOptions), 0, signingInput, 0, 32);
-		System.arraycopy(SHAUtil.sha256(canonicalizedDocument), 0, signingInput, 32, 32);
+		System.arraycopy(SHAUtil.sha256(normalizedProofOptions), 0, signingInput, 0, 32);
+		System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
 
-		boolean verify = this.verify(signingInput, ldSignature);
+		boolean verify = this.verify(signingInput, ldProof);
 
 		// done
 
 		return verify;
 	}
 
-	public boolean verify(LinkedHashMap<String, Object> jsonLdObject) throws JsonLdError, GeneralSecurityException {
+	public boolean verify(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
 
 		// obtain the signature object
 
-		LdSignature ldSignature = LdSignature.getFromJsonLdObject(jsonLdObject);
-		if (ldSignature == null) return false;
+		LdProof ldProof = LdProof.getFromJsonLDObject(jsonLdObject);
+		if (ldProof == null) return false;
 
 		// done
 
-		return this.verify(jsonLdObject, ldSignature);
+		return this.verify(jsonLdObject, ldProof);
 	}
 
 	public SignatureSuite getSignatureSuite() {

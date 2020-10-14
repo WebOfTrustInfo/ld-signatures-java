@@ -33,6 +33,10 @@
 
 	<repositories>
 		<repository>
+			<id>danubetech-maven-public</id>
+			<url>https://repo.danubetech.com/repository/maven-public/</url>
+		</repository>
+		<repository>
 			<id>sovrin</id>
 			<url>https://repo.sovrin.org/repository/maven-public</url>
 		</repository>
@@ -50,8 +54,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>11</release>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -130,34 +134,34 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.jsonld-java</groupId>
-			<artifactId>jsonld-java</artifactId>
-			<version>0.12.3</version>
-			<scope>compile</scope>
+			<groupId>decentralized-identity</groupId>
+			<artifactId>jsonld-common-java</artifactId>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
-			<version>8.14.1</version>
-			<scope>compile</scope>
+			<version>9.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.abstractj.kalium</groupId>
 			<artifactId>kalium</artifactId>
 			<version>0.8.0</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bitcoinj</groupId>
 			<artifactId>bitcoinj-core</artifactId>
 			<version>0.15.8</version>
-			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.15</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hyperledger</groupId>
 			<artifactId>indy</artifactId>
 			<version>1.14.0</version>
-			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
