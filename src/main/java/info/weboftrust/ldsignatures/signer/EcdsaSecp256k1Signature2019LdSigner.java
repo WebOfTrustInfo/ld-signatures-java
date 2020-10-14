@@ -47,15 +47,6 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 			JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.ES256K);
 			Base64URL signature = jwsSigner.sign(jwsHeader, jwsSigningInput);
 			jws = JWSUtil.serializeDetachedJws(jwsHeader, signature);
-
-			/*			JsonWebSignature jws = new JsonWebSignature();
-			jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
-			jws.getHeaders().setObjectHeaderValue(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD, false);
-			jws.setCriticalHeaderNames(HeaderParameterNames.BASE64URL_ENCODE_PAYLOAD);
-			jws.setPayload(unencodedPayload);
-
-			jws.setKey(privateKey);
-			signatureValue = jws.getDetachedContentCompactSerialization();*/
 		} catch (JOSEException ex) {
 
 			throw new GeneralSecurityException("JOSE signing problem: " + ex.getMessage(), ex);
