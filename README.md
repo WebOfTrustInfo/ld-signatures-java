@@ -46,19 +46,16 @@ Example JSON-LD document:
 Example code:
 
     JsonLDObject jsonLdObject = JsonLDObject.fromJson(new FileReader("input.jsonld"));
-    String verificationMethod = "https://example.com/jdoe/keys/1";
-    String domain = "example.com";
-    String nonce = null;
 
     byte[] testEd25519PrivateKey = Hex.decodeHex("984b589e121040156838303f107e13150be4a80fc5088ccba0b0bdc9b1d89090de8777a28f8da1a74e7a13090ed974d879bf692d001cddee16e4cc9f84b60580".toCharArray());
 
     Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(testEd25519PrivateKey);
     signer.setCreated(new Date());
     signer.setProofPurpose(LDSecurityKeywords.JSONLD_TERM_ASSERTIONMETHOD);
-    signer.setVerificationMethod(verificationMethod);
-    signer.setDomain(domain);
-    signer.setNonce(nonce);
-    LdProof ldProof = signer.sign(jsonLdObject, true, false);
+    signer.setVerificationMethod(URI.create("https://example.com/jdoe/keys/1"));
+    signer.setDomain("example.com");
+    signer.setNonce("343s$FSFDa-");
+    LdProof ldProof = signer.sign(jsonLdObject);
 
     System.out.println(jsonLdObject.toJson(true));
 
@@ -66,11 +63,12 @@ Example Linked Data Proof:
 
 	{
         "type": "Ed25519Signature2018",
-        "created": "2020-10-13T13:10:48Z",
+        "created": "2020-10-15T09:42:46Z",
         "domain": "example.com",
+        "nonce" : "343s$FSFDa-",
         "proofPurpose": "assertionMethod",
         "verificationMethod": "https://example.com/jdoe/keys/1",
-        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..p13-5CBxueMExUH8mIadvF0tQPFpmCWni9a3FiyUhSFfygSYRxhmJmDmqzU12UgRDsB-V_2g5Zxev6KUWm19Cw"
+        "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..8sFJcDtO_pYLjIkJNKfIOL3IOgm_bpbOqqr8ha0ZDa-e6XorbywVQmFCATNXPqMV10deru-zajF79tVelKo-Bw"
     }
 
 ### About
