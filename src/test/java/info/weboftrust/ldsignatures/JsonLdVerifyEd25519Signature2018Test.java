@@ -7,6 +7,7 @@ import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ public class JsonLdVerifyEd25519Signature2018Test {
 	public void testVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.good.ed25519.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -42,6 +44,7 @@ public class JsonLdVerifyEd25519Signature2018Test {
 	public void testBadVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.bad.ed25519.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

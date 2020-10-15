@@ -1,6 +1,7 @@
 package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	public void testVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.good.rsa.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
@@ -28,6 +30,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	public void testBadVerify() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.bad.rsa.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
 		boolean verify = verifier.verify(jsonLdObject);

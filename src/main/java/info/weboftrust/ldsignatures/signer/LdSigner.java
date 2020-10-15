@@ -83,7 +83,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 				.base(ldProofWithoutProofValues)
 				.defaultContexts(true)
 				.build();
-
+		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
 		// obtain the normalized document
@@ -91,7 +91,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
 				.base(jsonLdObject)
 				.build();
-
+		jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
 		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
 

@@ -2,6 +2,7 @@ package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.signer.RsaSignature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.verifier.RsaSignature2018LdVerifier;
@@ -21,6 +22,7 @@ public class JsonLdSignRsaSignature2018Test {
 	public void testSignEd25519Signature2018() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("https://example.com/jdoe/keys/1");
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");

@@ -2,6 +2,7 @@ package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.signer.EcdsaSecp256k1Signature2019LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.verifier.EcdsaSecp256k1Signature2019LdVerifier;
@@ -21,6 +22,7 @@ public class JsonLdSignEcdsaSecp256k1Signature2019Test {
 	public void testSignEcdsaSecp256k1Signature2019() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("input.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");

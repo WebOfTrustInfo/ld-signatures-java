@@ -8,6 +8,7 @@ import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
 import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
+import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.signer.Ed25519Signature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
@@ -36,6 +37,7 @@ public class JsonLdSignEd25519Signature2018Test {
 	public void testSignEd25519Signature2018() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld")));
+		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
 		Date created = JsonLDUtils.DATE_FORMAT.parse("2017-10-24T05:33:31Z");

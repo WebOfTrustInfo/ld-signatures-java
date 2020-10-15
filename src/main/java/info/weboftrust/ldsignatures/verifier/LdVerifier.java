@@ -49,15 +49,20 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 		// obtain the normalized proof options
 
-		JsonLDObject jsonLdObjectProofOptions = LdProof.builder().defaultContexts(true).build();
-		JsonLDUtils.jsonLdAddAll(jsonLdObjectProofOptions, ldProof.getJsonObject());
+		JsonLDObject jsonLdObjectProofOptions = LdProof.builder()
+				.defaultContexts(true)
+				.base(ldProof)
+				.build();
+		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
 		// obtain the normalized document
 
-		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder().build();
-		JsonLDUtils.jsonLdAddAll(jsonLdDocumentWithoutProof, jsonLdObject.getJsonObject());
+		JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
+				.base(jsonLdObject)
+				.build();
+		jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
 		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
 
