@@ -58,9 +58,9 @@ Example code:
     signer.setVerificationMethod(verificationMethod);
     signer.setDomain(domain);
     signer.setNonce(nonce);
-    LdProof ldProof = signer.sign(jsonLdObject);
+    LdProof ldProof = signer.sign(jsonLdObject, true, false);
 
-    System.out.println(ldProof.toJson(true));
+    System.out.println(jsonLdObject.toJson(true));
 
 Example Linked Data Proof:
 
