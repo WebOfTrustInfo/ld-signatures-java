@@ -39,7 +39,7 @@ public class LdProof extends JsonLDObject {
 		private String domain;
 		private String nonce;
 		private String proofPurpose;
-		private String verificationMethod;
+		private URI verificationMethod;
 		private String proofValue;
 		private String jws;
 
@@ -58,7 +58,7 @@ public class LdProof extends JsonLDObject {
 			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
 			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
 			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, this.verificationMethod);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
 			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
 			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
@@ -90,7 +90,7 @@ public class LdProof extends JsonLDObject {
 			return (B) this;
 		}
 
-		public B verificationMethod(String verificationMethod) {
+		public B verificationMethod(URI verificationMethod) {
 			this.verificationMethod = verificationMethod;
 			return (B) this;
 		}
@@ -167,8 +167,8 @@ public class LdProof extends JsonLDObject {
 		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE);
 	}
 
-	public String getVerificationMethod() {
-		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD);
+	public URI getVerificationMethod() {
+		return JsonLDUtils.stringToUri(JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD));
 	}
 
 	public String getProofValue() {

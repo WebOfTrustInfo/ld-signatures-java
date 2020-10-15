@@ -24,7 +24,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 	private String domain;
 	private String nonce;
 	private String proofPurpose;
-	private String verificationMethod;
+	private URI verificationMethod;
 
 	protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer) {
 
@@ -32,7 +32,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		this.signer = signer;
 	}
 
-	protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, Date created, String domain, String nonce, String proofPurpose, String verificationMethod) {
+	protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, Date created, String domain, String nonce, String proofPurpose, String URI) {
 
 		this.signatureSuite = signatureSuite;
 		this.signer = signer;
@@ -119,7 +119,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public LdProof sign(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
 
-		return this.sign(jsonLdObject, false, false);
+		return this.sign(jsonLdObject, true, false);
 	}
 
 	public SignatureSuite getSignatureSuite() {
@@ -181,11 +181,11 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		this.proofPurpose = proofPurpose;
 	}
 
-	public String getVerificationMethod() {
+	public URI getVerificationMethod() {
 		return verificationMethod;
 	}
 
-	public void setVerificationMethod(String verificationMethod) {
+	public void setVerificationMethod(URI verificationMethod) {
 		this.verificationMethod = verificationMethod;
 	}
 }
