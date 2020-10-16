@@ -1,18 +1,18 @@
-Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
-
 ![RWoT Logo](https://github.com/WebOfTrustInfo/ld-signatures-java/blob/master/wot-logo.png?raw=true)
 
-### Information
+# ld-signatures-java
+
+## Information
 
 This is a work-in-progress implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
- - [EcdsaSecp256k1Signature2019](https://w3c-dvcg.github.io/lds-ecdsa-secp256k1-2019/)
+ - [EcdsaSecp256k1Signature2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019/)
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
 
-Highly experimental, incomplete, and not ready for production use! Use at your own risk! Pull requests welcome.
+Not ready for production use! Use at your own risk! Pull requests welcome.
 
-### Maven
+## Maven
 
 Build:
 
@@ -27,7 +27,7 @@ Dependency:
 		<scope>compile</scope>
 	</dependency>
 
-### Example
+## Example
 
 Example JSON-LD document:
 
@@ -71,8 +71,8 @@ Example Linked Data Proof:
         "jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..8sFJcDtO_pYLjIkJNKfIOL3IOgm_bpbOqqr8ha0ZDa-e6XorbywVQmFCATNXPqMV10deru-zajF79tVelKo-Bw"
     }
 
-### About
+## About
 
-Rebooting Web-of-Trust - http://www.weboftrust.info/
+Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
 
 Markus Sabadello, Danube Tech - https://danubetech.com/
