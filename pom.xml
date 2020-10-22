@@ -1,19 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.weboftrust</groupId>
 	<artifactId>ld-signatures-java</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.3.0</version>
 	<name>ld-signatures-java</name>
 
 	<scm>
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
 		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
 		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
-	</scm>
+	  <tag>v0.3.0</tag>
+  </scm>
 
 	<issueManagement>
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java/issues</url>
