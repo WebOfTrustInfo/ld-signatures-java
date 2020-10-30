@@ -6,7 +6,7 @@
 	<groupId>info.weboftrust</groupId>
 	<artifactId>ld-signatures-java</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.4-SNAPSHOT</version>
 	<name>ld-signatures-java</name>
 
 	<scm>
