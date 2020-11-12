@@ -4,7 +4,7 @@
 		"name": "schema:name",
 		"homepage": "schema:url",
 		"image": "schema:image"
-	}, "https://w3id.org/security/v2"],
+	}, "https://w3id.org/security/v3"],
 	"name": "Evil Hacker",
 	"homepage": "https://manu.sporny.org/",
 	"image": "https://manu.sporny.org/images/manu.png",

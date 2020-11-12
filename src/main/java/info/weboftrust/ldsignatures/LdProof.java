@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class LdProof extends JsonLDObject {
 
-	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V2 };
+	public static final URI[] DEFAULT_JSONLD_CONTEXTS = { LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3 };
 	public static final String[] DEFAULT_JSONLD_TYPES = { };
 	public static final String DEFAULT_JSONLD_PREDICATE = LDSecurityKeywords.JSONLD_TERM_PROOF;
 	public static final DocumentLoader DEFAULT_DOCUMENT_LOADER = LDSecurityContexts.DOCUMENT_LOADER;
