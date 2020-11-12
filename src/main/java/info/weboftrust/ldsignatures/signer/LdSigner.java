@@ -2,13 +2,13 @@ package info.weboftrust.ldsignatures.signer;
 
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
@@ -61,7 +61,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract String sign(byte[] bytes) throws GeneralSecurityException;
 
-	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws GeneralSecurityException, JsonLDException {
+	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
 		// build the proof object
 
@@ -84,7 +84,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 				.defaultContexts(true)
 				.build();
 		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
-		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
+		String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
 
 		// obtain the normalized document
 
@@ -93,7 +93,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 				.build();
 		jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
-		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
+		String normalizedDocument = jsonLdDocumentWithoutProof.normalize("urdna2015");
 
 		// sign
 
@@ -117,7 +117,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		return ldProof;
 	}
 
-	public LdProof sign(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
+	public LdProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
 		return this.sign(jsonLdObject, true, false);
 	}

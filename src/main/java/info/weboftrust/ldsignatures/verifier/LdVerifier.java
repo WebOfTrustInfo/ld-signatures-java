@@ -2,14 +2,13 @@ package info.weboftrust.ldsignatures.verifier;
 
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
-import foundation.identity.jsonld.normalization.NormalizationAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteVerifier;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
@@ -41,7 +40,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 
 	public abstract boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException;
 
-	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws GeneralSecurityException, JsonLDException {
+	public boolean verify(JsonLDObject jsonLdObject, LdProof ldProof) throws IOException, GeneralSecurityException, JsonLDException {
 
 		// check the proof object
 
@@ -55,7 +54,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 				.build();
 		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
-		String normalizedProofOptions = jsonLdObjectProofOptions.normalize(NormalizationAlgorithm.Version.URDNA2015);
+		String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
 
 		// obtain the normalized document
 
@@ -64,7 +63,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 				.build();
 		jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
-		String normalizedDocument = jsonLdDocumentWithoutProof.normalize(NormalizationAlgorithm.Version.URDNA2015);
+		String normalizedDocument = jsonLdDocumentWithoutProof.normalize("urdna2015");
 
 		// verify
 
@@ -79,7 +78,7 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 		return verify;
 	}
 
-	public boolean verify(JsonLDObject jsonLdObject) throws GeneralSecurityException, JsonLDException {
+	public boolean verify(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
 
 		// obtain the signature object
 
