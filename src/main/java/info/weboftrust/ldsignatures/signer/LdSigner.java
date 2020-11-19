@@ -66,7 +66,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		// build the proof object
 
 		LdProof ldProofWithoutProofValues = LdProof.builder()
-				.defaultContexts(defaultContexts)
+				.defaultContexts(false)
 				.defaultTypes(false)
 				.type(this.getSignatureSuite().getTerm())
 				.creator(this.getCreator())
@@ -105,6 +105,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
 		LdProof ldProof = LdProof.builder()
 				.base(ldProofWithoutProofValues)
+				.defaultContexts(defaultContexts)
 				.jws(jws)
 				.build();
 
