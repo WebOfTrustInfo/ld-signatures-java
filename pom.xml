@@ -40,6 +40,10 @@
 			<id>sovrin</id>
 			<url>https://repo.sovrin.org/repository/maven-public</url>
 		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<properties>
@@ -152,6 +156,11 @@
 			<groupId>org.bitcoinj</groupId>
 			<artifactId>bitcoinj-core</artifactId>
 			<version>0.15.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.multiformats</groupId>
+			<artifactId>java-multibase</artifactId>
+			<version>v1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>

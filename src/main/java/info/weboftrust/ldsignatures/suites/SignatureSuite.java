@@ -11,16 +11,16 @@ public abstract class SignatureSuite {
 	private URI type;
 	private URI canonicalizationAlgorithm;
 	private URI digestAlgorithm;
-	private URI signatureAlgorithm;
+	private URI proofAlgorithm;
 
-	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI signatureAlgorithm) {
+	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm) {
 
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
 		this.canonicalizationAlgorithm = canonicalizationAlgorithm;
 		this.digestAlgorithm = digestAlgorithm;
-		this.signatureAlgorithm = signatureAlgorithm;
+		this.proofAlgorithm = proofAlgorithm;
 	}
 
 	public String getTerm() {
@@ -43,8 +43,8 @@ public abstract class SignatureSuite {
 		return digestAlgorithm;
 	}
 
-	public URI getSignatureAlgorithm() {
-		return signatureAlgorithm;
+	public URI getProofAlgorithm() {
+		return proofAlgorithm;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public abstract class SignatureSuite {
 		result = prime * result + ((canonicalizationAlgorithm == null) ? 0 : canonicalizationAlgorithm.hashCode());
 		result = prime * result + ((digestAlgorithm == null) ? 0 : digestAlgorithm.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((signatureAlgorithm == null) ? 0 : signatureAlgorithm.hashCode());
+		result = prime * result + ((proofAlgorithm == null) ? 0 : proofAlgorithm.hashCode());
 		result = prime * result + ((term == null) ? 0 : term.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -84,10 +84,10 @@ public abstract class SignatureSuite {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (signatureAlgorithm == null) {
-			if (other.signatureAlgorithm != null)
+		if (proofAlgorithm == null) {
+			if (other.proofAlgorithm != null)
 				return false;
-		} else if (!signatureAlgorithm.equals(other.signatureAlgorithm))
+		} else if (!proofAlgorithm.equals(other.proofAlgorithm))
 			return false;
 		if (term == null) {
 			if (other.term != null)
@@ -105,7 +105,7 @@ public abstract class SignatureSuite {
 	@Override
 	public String toString() {
 		return "SignatureSuite [term=" + term + ", id=" + id + ", type=" + type + ", canonicalizationAlgorithm="
-				+ canonicalizationAlgorithm + ", digestAlgorithm=" + digestAlgorithm + ", signatureAlgorithm="
-				+ signatureAlgorithm + "]";
+				+ canonicalizationAlgorithm + ", digestAlgorithm=" + digestAlgorithm + ", proofAlgorithm="
+				+ proofAlgorithm + "]";
 	}
 }

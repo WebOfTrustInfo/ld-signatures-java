@@ -2,6 +2,7 @@ package info.weboftrust.ldsignatures.signer;
 
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.Map;
 
 public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 
@@ -59,7 +61,7 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		return ldSignerForSignatureSuite(signatureSuite.getTerm());
 	}
 
-	public abstract String sign(byte[] bytes) throws GeneralSecurityException;
+	public abstract void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
 
 	public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
@@ -101,13 +103,13 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 		System.arraycopy(SHAUtil.sha256(normalizedProofOptions), 0, signingInput, 0, 32);
 		System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
 
-		String jws = this.sign(signingInput);
-
-		LdProof ldProof = LdProof.builder()
+		LdProof.Builder ldProofBuilder = LdProof.builder()
 				.base(ldProofWithoutProofValues)
-				.defaultContexts(defaultContexts)
-				.jws(jws)
-				.build();
+				.defaultContexts(defaultContexts);
+
+		this.sign(ldProofBuilder, signingInput);
+
+		LdProof ldProof = ldProofBuilder.build();
 
 		// add proof to JSON-LD?
 

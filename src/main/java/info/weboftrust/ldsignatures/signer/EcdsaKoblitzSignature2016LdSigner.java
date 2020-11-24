@@ -5,6 +5,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.crypto.ByteSigner;
 import info.weboftrust.ldsignatures.crypto.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
@@ -33,7 +34,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 		this((ByteSigner) null);
 	}
 
-	public static String sign(byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+	public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
 		// build the JWS and sign
 
@@ -54,12 +55,12 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 
 		// done
 
-		return jws;
+		ldProofBuilder.jws(jws);
 	}
 
 	@Override
-	public String sign(byte[] signingInput) throws GeneralSecurityException {
+	public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
-		return sign(signingInput, this.getSigner());
+		sign(ldProofBuilder, signingInput, this.getSigner());
 	}
 }
