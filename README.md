@@ -23,7 +23,7 @@ Dependency:
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>0.3-SNAPSHOT</version>
+		<version>0.4-SNAPSHOT</version>
 		<scope>compile</scope>
 	</dependency>
 
