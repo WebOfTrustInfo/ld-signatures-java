@@ -85,7 +85,6 @@ public abstract class LdSigner <SIGNATURESUITE extends SignatureSuite> {
 				.base(ldProofWithoutProofValues)
 				.defaultContexts(true)
 				.build();
-		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
 
 		// obtain the normalized document
