@@ -52,7 +52,6 @@ public abstract class LdVerifier <SIGNATURESUITE extends SignatureSuite> {
 				.defaultContexts(true)
 				.base(ldProof)
 				.build();
-		jsonLdObjectProofOptions.setDocumentLoader(jsonLdObject.getDocumentLoader());
 		LdProof.removeLdProofValues(jsonLdObjectProofOptions);
 		String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
 
