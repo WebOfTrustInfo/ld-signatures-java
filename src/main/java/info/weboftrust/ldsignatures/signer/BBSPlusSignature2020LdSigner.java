@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.signer;
 
+import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.JWSAlgorithms;
 import info.weboftrust.ldsignatures.LdProof;
 import com.danubetech.keyformats.crypto.ByteSigner;
@@ -7,7 +8,6 @@ import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PrivateKeySigne
 import info.weboftrust.ldsignatures.suites.BBSPlusSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
-import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
@@ -18,7 +18,7 @@ public class BBSPlusSignature2020LdSigner extends LdSigner<BBSPlusSignature2020S
         super(SignatureSuites.SIGNATURE_SUITE_BBSPLUSSIGNATURE2020, signer);
     }
 
-    public BBSPlusSignature2020LdSigner(ECKey privateKey) {
+    public BBSPlusSignature2020LdSigner(KeyPair privateKey) {
 
         this(new BLS12381_G2_BBSPlus_PrivateKeySigner(privateKey));
     }
