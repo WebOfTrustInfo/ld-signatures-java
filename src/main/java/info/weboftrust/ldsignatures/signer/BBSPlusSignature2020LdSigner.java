@@ -1,9 +1,9 @@
 package info.weboftrust.ldsignatures.signer;
 
+import com.danubetech.keyformats.jose.JWSAlgorithms;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.crypto.ByteSigner;
-import info.weboftrust.ldsignatures.crypto.impl.BLS12381_G2_BBSPlus_PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.jose.JWSAlgorithms;
+import com.danubetech.keyformats.crypto.ByteSigner;
+import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PrivateKeySigner;
 import info.weboftrust.ldsignatures.suites.BBSPlusSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;

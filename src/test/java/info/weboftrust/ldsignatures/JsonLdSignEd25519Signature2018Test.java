@@ -2,12 +2,12 @@ package info.weboftrust.ldsignatures;
 
 import foundation.identity.jsonld.JsonLDObject;
 import foundation.identity.jsonld.JsonLDUtils;
-import info.weboftrust.ldsignatures.crypto.provider.Ed25519Provider;
-import info.weboftrust.ldsignatures.crypto.provider.RandomProvider;
-import info.weboftrust.ldsignatures.crypto.provider.SHA256Provider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.JavaRandomProvider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.JavaSHA256Provider;
-import info.weboftrust.ldsignatures.crypto.provider.impl.TinkEd25519Provider;
+import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
+import com.danubetech.keyformats.crypto.provider.RandomProvider;
+import com.danubetech.keyformats.crypto.provider.SHA256Provider;
+import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
+import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
+import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.signer.Ed25519Signature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;

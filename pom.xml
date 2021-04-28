@@ -138,9 +138,32 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.hyperledger</groupId>
+			<artifactId>indy</artifactId>
+			<version>1.14.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.crypto.tink</groupId>
+			<artifactId>tink</artifactId>
+			<version>1.5.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.mattrglobal</groupId>
+			<artifactId>bbs.signatures</artifactId>
+			<version>1.5-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>decentralized-identity</groupId>
 			<artifactId>jsonld-common-java</artifactId>
 			<version>0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.danubetech</groupId>
+			<artifactId>key-formats-java</artifactId>
+			<version>0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
@@ -148,42 +171,9 @@
 			<version>9.9</version>
 		</dependency>
 		<dependency>
-			<groupId>org.abstractj.kalium</groupId>
-			<artifactId>kalium</artifactId>
-			<version>0.8.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bitcoinj</groupId>
-			<artifactId>bitcoinj-core</artifactId>
-			<version>0.15.10</version>
-		</dependency>
-		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multibase</artifactId>
 			<version>v1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.15</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hyperledger</groupId>
-			<artifactId>indy</artifactId>
-			<version>1.14.0</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.google.crypto.tink</groupId>
-			<artifactId>tink</artifactId>
-			<version>1.5.0</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.github.mattrglobal</groupId>
-			<artifactId>bbs.signatures</artifactId>
-			<version>1.5-SNAPSHOT</version>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
