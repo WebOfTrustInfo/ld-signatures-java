@@ -4,10 +4,9 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.KeyType;
-import info.weboftrust.ldsignatures.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.impl.RSA_PS256_PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.impl.RSA_RS256_PrivateKeySigner;
-import info.weboftrust.ldsignatures.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
+import info.weboftrust.ldsignatures.crypto.impl.*;
+import info.weboftrust.ldsignatures.crypto.jose.Curves;
+import info.weboftrust.ldsignatures.crypto.jose.JWSAlgorithms;
 import org.bitcoinj.core.ECKey;
 
 import java.security.interfaces.RSAPrivateKey;
@@ -27,6 +26,12 @@ public class PrivateKeySignerFactory {
 		} else if (Curve.SECP256K1.getName().equals(keyType)) {
 
 			if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new secp256k1_ES256K_PrivateKeySigner((ECKey) privateKey);
+		} else if (Curves.BLS12381_G1.getName().equals(keyType)) {
+
+			if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G1_BBSPlus_PrivateKeySigner((ECKey) privateKey);
+		} else if (Curves.BLS12381_G2.getName().equals(keyType)) {
+
+			if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G2_BBSPlus_PrivateKeySigner((ECKey) privateKey);
 		} else if (Curve.Ed25519.getName().equals(keyType)) {
 
 			if (JWSAlgorithm.EdDSA.getName().equals(algorithm)) return new Ed25519_EdDSA_PrivateKeySigner((byte[]) privateKey);

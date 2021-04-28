@@ -64,19 +64,6 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
 		return verify;
 	}
 
-	/*	public static boolean verify(String canonicalizedDocument, LdSignature ldProof, ByteVerifier verifier) throws GeneralSecurityException {
-
-		// verify
-
-		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureValueBytes = Base64.decodeBase64(ldProof.getJws());
-		boolean verify = verifier.verify(canonicalizedDocumentBytes, signatureValueBytes, "EdDSA");
-
-		// done
-
-		return verify;
-	}*/
-
 	@Override
 	public boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException {
 

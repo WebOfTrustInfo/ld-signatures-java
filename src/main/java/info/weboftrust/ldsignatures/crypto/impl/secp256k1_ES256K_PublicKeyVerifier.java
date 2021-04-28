@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
+import com.nimbusds.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
@@ -11,7 +12,7 @@ public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey>
 
 	public secp256k1_ES256K_PublicKeyVerifier(ECKey publicKey) {
 
-		super(publicKey, "ES256K");
+		super(publicKey, JWSAlgorithm.ES256K.getName());
 	}
 
 	@Override

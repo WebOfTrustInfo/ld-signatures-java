@@ -7,4 +7,5 @@ public class SignatureSuites {
 	public static final Ed25519Signature2020SignatureSuite SIGNATURE_SUITE_ED25519SIGNATURE2020 = new Ed25519Signature2020SignatureSuite();
 	public static final EcdsaKoblitzSignature2016SignatureSuite SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016SignatureSuite();
 	public static final EcdsaSecp256k1Signature2019SignatureSuite SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019 = new EcdsaSecp256k1Signature2019SignatureSuite();
+	public static final BBSPlusSignature2020SignatureSuite SIGNATURE_SUITE_BBSPLUSSIGNATURE2020 = new BBSPlusSignature2020SignatureSuite();
 }

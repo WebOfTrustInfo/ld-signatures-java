@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
+import com.nimbusds.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.crypto.PrivateKeySigner;
 
 import java.security.GeneralSecurityException;
@@ -10,7 +11,7 @@ public class RSA_RS256_PrivateKeySigner extends PrivateKeySigner<RSAPrivateKey> 
 
 	public RSA_RS256_PrivateKeySigner(RSAPrivateKey privateKey) {
 
-		super(privateKey, "RS256");
+		super(privateKey, JWSAlgorithm.RS256.getName());
 	}
 
 	@Override

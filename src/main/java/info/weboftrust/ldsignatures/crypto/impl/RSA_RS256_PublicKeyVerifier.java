@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.crypto.impl;
 
+import com.nimbusds.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.crypto.PublicKeyVerifier;
 
 import java.security.GeneralSecurityException;
@@ -10,7 +11,7 @@ public class RSA_RS256_PublicKeyVerifier extends PublicKeyVerifier<RSAPublicKey>
 
 	public RSA_RS256_PublicKeyVerifier(RSAPublicKey publicKey) {
 
-		super(publicKey, "RS256");
+		super(publicKey, JWSAlgorithm.RS256.getName());
 	}
 
 	@Override
