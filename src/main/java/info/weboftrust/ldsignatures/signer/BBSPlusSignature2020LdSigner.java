@@ -1,10 +1,10 @@
 package info.weboftrust.ldsignatures.signer;
 
 import bbs.signatures.KeyPair;
-import com.danubetech.keyformats.jose.JWSAlgorithms;
-import info.weboftrust.ldsignatures.LdProof;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PrivateKeySigner;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.suites.BBSPlusSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
@@ -34,7 +34,7 @@ public class BBSPlusSignature2020LdSigner extends LdSigner<BBSPlusSignature2020S
 
         String proofValue;
 
-        byte[] bytes = signer.sign(signingInput, JWSAlgorithms.BBSPlus.getName());
+        byte[] bytes = signer.sign(signingInput, JWSAlgorithm.BBSPlus);
         proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
 
         // done

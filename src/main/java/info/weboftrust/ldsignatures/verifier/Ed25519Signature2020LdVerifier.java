@@ -1,9 +1,9 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import com.nimbusds.jose.JWSAlgorithm;
-import info.weboftrust.ldsignatures.LdProof;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
+import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
@@ -35,7 +35,7 @@ public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);
-        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA.getName());
+        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
 
         // done
 
