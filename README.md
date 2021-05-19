@@ -73,12 +73,12 @@ Example Linked Data Proof:
 
 ## About
 
-Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
-
 Danube Tech - https://danubetech.com/
 
-<br clear="left" />
+Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
 
 <img align="left" src="https://raw.githubusercontent.com/WebOfTrustInfo/ld-signatures-java/master/docs/logo-ngi-essiflab.png" width="115">
 
 Supported by [ESSIF-Lab](https://essif-lab.eu/), which is made possible with financial support from the European Commission's [Next Generation Internet](https://ngi.eu/) programme.
+
+<br clear="left" />
