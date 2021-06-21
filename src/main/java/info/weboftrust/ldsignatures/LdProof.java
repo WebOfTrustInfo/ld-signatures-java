@@ -43,8 +43,8 @@ public class LdProof extends JsonLDObject {
 		private String proofValue;
 		private String jws;
 
-		public Builder(LdProof jsonLDObject) {
-			super(jsonLDObject);
+		public Builder(LdProof jsonLdObject) {
+			super(jsonLdObject);
 		}
 
 		@Override
@@ -53,16 +53,16 @@ public class LdProof extends JsonLDObject {
 			super.build();
 
 			// add JSON-LD properties
-			if (this.creator != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
-			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
-			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
-			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
-			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
-			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
-			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
-			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLDObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
+			if (this.creator != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
+			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
+			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
+			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
+			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
+			if (this.proofValue != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE, this.proofValue);
+			if (this.jws != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_JWS, this.jws);
 
-			return (LdProof) this.jsonLDObject;
+			return (LdProof) this.jsonLdObject;
 		}
 
 		public B creator(URI creator) {
@@ -120,6 +120,10 @@ public class LdProof extends JsonLDObject {
 
 	public static LdProof fromJson(String json) {
 		return new LdProof(readJson(json));
+	}
+
+	public static LdProof fromMap(Map<String, Object> jsonObject) {
+		return new LdProof(jsonObject);
 	}
 
 	/*
