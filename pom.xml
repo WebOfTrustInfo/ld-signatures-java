@@ -11,8 +11,9 @@
 
 	<scm>
 		<url>https://github.com/WebOfTrustInfo/ld-signatures-java</url>
-		<connection>scm:git:git://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
-		<developerConnection>scm:git:git@github.com:WebOfTrustInfo/ld-signatures-java.git</developerConnection>
+		<connection>scm:git:https://github.com/WebOfTrustInfo/ld-signatures-java.git</connection>
+		<developerConnection>scm:git:https://github.com/WebOfTrustInfo/ld-signatures-java.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
@@ -49,6 +50,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
+		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 	</properties>
 
 	<build>
@@ -99,6 +101,14 @@
 					<includeScope>runtime</includeScope>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+				<configuration>
+					<scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -140,12 +150,12 @@
 		<dependency>
 			<groupId>decentralized-identity</groupId>
 			<artifactId>jsonld-common-java</artifactId>
-			<version>0.2-SNAPSHOT</version>
+			<version>0.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>0.3-SNAPSHOT</version>
+			<version>0.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
@@ -172,7 +182,7 @@
 		<dependency>
 			<groupId>com.github.mattrglobal</groupId>
 			<artifactId>bbs.signatures</artifactId>
-			<version>1.5-SNAPSHOT</version>
+			<version>1.5-21-07-2021</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
