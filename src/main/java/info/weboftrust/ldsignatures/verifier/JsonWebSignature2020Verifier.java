@@ -1,34 +1,29 @@
 package info.weboftrust.ldsignatures.verifier;
 
+import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.ByteVerifier;
-import com.danubetech.keyformats.crypto.impl.RSA_RS256_PublicKeyVerifier;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
+import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
-import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
+import info.weboftrust.ldsignatures.signer.LdSigner;
+import info.weboftrust.ldsignatures.suites.JsonWebSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
+import java.util.Collections;
 
-public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018SignatureSuite> {
+public class JsonWebSignature2020Verifier extends LdVerifier<JsonWebSignature2020SignatureSuite> {
 
-    public RsaSignature2018LdVerifier(ByteVerifier verifier) {
+    public JsonWebSignature2020Verifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, verifier);
+        super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, verifier);
     }
 
-    public RsaSignature2018LdVerifier(RSAPublicKey publicKey) {
-
-        this(new RSA_RS256_PublicKeyVerifier(publicKey));
-    }
-
-    public RsaSignature2018LdVerifier() {
+    public JsonWebSignature2020Verifier() {
 
         this((ByteVerifier) null);
     }
@@ -45,7 +40,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
             JWSObject detachedJwsObject = JWSObject.parse(jws);
             byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
 
-            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
+            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.parse(verifier.getAlgorithm()));
             verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
         } catch (JOSEException | ParseException ex) {
 

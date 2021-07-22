@@ -44,22 +44,11 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.verificationMethod = verificationMethod;
     }
 
-    public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuite) {
-
-        if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite))
-            return new RsaSignature2018LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite))
-            return new Ed25519Signature2018LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite))
-            return new EcdsaKoblitzSignature2016LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm().equals(signatureSuite))
-            return new EcdsaSecp256k1Signature2019LdSigner();
-
-        throw new IllegalArgumentException();
+    public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuiteTerm) {
+        return LdSignerRegistry.getLdSignerBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
     public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(SignatureSuite signatureSuite) {
-
         return ldSignerForSignatureSuite(signatureSuite.getTerm());
     }
 

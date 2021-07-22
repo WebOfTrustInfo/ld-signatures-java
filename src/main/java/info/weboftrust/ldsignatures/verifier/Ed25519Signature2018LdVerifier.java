@@ -46,14 +46,6 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
 
             JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.EdDSA);
             verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
-
-			/*			JsonWebSignature jws = new JsonWebSignature();
-			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
-			jws.setCompactSerialization(ldProof.getJws());
-			jws.setPayload(unencodedPayload);
-
-			jws.setKey(publicKey);
-			verify = jws.verifySignature();*/
         } catch (JOSEException | ParseException ex) {
 
             throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);

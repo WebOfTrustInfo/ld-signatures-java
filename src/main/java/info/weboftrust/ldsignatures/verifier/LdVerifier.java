@@ -23,22 +23,11 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
         this.verifier = verifier;
     }
 
-    public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuite) {
-
-        if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite))
-            return new RsaSignature2018LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite))
-            return new Ed25519Signature2018LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite))
-            return new EcdsaKoblitzSignature2016LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm().equals(signatureSuite))
-            return new EcdsaSecp256k1Signature2019LdVerifier();
-
-        throw new IllegalArgumentException();
+    public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuiteTerm) {
+        return LdVerifierRegistry.getLdVerifierBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
     public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(SignatureSuite signatureSuite) {
-
         return ldVerifierForSignatureSuite(signatureSuite.getTerm());
     }
 

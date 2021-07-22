@@ -1,5 +1,15 @@
 package info.weboftrust.ldsignatures.suites;
 
+import com.danubetech.keyformats.jose.KeyTypeName;
+import info.weboftrust.ldsignatures.signer.*;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SignatureSuites {
 
 	public static final RsaSignature2018SignatureSuite SIGNATURE_SUITE_RSASIGNATURE2018 = new RsaSignature2018SignatureSuite();
@@ -8,4 +18,63 @@ public class SignatureSuites {
 	public static final EcdsaKoblitzSignature2016SignatureSuite SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016SignatureSuite();
 	public static final EcdsaSecp256k1Signature2019SignatureSuite SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019 = new EcdsaSecp256k1Signature2019SignatureSuite();
 	public static final BBSPlusSignature2020SignatureSuite SIGNATURE_SUITE_BBSPLUSSIGNATURE2020 = new BBSPlusSignature2020SignatureSuite();
+	public static final JsonWebSignature2020SignatureSuite SIGNATURE_SUITE_JSONWEBSIGNATURE2020 = new JsonWebSignature2020SignatureSuite();
+
+	public static List<? extends SignatureSuite> SIGNATURE_SUITES = List.of(
+			SIGNATURE_SUITE_RSASIGNATURE2018,
+			SIGNATURE_SUITE_ED25519SIGNATURE2018,
+			SIGNATURE_SUITE_ED25519SIGNATURE2020,
+			SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016,
+			SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019,
+			SIGNATURE_SUITE_BBSPLUSSIGNATURE2020,
+			SIGNATURE_SUITE_JSONWEBSIGNATURE2020
+	);
+
+	private static final Map<Class<? extends SignatureSuite>, SignatureSuite> SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS;
+
+	private static final Map<KeyTypeName, List<SignatureSuite>> SIGNATURE_SUITES_BY_KEY_TYPE_NAME;
+
+	static {
+		SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS = new HashMap<>();
+		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
+			Class<? extends SignatureSuite> signatureSuiteClass = signatureSuite.getClass();
+			SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS.put(signatureSuiteClass, signatureSuite);
+		}
+	}
+
+	static {
+		SIGNATURE_SUITES_BY_KEY_TYPE_NAME = new HashMap<>();
+		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
+			List<KeyTypeName> keyTypeNames = signatureSuite.getKeyTypeNames();
+			for (KeyTypeName keyTypeName : keyTypeNames) {
+				List<SignatureSuite> signatureSuitesList = SIGNATURE_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
+				if (signatureSuitesList == null) {
+					signatureSuitesList = new ArrayList<>();
+					SIGNATURE_SUITES_BY_KEY_TYPE_NAME.put(keyTypeName, signatureSuitesList);
+				}
+				signatureSuitesList.add(signatureSuite);
+			}
+		}
+	}
+
+	public static SignatureSuite findSignatureSuiteByTerm(String term) {
+		if (term == null) throw new NullPointerException();
+		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
+			if (signatureSuite.getTerm().equals(term)) return signatureSuite;
+		}
+		return null;
+	}
+
+	public static SignatureSuite findSignatureSuiteByClass(Class<? extends SignatureSuite> clazz) {
+		return SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS.get(clazz);
+	}
+
+	public static List<SignatureSuite> findSignatureSuitesByKeyTypeName(KeyTypeName keyTypeName) {
+		return SIGNATURE_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
+	}
+
+	public static SignatureSuite findDefaultSignatureSuiteByKeyTypeName(KeyTypeName keyTypeName) {
+		List<SignatureSuite> foundSignatureSuitesByKeyTypeName = findSignatureSuitesByKeyTypeName(keyTypeName);
+		return foundSignatureSuitesByKeyTypeName == null ? null : foundSignatureSuitesByKeyTypeName.get(0);
+	}
 }
