@@ -1,30 +1,30 @@
 package info.weboftrust.ldsignatures.verifier;
 
 import com.danubetech.keyformats.crypto.ByteVerifier;
-import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PublicKeyVerifier;
+import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
-import info.weboftrust.ldsignatures.suites.BbsBlsSignature2020SignatureSuite;
+import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
+import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import io.ipfs.multibase.Base58;
 import io.ipfs.multibase.Multibase;
-import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
-public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature2020SignatureSuite> {
+public class JcsEd25519Signature2020LdVerifier extends LdVerifier<JcsEd25519Signature2020SignatureSuite> {
 
-    public BbsBlsSignature2020LdVerifier(ByteVerifier verifier) {
+    public JcsEd25519Signature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_BBSBLSSIGNATURE2020, verifier, new RdfCanonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_JCSED25519SIGNATURE2020, verifier, new JCSCanonicalizer());
     }
 
-    public BbsBlsSignature2020LdVerifier(ECKey publicKey) {
+    public JcsEd25519Signature2020LdVerifier(byte[] publicKey) {
 
-        this(new BLS12381_G2_BBSPlus_PublicKeyVerifier(publicKey));
+        this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
     }
 
-    public BbsBlsSignature2020LdVerifier() {
+    public JcsEd25519Signature2020LdVerifier() {
 
         this((ByteVerifier) null);
     }
@@ -36,8 +36,8 @@ public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature202
         String proofValue = ldProof.getProofValue();
         boolean verify;
 
-        byte[] bytes = Multibase.decode(proofValue);
-        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.BBSPlus);
+        byte[] bytes = Base58.decode(proofValue);
+        verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
 
         // done
 

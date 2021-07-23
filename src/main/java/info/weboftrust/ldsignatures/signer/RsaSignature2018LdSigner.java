@@ -9,6 +9,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
+import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -21,7 +22,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
 
     public RsaSignature2018LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, signer);
+        super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, signer, new RdfCanonicalizer());
     }
 
     public RsaSignature2018LdSigner(RSAPrivateKey privateKey) {

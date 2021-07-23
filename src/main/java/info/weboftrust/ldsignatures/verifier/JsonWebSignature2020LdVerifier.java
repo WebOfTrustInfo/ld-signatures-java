@@ -7,6 +7,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
+import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
 import info.weboftrust.ldsignatures.suites.JsonWebSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -18,7 +19,7 @@ public class JsonWebSignature2020LdVerifier extends LdVerifier<JsonWebSignature2
 
     public JsonWebSignature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, verifier);
+        super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, verifier, new RdfCanonicalizer());
     }
 
     public JsonWebSignature2020LdVerifier() {

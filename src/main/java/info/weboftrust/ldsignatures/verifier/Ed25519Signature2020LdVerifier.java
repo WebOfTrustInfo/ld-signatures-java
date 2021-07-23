@@ -4,6 +4,7 @@ import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
+import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
@@ -14,7 +15,7 @@ public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2
 
     public Ed25519Signature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020, verifier);
+        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020, verifier, new RdfCanonicalizer());
     }
 
     public Ed25519Signature2020LdVerifier(byte[] publicKey) {

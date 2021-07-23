@@ -4,6 +4,7 @@ import com.danubetech.keyformats.crypto.ByteVerifier;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.LdProof;
+import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
@@ -15,11 +16,13 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
     private final SIGNATURESUITE signatureSuite;
 
     private ByteVerifier verifier;
+    private Canonicalizer canonicalizer;
 
-    protected LdVerifier(SIGNATURESUITE signatureSuite, ByteVerifier verifier) {
+    protected LdVerifier(SIGNATURESUITE signatureSuite, ByteVerifier verifier, Canonicalizer canonicalizer) {
 
         this.signatureSuite = signatureSuite;
         this.verifier = verifier;
+        this.canonicalizer = canonicalizer;
     }
 
     /**
@@ -49,31 +52,13 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
         if (!this.getSignatureSuite().getTerm().equals(ldProof.getType()))
             throw new GeneralSecurityException("Unexpected signature type: " + ldProof.getType() + " is not " + this.getSignatureSuite().getTerm());
 
-        // obtain the normalized proof options
+        // obtain the canonicalized document
 
-        JsonLDObject jsonLdObjectProofOptions = LdProof.builder()
-                .defaultContexts(true)
-                .base(ldProof)
-                .build();
-        LdProof.removeLdProofValues(jsonLdObjectProofOptions);
-        String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
-
-        // obtain the normalized document
-
-        JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
-                .base(jsonLdObject)
-                .build();
-        jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
-        String normalizedDocument = jsonLdDocumentWithoutProof.normalize("urdna2015");
+        byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(ldProof, jsonLdObject);
 
         // verify
 
-        byte[] signingInput = new byte[64];
-        System.arraycopy(SHAUtil.sha256(normalizedProofOptions), 0, signingInput, 0, 32);
-        System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
-
-        boolean verify = this.verify(signingInput, ldProof);
+        boolean verify = this.verify(canonicalizationResult, ldProof);
 
         // done
 
@@ -93,7 +78,6 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
     }
 
     public SignatureSuite getSignatureSuite() {
-
         return this.signatureSuite;
     }
 
@@ -102,12 +86,18 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
      */
 
     public ByteVerifier getVerifier() {
-
         return this.verifier;
     }
 
     public void setVerifier(ByteVerifier verifier) {
-
         this.verifier = verifier;
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return canonicalizer;
+    }
+
+    public void setCanonicalizer(Canonicalizer canonicalizer) {
+        this.canonicalizer = canonicalizer;
     }
 }

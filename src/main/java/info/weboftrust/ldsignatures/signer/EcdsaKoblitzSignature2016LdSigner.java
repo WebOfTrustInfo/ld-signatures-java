@@ -9,6 +9,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
+import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
 import info.weboftrust.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -21,7 +22,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 
     public EcdsaKoblitzSignature2016LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, signer);
+        super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, signer, new RdfCanonicalizer());
     }
 
     public EcdsaKoblitzSignature2016LdSigner(ECKey privateKey) {

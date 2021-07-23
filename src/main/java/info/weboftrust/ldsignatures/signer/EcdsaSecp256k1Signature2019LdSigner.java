@@ -9,6 +9,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
+import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
 import info.weboftrust.ldsignatures.suites.EcdsaSecp256k1Signature2019SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -21,7 +22,7 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
 
     public EcdsaSecp256k1Signature2019LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, signer);
+        super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, signer, new RdfCanonicalizer());
     }
 
     public EcdsaSecp256k1Signature2019LdSigner(ECKey privateKey) {
