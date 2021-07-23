@@ -1,0 +1,18 @@
+{
+  "@context" : [ {
+    "schema" : "http://schema.org/",
+    "name" : "schema:name",
+    "homepage" : "schema:url",
+    "image" : "schema:image"
+  }, "https://w3id.org/security/v3" ],
+  "name" : "Evil Hacker",
+  "homepage" : "https://manu.sporny.org/",
+  "image" : "https://manu.sporny.org/images/manu.png",
+  "proof" : {
+    "type" : "Ed25519Signature2020",
+    "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
+    "created" : "2017-10-24T05:33:31Z",
+    "domain" : "example.com",
+    "proofValue" : "zd4XJsrXZPKR4KyYfHYTXZwHdcetercr5apNMgh5rjPp9nobNmCrtXFn5eiDMzXz7nSfYuhMhmKnPph1Epfi5FuT"
+  }
+}

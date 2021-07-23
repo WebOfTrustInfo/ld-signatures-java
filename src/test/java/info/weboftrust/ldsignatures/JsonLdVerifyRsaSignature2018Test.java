@@ -16,7 +16,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.good.rsa.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.good.RsaSignature2018.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);
@@ -29,7 +29,7 @@ public class JsonLdVerifyRsaSignature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testBadVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.bad.rsa.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyRsaSignature2018Test.class.getResourceAsStream("signed.bad.RsaSignature2018.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		RsaSignature2018LdVerifier verifier = new RsaSignature2018LdVerifier(TestUtil.testRSAPublicKey);

@@ -1,10 +1,10 @@
 {
-	"@context": {
+	"@context": [{
 		"schema": "http://schema.org/",
 		"name": "schema:name",
 		"homepage": "schema:url",
 		"image": "schema:image"
-	},
+	}, "https://w3id.org/security/v3"],
 	"name": "Manu Sporny",
 	"homepage": "https://manu.sporny.org/",
 	"image": "https://manu.sporny.org/images/manu.png"

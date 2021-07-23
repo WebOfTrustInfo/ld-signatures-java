@@ -5,7 +5,7 @@
 		"homepage": "schema:url",
 		"image": "schema:image"
 	}, "https://w3id.org/security/v3"],
-	"name": "Manu Sporny",
+	"name": "Evil Hacker",
 	"homepage": "https://manu.sporny.org/",
 	"image": "https://manu.sporny.org/images/manu.png",
 	"proof": {
@@ -13,7 +13,6 @@
 		"creator": "https://example.com/jdoe/keys/1",
 		"created": "2017-10-24T05:33:31Z",
 		"domain": "example.com",
-		"nonce": null,
 		"jws": "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..Re15jwVmt168oDUXs76hCX3shLHkaNvZNrLSxwDvyfTvkFvmxy3u9bdlFCKBOUqYQefu7AC1qMEFmOn5nHme5SIa9OlO8_7vnwFo7DHf2JJajI40JllkVNxQ4hIhjqceD8tS5_J6fpt0RkhpX6AWRMj5wB60JenL0oONcF0G5EWR_s1g4R8w8benOTNFT53TZGmku6QQib6fOEzqOo_SVJVvBZYhim8UEHcVNOc2iCre0eobnXrGWxhdL0sUiltb0apkyWveJAdJ9ENHK6ef8zZC3NlWZKK5QzMBjbKm_wMDbPOI3e7mWarihM7bqjTdrHHeOifWEK_Cx9iuWJMx_A"
 	}
 }

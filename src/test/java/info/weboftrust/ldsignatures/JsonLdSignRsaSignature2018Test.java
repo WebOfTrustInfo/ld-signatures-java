@@ -19,7 +19,7 @@ public class JsonLdSignRsaSignature2018Test {
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testSignEd25519Signature2018() throws Throwable {
+	public void testSign() throws Throwable {
 
 		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
