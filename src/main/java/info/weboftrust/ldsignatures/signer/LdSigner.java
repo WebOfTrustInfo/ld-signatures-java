@@ -32,7 +32,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.signer = signer;
     }
 
-    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, Date created, String domain, String nonce, String proofPurpose, String URI) {
+    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, Date created, String domain, String nonce, String proofPurpose, URI verificationMethod) {
 
         this.signatureSuite = signatureSuite;
         this.signer = signer;
