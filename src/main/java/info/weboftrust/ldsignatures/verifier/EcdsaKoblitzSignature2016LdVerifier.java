@@ -39,6 +39,8 @@ public class EcdsaKoblitzSignature2016LdVerifier extends LdVerifier<EcdsaKoblitz
         // build the JWS and verify
 
         String jws = ldProof.getJws();
+        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+
         boolean verify;
 
         try {

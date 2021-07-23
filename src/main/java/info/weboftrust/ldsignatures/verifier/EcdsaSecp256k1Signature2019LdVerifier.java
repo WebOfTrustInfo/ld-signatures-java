@@ -39,6 +39,8 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
         // build the JWS and verify
 
         String jws = ldProof.getJws();
+        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+
         boolean verify;
 
         try {

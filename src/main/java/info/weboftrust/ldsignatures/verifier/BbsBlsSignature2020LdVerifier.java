@@ -34,6 +34,8 @@ public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature202
         // verify
 
         String proofValue = ldProof.getProofValue();
+        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
+
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);

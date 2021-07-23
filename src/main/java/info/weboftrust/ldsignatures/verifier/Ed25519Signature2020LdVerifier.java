@@ -33,6 +33,8 @@ public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2
         // verify
 
         String proofValue = ldProof.getProofValue();
+        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
+
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);

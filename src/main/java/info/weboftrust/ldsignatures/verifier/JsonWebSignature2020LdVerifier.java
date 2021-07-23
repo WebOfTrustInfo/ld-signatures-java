@@ -32,6 +32,8 @@ public class JsonWebSignature2020LdVerifier extends LdVerifier<JsonWebSignature2
         // build the JWS and verify
 
         String jws = ldProof.getJws();
+        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+
         boolean verify;
 
         try {

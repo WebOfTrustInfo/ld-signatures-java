@@ -38,6 +38,8 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
         // build the JWS and verify
 
         String jws = ldProof.getJws();
+        if (jws == null) throw new GeneralSecurityException("No 'jws' in proof.");
+
         boolean verify;
 
         try {
