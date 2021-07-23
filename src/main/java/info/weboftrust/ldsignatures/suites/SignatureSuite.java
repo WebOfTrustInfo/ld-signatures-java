@@ -21,7 +21,6 @@ public abstract class SignatureSuite {
 	private Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
 
 	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName) {
-
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;

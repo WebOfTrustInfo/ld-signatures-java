@@ -8,7 +8,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
-import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
+import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
 import info.weboftrust.ldsignatures.suites.EcdsaSecp256k1Signature2019SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -21,7 +21,7 @@ public class EcdsaSecp256k1Signature2019LdVerifier extends LdVerifier<EcdsaSecp2
 
     public EcdsaSecp256k1Signature2019LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, verifier, new RdfCanonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019, verifier, new URDNA2015Canonicalizer());
     }
 
     public EcdsaSecp256k1Signature2019LdVerifier(ECKey publicKey) {

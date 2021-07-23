@@ -30,7 +30,7 @@ public class SignatureSuites {
 	);
 
 	private static final Map<Class<? extends SignatureSuite>, SignatureSuite> SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS;
-
+	private static final Map<String, SignatureSuite> SIGNATURE_SUITES_BY_TERM;
 	private static final Map<KeyTypeName, List<SignatureSuite>> SIGNATURE_SUITES_BY_KEY_TYPE_NAME;
 
 	static {
@@ -38,6 +38,14 @@ public class SignatureSuites {
 		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
 			Class<? extends SignatureSuite> signatureSuiteClass = signatureSuite.getClass();
 			SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS.put(signatureSuiteClass, signatureSuite);
+		}
+	}
+
+	static {
+		SIGNATURE_SUITES_BY_TERM = new HashMap<>();
+		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
+			String signatureSuiteTerm = signatureSuite.getTerm();
+			SIGNATURE_SUITES_BY_TERM.put(signatureSuiteTerm, signatureSuite);
 		}
 	}
 
@@ -56,16 +64,12 @@ public class SignatureSuites {
 		}
 	}
 
-	public static SignatureSuite findSignatureSuiteByTerm(String term) {
-		if (term == null) throw new NullPointerException();
-		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
-			if (signatureSuite.getTerm().equals(term)) return signatureSuite;
-		}
-		return null;
-	}
-
 	public static SignatureSuite findSignatureSuiteByClass(Class<? extends SignatureSuite> clazz) {
 		return SIGNATURE_SUITES_BY_SIGNATURE_SUITE_CLASS.get(clazz);
+	}
+
+	public static SignatureSuite findSignatureSuiteByTerm(String signatureSuiteTerm) {
+		return SIGNATURE_SUITES_BY_TERM.get(signatureSuiteTerm);
 	}
 
 	public static List<SignatureSuite> findSignatureSuitesByKeyTypeName(KeyTypeName keyTypeName) {

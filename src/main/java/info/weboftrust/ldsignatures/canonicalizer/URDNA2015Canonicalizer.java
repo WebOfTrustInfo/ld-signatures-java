@@ -7,19 +7,13 @@ import info.weboftrust.ldsignatures.util.SHAUtil;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
-public class RdfCanonicalizer implements Canonicalizer {
+public class URDNA2015Canonicalizer extends Canonicalizer {
 
-    public static final String CANONICALIZATION_ALGORITH_URDNA2015 = "urdna2015";
+    public URDNA2015Canonicalizer() {
 
-    private String canonicalizationAlgorithm;
-
-    public RdfCanonicalizer(String canonicalizationAlgorithm) {
-        this.canonicalizationAlgorithm = canonicalizationAlgorithm;
-    }
-
-    public RdfCanonicalizer() {
-        this(CANONICALIZATION_ALGORITH_URDNA2015);
+        super(List.of("urdna2015"));
     }
 
     @Override
@@ -43,8 +37,8 @@ public class RdfCanonicalizer implements Canonicalizer {
 
         // canonicalize the LD proof and LD object
 
-        String canonicalizedLdProofWithoutProofValues = ldProofWithoutProofValues.normalize(this.getCanonicalizationAlgorithm());
-        String canonicalizedJsonLdObjectWithoutProof = jsonLdObjectWithoutProof.normalize(this.getCanonicalizationAlgorithm());
+        String canonicalizedLdProofWithoutProofValues = ldProofWithoutProofValues.normalize("urdna2015");
+        String canonicalizedJsonLdObjectWithoutProof = jsonLdObjectWithoutProof.normalize("urdna2015");
 
         // construct the canonicalization result
 
@@ -53,17 +47,5 @@ public class RdfCanonicalizer implements Canonicalizer {
         System.arraycopy(SHAUtil.sha256(canonicalizedJsonLdObjectWithoutProof), 0, canonicalizationResult, 32, 32);
 
         return canonicalizationResult;
-    }
-
-    /*
-     * Getters and setters
-     */
-
-    public String getCanonicalizationAlgorithm() {
-        return canonicalizationAlgorithm;
-    }
-
-    public void setCanonicalizationAlgorithm(String canonicalizationAlgorithm) {
-        this.canonicalizationAlgorithm = canonicalizationAlgorithm;
     }
 }

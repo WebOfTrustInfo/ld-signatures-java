@@ -8,8 +8,14 @@ import org.erdtman.jcs.JsonCanonicalizer;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
-public class JCSCanonicalizer implements Canonicalizer {
+public class JCSCanonicalizer extends Canonicalizer {
+
+    public JCSCanonicalizer() {
+
+        super(List.of("jcs"));
+    }
 
     @Override
     public byte[] canonicalize(LdProof ldProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {

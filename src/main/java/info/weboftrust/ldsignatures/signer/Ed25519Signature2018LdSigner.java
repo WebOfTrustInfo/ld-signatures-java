@@ -9,7 +9,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
-import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
+import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -21,7 +21,7 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
 
     public Ed25519Signature2018LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, signer, new RdfCanonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, signer, new URDNA2015Canonicalizer());
     }
 
     public Ed25519Signature2018LdSigner(byte[] privateKey) {

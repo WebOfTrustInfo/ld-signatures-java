@@ -4,7 +4,7 @@ import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.canonicalizer.RdfCanonicalizer;
+import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
 import info.weboftrust.ldsignatures.suites.Ed25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
@@ -15,7 +15,7 @@ public class Ed25519Signature2020LdSigner extends LdSigner<Ed25519Signature2020S
 
     public Ed25519Signature2020LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020, signer, new RdfCanonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020, signer, new URDNA2015Canonicalizer());
     }
 
     public Ed25519Signature2020LdSigner(byte[] privateKey) {
