@@ -13,6 +13,6 @@
     "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
-    "proofValue" : "3L4Z6aCb9unrQzsYHywxwK8hFTB2RuVFwd8tbPRbFuyr3rmFxvNAFTAgD1YY9NmYfGynaci3iL43JVzrARPEiqHi"
+    "signatureValue" : "3L4Z6aCb9unrQzsYHywxwK8hFTB2RuVFwd8tbPRbFuyr3rmFxvNAFTAgD1YY9NmYfGynaci3iL43JVzrARPEiqHi"
   }
 }

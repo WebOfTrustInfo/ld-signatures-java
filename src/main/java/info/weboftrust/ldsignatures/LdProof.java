@@ -145,6 +145,7 @@ public class LdProof extends JsonLDObject {
 	public static void removeLdProofValues(JsonLDObject jsonLdObject) {
 		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFVALUE);
 		JsonLDUtils.jsonLdRemove(jsonLdObject, LDSecurityKeywords.JSONLD_TERM_JWS);
+		JsonLDUtils.jsonLdRemove(jsonLdObject, "signatureValue");
 	}
 
 	/*

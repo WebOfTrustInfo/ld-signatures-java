@@ -3,6 +3,7 @@ package info.weboftrust.ldsignatures.verifier;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
 import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
@@ -33,10 +34,12 @@ public class JcsEd25519Signature2020LdVerifier extends LdVerifier<JcsEd25519Sign
 
         // verify
 
-        String proofValue = ldProof.getProofValue();
+        String signatureValue = (String) ldProof.getJsonObject().get("signatureValue");
+        if (signatureValue == null) throw new GeneralSecurityException("No 'signatureValue' in proof.");
+
         boolean verify;
 
-        byte[] bytes = Base58.decode(proofValue);
+        byte[] bytes = Base58.decode(signatureValue);
         verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
 
         // done

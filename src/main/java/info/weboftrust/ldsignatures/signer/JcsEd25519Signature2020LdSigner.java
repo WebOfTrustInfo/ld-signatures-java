@@ -11,6 +11,7 @@ import io.ipfs.multibase.Base58;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
+import java.util.Map;
 
 public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signature2020SignatureSuite> {
 
@@ -33,14 +34,14 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
 
         // sign
 
-        String proofValue;
+        String signatureValue;
 
         byte[] bytes = signer.sign(signingInput, JWSAlgorithm.EdDSA);
-        proofValue = Base58.encode(bytes);
+        signatureValue = Base58.encode(bytes);
 
         // done
 
-        ldProofBuilder.proofValue(proofValue);
+        ldProofBuilder.properties(Map.of("signatureValue", signatureValue));
     }
 
     @Override
