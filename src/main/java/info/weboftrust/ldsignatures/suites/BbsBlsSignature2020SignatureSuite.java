@@ -7,9 +7,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-public class BBSPlusSignature2020SignatureSuite extends SignatureSuite {
+public class BbsBlsSignature2020SignatureSuite extends SignatureSuite {
 
-	BBSPlusSignature2020SignatureSuite() {
+	BbsBlsSignature2020SignatureSuite() {
 
 		super(
 				"BbsBlsSignature2020",

@@ -1,7 +1,6 @@
 package info.weboftrust.ldsignatures.signer;
 
 import com.danubetech.keyformats.crypto.ByteSigner;
-import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -9,7 +8,6 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
-import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.JsonWebSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -17,14 +15,14 @@ import info.weboftrust.ldsignatures.util.JWSUtil;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
-public class JsonWebSignature2020Signer extends LdSigner<JsonWebSignature2020SignatureSuite> {
+public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020SignatureSuite> {
 
-    public JsonWebSignature2020Signer(ByteSigner signer) {
+    public JsonWebSignature2020LdSigner(ByteSigner signer) {
 
         super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, signer);
     }
 
-    public JsonWebSignature2020Signer() {
+    public JsonWebSignature2020LdSigner() {
 
         this((ByteSigner) null);
     }

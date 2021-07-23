@@ -6,25 +6,25 @@ import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PrivateKeySigne
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
-import info.weboftrust.ldsignatures.suites.BBSPlusSignature2020SignatureSuite;
+import info.weboftrust.ldsignatures.suites.BbsBlsSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 
-public class BBSPlusSignature2020LdSigner extends LdSigner<BBSPlusSignature2020SignatureSuite> {
+public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020SignatureSuite> {
 
-    public BBSPlusSignature2020LdSigner(ByteSigner signer) {
+    public BbsBlsSignature2020LdSigner(ByteSigner signer) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_BBSPLUSSIGNATURE2020, signer);
+        super(SignatureSuites.SIGNATURE_SUITE_BBSBLSSIGNATURE2020, signer);
     }
 
-    public BBSPlusSignature2020LdSigner(KeyPair privateKey) {
+    public BbsBlsSignature2020LdSigner(KeyPair privateKey) {
 
         this(new BLS12381_G2_BBSPlus_PrivateKeySigner(privateKey));
     }
 
-    public BBSPlusSignature2020LdSigner() {
+    public BbsBlsSignature2020LdSigner() {
 
         this((ByteSigner) null);
     }

@@ -1,29 +1,27 @@
 package info.weboftrust.ldsignatures.verifier;
 
-import com.danubetech.keyformats.crypto.ByteSigner;
 import com.danubetech.keyformats.crypto.ByteVerifier;
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.util.Base64URL;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSObject;
+import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.adapter.JWSSignerAdapter;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
-import info.weboftrust.ldsignatures.signer.LdSigner;
 import info.weboftrust.ldsignatures.suites.JsonWebSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
-import java.util.Collections;
 
-public class JsonWebSignature2020Verifier extends LdVerifier<JsonWebSignature2020SignatureSuite> {
+public class JsonWebSignature2020LdVerifier extends LdVerifier<JsonWebSignature2020SignatureSuite> {
 
-    public JsonWebSignature2020Verifier(ByteVerifier verifier) {
+    public JsonWebSignature2020LdVerifier(ByteVerifier verifier) {
 
         super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, verifier);
     }
 
-    public JsonWebSignature2020Verifier() {
+    public JsonWebSignature2020LdVerifier() {
 
         this((ByteVerifier) null);
     }

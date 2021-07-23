@@ -1,12 +1,10 @@
 package info.weboftrust.ldsignatures.signer;
 
-import com.danubetech.keyformats.jose.KeyTypeName;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +17,8 @@ public class LdSignerRegistry {
             Ed25519Signature2020LdSigner.class,
             EcdsaKoblitzSignature2016LdSigner.class,
             EcdsaSecp256k1Signature2019LdSigner.class,
-            BBSPlusSignature2020LdSigner.class,
-            JsonWebSignature2020Signer.class
+            BbsBlsSignature2020LdSigner.class,
+            JsonWebSignature2020LdSigner.class
     );
 
     private static final Map<String, Class<? extends LdSigner<? extends SignatureSuite>>> LD_SIGNERS_BY_SIGNATURE_SUITE_TERM;

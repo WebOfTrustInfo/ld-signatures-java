@@ -17,8 +17,8 @@ public class LdVerifierRegistry {
             Ed25519Signature2020LdVerifier.class,
             EcdsaKoblitzSignature2016LdVerifier.class,
             EcdsaSecp256k1Signature2019LdVerifier.class,
-            BBSPlusSignature2020LdVerifier.class,
-            JsonWebSignature2020Verifier.class
+            BbsBlsSignature2020LdVerifier.class,
+            JsonWebSignature2020LdVerifier.class
     );
 
     private static final Map<String, Class<? extends LdVerifier<? extends SignatureSuite>>> LD_VERIFIERS_BY_SIGNATURE_SUITE_TERM;
