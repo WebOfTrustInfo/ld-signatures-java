@@ -43,12 +43,22 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.verificationMethod = verificationMethod;
     }
 
+    /**
+     * @deprecated
+     * Use LdSignerRegistry.getLdSignerBySignatureSuiteTerm(signatureSuiteTerm) instead.
+     */
+    @Deprecated
     public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuiteTerm) {
         return LdSignerRegistry.getLdSignerBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
+    /**
+     * @deprecated
+     * Use LdSignerRegistry.getLdSignerBySignatureSuite(signatureSuite) instead.
+     */
+    @Deprecated
     public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(SignatureSuite signatureSuite) {
-        return ldSignerForSignatureSuite(signatureSuite.getTerm());
+        return LdSignerRegistry.getLdSignerBySignatureSuite(signatureSuite);
     }
 
     public abstract void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;

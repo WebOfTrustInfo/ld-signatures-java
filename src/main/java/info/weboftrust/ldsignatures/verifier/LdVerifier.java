@@ -22,12 +22,22 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
         this.verifier = verifier;
     }
 
+    /**
+     * @deprecated
+     * Use LdVerifierRegistry.getLdVerifierBySignatureSuiteTerm(signatureSuiteTerm) instead.
+     */
+    @Deprecated
     public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuiteTerm) {
         return LdVerifierRegistry.getLdVerifierBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
+    /**
+     * @deprecated
+     * Use LdVerifierRegistry.getLdVerifierBySignatureSuite(signatureSuite) instead.
+     */
+    @Deprecated
     public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(SignatureSuite signatureSuite) {
-        return ldVerifierForSignatureSuite(signatureSuite.getTerm());
+        return LdVerifierRegistry.getLdVerifierBySignatureSuite(signatureSuite);
     }
 
     public abstract boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException;
