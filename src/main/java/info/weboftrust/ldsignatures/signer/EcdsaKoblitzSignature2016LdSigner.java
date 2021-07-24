@@ -43,7 +43,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 
         try {
 
-            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.ES256K).customParam("b64", Boolean.FALSE).criticalParams(Collections.singleton("b64")).build();
+            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.ES256K).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
             byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
             JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.ES256K);
