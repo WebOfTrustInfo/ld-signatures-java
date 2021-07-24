@@ -13,8 +13,8 @@ public class SignatureSuites {
 	public static final Ed25519Signature2018SignatureSuite SIGNATURE_SUITE_ED25519SIGNATURE2018 = new Ed25519Signature2018SignatureSuite();
 	public static final Ed25519Signature2020SignatureSuite SIGNATURE_SUITE_ED25519SIGNATURE2020 = new Ed25519Signature2020SignatureSuite();
 	public static final JcsEd25519Signature2020SignatureSuite SIGNATURE_SUITE_JCSED25519SIGNATURE2020 = new JcsEd25519Signature2020SignatureSuite();
-	public static final EcdsaKoblitzSignature2016SignatureSuite SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016SignatureSuite();
 	public static final EcdsaSecp256k1Signature2019SignatureSuite SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019 = new EcdsaSecp256k1Signature2019SignatureSuite();
+	public static final EcdsaKoblitzSignature2016SignatureSuite SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016 = new EcdsaKoblitzSignature2016SignatureSuite();
 	public static final JcsEcdsaSecp256k1Signature2019SignatureSuite SIGNATURE_SUITE_JCSECDSASECP256L1SIGNATURE2019 = new JcsEcdsaSecp256k1Signature2019SignatureSuite();
 	public static final BbsBlsSignature2020SignatureSuite SIGNATURE_SUITE_BBSBLSSIGNATURE2020 = new BbsBlsSignature2020SignatureSuite();
 	public static final JsonWebSignature2020SignatureSuite SIGNATURE_SUITE_JSONWEBSIGNATURE2020 = new JsonWebSignature2020SignatureSuite();
@@ -24,8 +24,8 @@ public class SignatureSuites {
 			SIGNATURE_SUITE_ED25519SIGNATURE2018,
 			SIGNATURE_SUITE_ED25519SIGNATURE2020,
 			SIGNATURE_SUITE_JCSED25519SIGNATURE2020,
-			SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016,
 			SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019,
+			SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016,
 			SIGNATURE_SUITE_JCSECDSASECP256L1SIGNATURE2019,
 			SIGNATURE_SUITE_BBSBLSSIGNATURE2020,
 			SIGNATURE_SUITE_JSONWEBSIGNATURE2020
