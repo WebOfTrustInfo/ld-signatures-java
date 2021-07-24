@@ -4,26 +4,27 @@ import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.BLS12381_G2_BBSPlus_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.suites.BBSPlusSignature2020SignatureSuite;
+import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
+import info.weboftrust.ldsignatures.suites.BbsBlsSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
 import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
-public class BBSPlusSignature2020LdVerifier extends LdVerifier<BBSPlusSignature2020SignatureSuite> {
+public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature2020SignatureSuite> {
 
-    public BBSPlusSignature2020LdVerifier(ByteVerifier verifier) {
+    public BbsBlsSignature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_BBSPLUSSIGNATURE2020, verifier);
+        super(SignatureSuites.SIGNATURE_SUITE_BBSBLSSIGNATURE2020, verifier, new URDNA2015Canonicalizer());
     }
 
-    public BBSPlusSignature2020LdVerifier(ECKey publicKey) {
+    public BbsBlsSignature2020LdVerifier(ECKey publicKey) {
 
         this(new BLS12381_G2_BBSPlus_PublicKeyVerifier(publicKey));
     }
 
-    public BBSPlusSignature2020LdVerifier() {
+    public BbsBlsSignature2020LdVerifier() {
 
         this((ByteVerifier) null);
     }
@@ -33,6 +34,8 @@ public class BBSPlusSignature2020LdVerifier extends LdVerifier<BBSPlusSignature2
         // verify
 
         String proofValue = ldProof.getProofValue();
+        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
+
         boolean verify;
 
         byte[] bytes = Multibase.decode(proofValue);

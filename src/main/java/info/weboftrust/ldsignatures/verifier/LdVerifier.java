@@ -4,8 +4,8 @@ import com.danubetech.keyformats.crypto.ByteVerifier;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.LdProof;
+import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
-import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.SHAUtil;
 
 import java.io.IOException;
@@ -16,30 +16,31 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
     private final SIGNATURESUITE signatureSuite;
 
     private ByteVerifier verifier;
+    private Canonicalizer canonicalizer;
 
-    protected LdVerifier(SIGNATURESUITE signatureSuite, ByteVerifier verifier) {
+    protected LdVerifier(SIGNATURESUITE signatureSuite, ByteVerifier verifier, Canonicalizer canonicalizer) {
 
         this.signatureSuite = signatureSuite;
         this.verifier = verifier;
+        this.canonicalizer = canonicalizer;
     }
 
-    public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuite) {
-
-        if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite))
-            return new RsaSignature2018LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite))
-            return new Ed25519Signature2018LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite))
-            return new EcdsaKoblitzSignature2016LdVerifier();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm().equals(signatureSuite))
-            return new EcdsaSecp256k1Signature2019LdVerifier();
-
-        throw new IllegalArgumentException();
+    /**
+     * @deprecated
+     * Use LdVerifierRegistry.getLdVerifierBySignatureSuiteTerm(signatureSuiteTerm) instead.
+     */
+    @Deprecated
+    public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(String signatureSuiteTerm) {
+        return LdVerifierRegistry.getLdVerifierBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
+    /**
+     * @deprecated
+     * Use LdVerifierRegistry.getLdVerifierBySignatureSuite(signatureSuite) instead.
+     */
+    @Deprecated
     public static LdVerifier<? extends SignatureSuite> ldVerifierForSignatureSuite(SignatureSuite signatureSuite) {
-
-        return ldVerifierForSignatureSuite(signatureSuite.getTerm());
+        return LdVerifierRegistry.getLdVerifierBySignatureSuite(signatureSuite);
     }
 
     public abstract boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException;
@@ -51,31 +52,13 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
         if (!this.getSignatureSuite().getTerm().equals(ldProof.getType()))
             throw new GeneralSecurityException("Unexpected signature type: " + ldProof.getType() + " is not " + this.getSignatureSuite().getTerm());
 
-        // obtain the normalized proof options
+        // obtain the canonicalized document
 
-        JsonLDObject jsonLdObjectProofOptions = LdProof.builder()
-                .defaultContexts(true)
-                .base(ldProof)
-                .build();
-        LdProof.removeLdProofValues(jsonLdObjectProofOptions);
-        String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
-
-        // obtain the normalized document
-
-        JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
-                .base(jsonLdObject)
-                .build();
-        jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
-        String normalizedDocument = jsonLdDocumentWithoutProof.normalize("urdna2015");
+        byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(ldProof, jsonLdObject);
 
         // verify
 
-        byte[] signingInput = new byte[64];
-        System.arraycopy(SHAUtil.sha256(normalizedProofOptions), 0, signingInput, 0, 32);
-        System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
-
-        boolean verify = this.verify(signingInput, ldProof);
+        boolean verify = this.verify(canonicalizationResult, ldProof);
 
         // done
 
@@ -95,7 +78,6 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
     }
 
     public SignatureSuite getSignatureSuite() {
-
         return this.signatureSuite;
     }
 
@@ -104,12 +86,18 @@ public abstract class LdVerifier<SIGNATURESUITE extends SignatureSuite> {
      */
 
     public ByteVerifier getVerifier() {
-
         return this.verifier;
     }
 
     public void setVerifier(ByteVerifier verifier) {
-
         this.verifier = verifier;
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return canonicalizer;
+    }
+
+    public void setCanonicalizer(Canonicalizer canonicalizer) {
+        this.canonicalizer = canonicalizer;
     }
 }

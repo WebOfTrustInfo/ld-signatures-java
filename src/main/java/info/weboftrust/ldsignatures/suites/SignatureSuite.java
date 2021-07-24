@@ -1,6 +1,11 @@
 package info.weboftrust.ldsignatures.suites;
 
+import com.danubetech.keyformats.jose.KeyTypeName;
+
 import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public abstract class SignatureSuite {
 
@@ -12,15 +17,27 @@ public abstract class SignatureSuite {
 	private URI canonicalizationAlgorithm;
 	private URI digestAlgorithm;
 	private URI proofAlgorithm;
+	private List<KeyTypeName> keyTypeNames;
+	private Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
 
-	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm) {
-
+	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
 		this.canonicalizationAlgorithm = canonicalizationAlgorithm;
 		this.digestAlgorithm = digestAlgorithm;
 		this.proofAlgorithm = proofAlgorithm;
+		this.keyTypeNames = keyTypeNames;
+		this.jwsAlgorithmForKeyTypeName = jwsAlgorithmForKeyTypeName;
+	}
+
+	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
+		return this.getJwsAlgorithmsForKeyTypeName().get(keyTypeName);
+	}
+
+	public String findDefaultJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
+		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
+		return foundAlgorithmsForKeyTypeName == null ? null : foundAlgorithmsForKeyTypeName.get(0);
 	}
 
 	public String getTerm() {
@@ -47,65 +64,38 @@ public abstract class SignatureSuite {
 		return proofAlgorithm;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((canonicalizationAlgorithm == null) ? 0 : canonicalizationAlgorithm.hashCode());
-		result = prime * result + ((digestAlgorithm == null) ? 0 : digestAlgorithm.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((proofAlgorithm == null) ? 0 : proofAlgorithm.hashCode());
-		result = prime * result + ((term == null) ? 0 : term.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		return result;
+	public List<KeyTypeName> getKeyTypeNames() {
+		return keyTypeNames;
+	}
+
+	public Map<KeyTypeName, List<String>> getJwsAlgorithmsForKeyTypeName() {
+		return jwsAlgorithmForKeyTypeName;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SignatureSuite other = (SignatureSuite) obj;
-		if (canonicalizationAlgorithm == null) {
-			if (other.canonicalizationAlgorithm != null)
-				return false;
-		} else if (!canonicalizationAlgorithm.equals(other.canonicalizationAlgorithm))
-			return false;
-		if (digestAlgorithm == null) {
-			if (other.digestAlgorithm != null)
-				return false;
-		} else if (!digestAlgorithm.equals(other.digestAlgorithm))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (proofAlgorithm == null) {
-			if (other.proofAlgorithm != null)
-				return false;
-		} else if (!proofAlgorithm.equals(other.proofAlgorithm))
-			return false;
-		if (term == null) {
-			if (other.term != null)
-				return false;
-		} else if (!term.equals(other.term))
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
-		return true;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		SignatureSuite that = (SignatureSuite) o;
+		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmForKeyTypeName, that.jwsAlgorithmForKeyTypeName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmForKeyTypeName);
 	}
 
 	@Override
 	public String toString() {
-		return "SignatureSuite [term=" + term + ", id=" + id + ", type=" + type + ", canonicalizationAlgorithm="
-				+ canonicalizationAlgorithm + ", digestAlgorithm=" + digestAlgorithm + ", proofAlgorithm="
-				+ proofAlgorithm + "]";
+		return "SignatureSuite{" +
+				"term='" + term + '\'' +
+				", id=" + id +
+				", type=" + type +
+				", canonicalizationAlgorithm=" + canonicalizationAlgorithm +
+				", digestAlgorithm=" + digestAlgorithm +
+				", proofAlgorithm=" + proofAlgorithm +
+				", keyTypeNames=" + keyTypeNames +
+				", jwsAlgorithmForKeyTypeName=" + jwsAlgorithmForKeyTypeName +
+				'}';
 	}
 }

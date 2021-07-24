@@ -8,6 +8,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
+import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
 import info.weboftrust.ldsignatures.suites.RsaSignature2018SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
@@ -20,7 +21,7 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
     public RsaSignature2018LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, verifier);
+        super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, verifier, new URDNA2015Canonicalizer());
     }
 
     public RsaSignature2018LdVerifier(RSAPublicKey publicKey) {
@@ -47,14 +48,6 @@ public class RsaSignature2018LdVerifier extends LdVerifier<RsaSignature2018Signa
 
             JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.RS256);
             verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
-
-			/*			JsonWebSignature jws = new JsonWebSignature();
-			jws.setAlgorithmConstraints(new AlgorithmConstraints(AlgorithmConstraints.ConstraintType.WHITELIST, AlgorithmIdentifiers.RSA_USING_SHA256));
-			jws.setCompactSerialization(ldProof.getJws());
-			jws.setPayload(unencodedPayload);
-
-			jws.setKey(publicKey);
-			verify = jws.verifySignature();*/
         } catch (JOSEException | ParseException ex) {
 
             throw new GeneralSecurityException("JOSE verification problem: " + ex.getMessage(), ex);

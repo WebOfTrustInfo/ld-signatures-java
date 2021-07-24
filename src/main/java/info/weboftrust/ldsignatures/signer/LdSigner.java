@@ -4,9 +4,8 @@ import com.danubetech.keyformats.crypto.ByteSigner;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.LdProof;
+import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
-import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.util.SHAUtil;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,6 +17,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
     private final SIGNATURESUITE signatureSuite;
 
     private ByteSigner signer;
+    private Canonicalizer canonicalizer;
 
     private URI creator;
     private Date created;
@@ -26,16 +26,18 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
     private String proofPurpose;
     private URI verificationMethod;
 
-    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer) {
+    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, Canonicalizer canonicalizer) {
 
         this.signatureSuite = signatureSuite;
         this.signer = signer;
+        this.canonicalizer = canonicalizer;
     }
 
-    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, URI creator, Date created, String domain, String nonce, String proofPurpose, String URI) {
+    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, Canonicalizer canonicalizer, URI creator, Date created, String domain, String nonce, String proofPurpose, URI verificationMethod) {
 
         this.signatureSuite = signatureSuite;
         this.signer = signer;
+        this.canonicalizer = canonicalizer;
         this.creator = creator;
         this.created = created;
         this.domain = domain;
@@ -44,32 +46,31 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.verificationMethod = verificationMethod;
     }
 
-    public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuite) {
-
-        if (SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018.getTerm().equals(signatureSuite))
-            return new RsaSignature2018LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm().equals(signatureSuite))
-            return new Ed25519Signature2018LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016.getTerm().equals(signatureSuite))
-            return new EcdsaKoblitzSignature2016LdSigner();
-        if (SignatureSuites.SIGNATURE_SUITE_ECDSASECP256L1SIGNATURE2019.getTerm().equals(signatureSuite))
-            return new EcdsaSecp256k1Signature2019LdSigner();
-
-        throw new IllegalArgumentException();
+    /**
+     * @deprecated
+     * Use LdSignerRegistry.getLdSignerBySignatureSuiteTerm(signatureSuiteTerm) instead.
+     */
+    @Deprecated
+    public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(String signatureSuiteTerm) {
+        return LdSignerRegistry.getLdSignerBySignatureSuiteTerm(signatureSuiteTerm);
     }
 
+    /**
+     * @deprecated
+     * Use LdSignerRegistry.getLdSignerBySignatureSuite(signatureSuite) instead.
+     */
+    @Deprecated
     public static LdSigner<? extends SignatureSuite> ldSignerForSignatureSuite(SignatureSuite signatureSuite) {
-
-        return ldSignerForSignatureSuite(signatureSuite.getTerm());
+        return LdSignerRegistry.getLdSignerBySignatureSuite(signatureSuite);
     }
 
     public abstract void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
 
     public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
-        // build the proof object
+        // build the base proof object
 
-        LdProof ldProofWithoutProofValues = LdProof.builder()
+        LdProof ldProof = LdProof.builder()
                 .defaultContexts(false)
                 .defaultTypes(false)
                 .type(this.getSignatureSuite().getTerm())
@@ -81,38 +82,21 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
                 .verificationMethod(this.getVerificationMethod())
                 .build();
 
-        // obtain the normalized proof options
+        // obtain the canonicalized document
 
-        JsonLDObject jsonLdObjectProofOptions = LdProof.builder()
-                .base(ldProofWithoutProofValues)
-                .defaultContexts(true)
-                .build();
-        String normalizedProofOptions = jsonLdObjectProofOptions.normalize("urdna2015");
-
-        // obtain the normalized document
-
-        JsonLDObject jsonLdDocumentWithoutProof = JsonLDObject.builder()
-                .base(jsonLdObject)
-                .build();
-        jsonLdDocumentWithoutProof.setDocumentLoader(jsonLdObject.getDocumentLoader());
-        LdProof.removeFromJsonLdObject(jsonLdDocumentWithoutProof);
-        String normalizedDocument = jsonLdDocumentWithoutProof.normalize("urdna2015");
+        byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(ldProof, jsonLdObject);
 
         // sign
 
-        byte[] signingInput = new byte[64];
-        System.arraycopy(SHAUtil.sha256(normalizedProofOptions), 0, signingInput, 0, 32);
-        System.arraycopy(SHAUtil.sha256(normalizedDocument), 0, signingInput, 32, 32);
-
         LdProof.Builder ldProofBuilder = LdProof.builder()
-                .base(ldProofWithoutProofValues)
+                .base(ldProof)
                 .defaultContexts(defaultContexts);
 
-        this.sign(ldProofBuilder, signingInput);
+        this.sign(ldProofBuilder, canonicalizationResult);
 
-        LdProof ldProof = ldProofBuilder.build();
+        ldProof = ldProofBuilder.build();
 
-        // add proof to JSON-LD?
+        // add proof to JSON-LD
 
         if (addToJsonLdObject) ldProof.addToJsonLDObject(jsonLdObject);
 
@@ -122,12 +106,10 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
     }
 
     public LdProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
-
         return this.sign(jsonLdObject, true, false);
     }
 
     public SignatureSuite getSignatureSuite() {
-
         return this.signatureSuite;
     }
 
@@ -136,13 +118,19 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
      */
 
     public ByteSigner getSigner() {
-
         return this.signer;
     }
 
     public void setSigner(ByteSigner signer) {
-
         this.signer = signer;
+    }
+
+    public Canonicalizer getCanonicalizer() {
+        return canonicalizer;
+    }
+
+    public void setCanonicalizer(Canonicalizer canonicalizer) {
+        this.canonicalizer = canonicalizer;
     }
 
     public URI getCreator() {

@@ -1,7 +1,6 @@
 package info.weboftrust.ldsignatures.verifier;
 
 import com.danubetech.keyformats.crypto.ByteVerifier;
-import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
@@ -9,26 +8,21 @@ import com.nimbusds.jose.JWSVerifier;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.adapter.JWSVerifierAdapter;
 import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
-import info.weboftrust.ldsignatures.suites.Ed25519Signature2018SignatureSuite;
+import info.weboftrust.ldsignatures.suites.JsonWebSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
 
-public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2018SignatureSuite> {
+public class JsonWebSignature2020LdVerifier extends LdVerifier<JsonWebSignature2020SignatureSuite> {
 
-    public Ed25519Signature2018LdVerifier(ByteVerifier verifier) {
+    public JsonWebSignature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018, verifier, new URDNA2015Canonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_JSONWEBSIGNATURE2020, verifier, new URDNA2015Canonicalizer());
     }
 
-    public Ed25519Signature2018LdVerifier(byte[] publicKey) {
-
-        this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
-    }
-
-    public Ed25519Signature2018LdVerifier() {
+    public JsonWebSignature2020LdVerifier() {
 
         this((ByteVerifier) null);
     }
@@ -47,7 +41,7 @@ public class Ed25519Signature2018LdVerifier extends LdVerifier<Ed25519Signature2
             JWSObject detachedJwsObject = JWSObject.parse(jws);
             byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.getHeader(), signingInput);
 
-            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.EdDSA);
+            JWSVerifier jwsVerifier = new JWSVerifierAdapter(verifier, JWSAlgorithm.parse(verifier.getAlgorithm()));
             verify = jwsVerifier.verify(detachedJwsObject.getHeader(), jwsSigningInput, detachedJwsObject.getSignature());
         } catch (JOSEException | ParseException ex) {
 

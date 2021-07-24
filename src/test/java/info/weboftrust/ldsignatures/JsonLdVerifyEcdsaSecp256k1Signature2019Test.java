@@ -16,7 +16,7 @@ public class JsonLdVerifyEcdsaSecp256k1Signature2019Test {
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.good.secp256k1.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.good.EcdsaSecp256k1Signature2019.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		EcdsaSecp256k1Signature2019LdVerifier verifier = new EcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
@@ -29,7 +29,7 @@ public class JsonLdVerifyEcdsaSecp256k1Signature2019Test {
 	@SuppressWarnings("unchecked")
 	public void testBadVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.bad.secp256k1.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEcdsaSecp256k1Signature2019Test.class.getResourceAsStream("signed.bad.EcdsaSecp256k1Signature2019.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		EcdsaSecp256k1Signature2019LdVerifier verifier = new EcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);

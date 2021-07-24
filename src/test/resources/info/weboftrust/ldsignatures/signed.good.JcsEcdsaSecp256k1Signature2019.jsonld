@@ -5,15 +5,14 @@
     "homepage" : "schema:url",
     "image" : "schema:image"
   }, "https://w3id.org/security/v3" ],
-  "name" : "Evil Hacker",
+  "name" : "Manu Sporny",
   "homepage" : "https://manu.sporny.org/",
   "image" : "https://manu.sporny.org/images/manu.png",
   "proof" : {
-    "type" : "Ed25519Signature2018",
+    "type" : "JcsEcdsaSecp256k1Signature2019",
     "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
-    "nonce" : null,
-    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..5VI99nGh5wrAJRub5likTa5lLQ2Dmfiv-ByTRfd1D4WmnOSo3N1eSLemCYlXG95VY6Na-FuEHpjofI8iz8iPBQ"
+    "signatureValue" : "381yXZEgLdxfNwKdo7X8jDxKTjPYYvaDWtQNw41Ys5wYrf3t2SNzzpanrUps1aU3PYbVjvgHeRXmhuH36R2dYFK2b5STpTQA"
   }
 }

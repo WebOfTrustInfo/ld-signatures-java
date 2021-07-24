@@ -1,17 +1,17 @@
 package info.weboftrust.ldsignatures;
 
-import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
-import info.weboftrust.ldsignatures.signer.Ed25519Signature2018LdSigner;
+import info.weboftrust.ldsignatures.signer.Ed25519Signature2020LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
-import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
+import info.weboftrust.ldsignatures.verifier.Ed25519Signature2020LdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonLdSignEd25519Signature2018Test {
+public class JsonLdSignEd25519Signature2020Test {
 
 	@BeforeEach
 	public void before() {
@@ -36,7 +36,7 @@ public class JsonLdSignEd25519Signature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEd25519Signature2020Test.class.getResourceAsStream("input.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");
@@ -44,21 +44,21 @@ public class JsonLdSignEd25519Signature2018Test {
 		String domain = "example.com";
 		String nonce = null;
 
-		Ed25519Signature2018LdSigner signer = new Ed25519Signature2018LdSigner(TestUtil.testEd25519PrivateKey);
+		Ed25519Signature2020LdSigner signer = new Ed25519Signature2020LdSigner(TestUtil.testEd25519PrivateKey);
 		signer.setCreator(creator);
 		signer.setCreated(created);
 		signer.setDomain(domain);
 		signer.setNonce(nonce);
 		LdProof ldProof = signer.sign(jsonLdObject);
 
-		assertEquals(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2018.getTerm(), ldProof.getType());
+		assertEquals(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020.getTerm(), ldProof.getType());
 		assertEquals(creator, ldProof.getCreator());
 		assertEquals(created, ldProof.getCreated());
 		assertEquals(domain, ldProof.getDomain());
 		assertEquals(nonce, ldProof.getNonce());
-		assertEquals("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFZERTQSJ9..5VI99nGh5wrAJRub5likTa5lLQ2Dmfiv-ByTRfd1D4WmnOSo3N1eSLemCYlXG95VY6Na-FuEHpjofI8iz8iPBQ", ldProof.getJws());
+		assertEquals("zd4XJsrXZPKR4KyYfHYTXZwHdcetercr5apNMgh5rjPp9nobNmCrtXFn5eiDMzXz7nSfYuhMhmKnPph1Epfi5FuT", ldProof.getProofValue());
 
-		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
+		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, ldProof);
 		assertTrue(verify);
 	}

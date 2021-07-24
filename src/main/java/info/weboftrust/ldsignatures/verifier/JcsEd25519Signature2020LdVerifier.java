@@ -3,27 +3,29 @@ package info.weboftrust.ldsignatures.verifier;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
-import info.weboftrust.ldsignatures.suites.Ed25519Signature2020SignatureSuite;
+import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
+import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
+import io.ipfs.multibase.Base58;
 import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 
-public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2020SignatureSuite> {
+public class JcsEd25519Signature2020LdVerifier extends LdVerifier<JcsEd25519Signature2020SignatureSuite> {
 
-    public Ed25519Signature2020LdVerifier(ByteVerifier verifier) {
+    public JcsEd25519Signature2020LdVerifier(ByteVerifier verifier) {
 
-        super(SignatureSuites.SIGNATURE_SUITE_ED25519SIGNATURE2020, verifier, new URDNA2015Canonicalizer());
+        super(SignatureSuites.SIGNATURE_SUITE_JCSED25519SIGNATURE2020, verifier, new JCSCanonicalizer());
     }
 
-    public Ed25519Signature2020LdVerifier(byte[] publicKey) {
+    public JcsEd25519Signature2020LdVerifier(byte[] publicKey) {
 
         this(new Ed25519_EdDSA_PublicKeyVerifier(publicKey));
     }
 
-    public Ed25519Signature2020LdVerifier() {
+    public JcsEd25519Signature2020LdVerifier() {
 
         this((ByteVerifier) null);
     }
@@ -32,12 +34,12 @@ public class Ed25519Signature2020LdVerifier extends LdVerifier<Ed25519Signature2
 
         // verify
 
-        String proofValue = ldProof.getProofValue();
-        if (proofValue == null) throw new GeneralSecurityException("No 'proofValue' in proof.");
+        String signatureValue = (String) ldProof.getJsonObject().get("signatureValue");
+        if (signatureValue == null) throw new GeneralSecurityException("No 'signatureValue' in proof.");
 
         boolean verify;
 
-        byte[] bytes = Multibase.decode(proofValue);
+        byte[] bytes = Base58.decode(signatureValue);
         verify = verifier.verify(signingInput, bytes, JWSAlgorithm.EdDSA);
 
         // done

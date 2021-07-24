@@ -1,14 +1,14 @@
 package info.weboftrust.ldsignatures;
 
-import foundation.identity.jsonld.JsonLDObject;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
+import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
-import info.weboftrust.ldsignatures.verifier.Ed25519Signature2018LdVerifier;
+import info.weboftrust.ldsignatures.verifier.JcsEd25519Signature2020LdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonLdVerifyEd25519Signature2018Test {
+public class JsonLdVerifyJcsEd25519Signature2020Test {
 
 	@BeforeEach
 	public void before() {
@@ -31,10 +31,10 @@ public class JsonLdVerifyEd25519Signature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.good.Ed25519Signature2018.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.good.JcsEd25519Signature2020.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
-		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
+		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
 		assertTrue(verify);
 	}
@@ -43,10 +43,10 @@ public class JsonLdVerifyEd25519Signature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testBadVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2018Test.class.getResourceAsStream("signed.bad.Ed25519Signature2018.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyJcsEd25519Signature2020Test.class.getResourceAsStream("signed.bad.JcsEd25519Signature2020.jsonld")));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
-		Ed25519Signature2018LdVerifier verifier = new Ed25519Signature2018LdVerifier(TestUtil.testEd25519PublicKey);
+		JcsEd25519Signature2020LdVerifier verifier = new JcsEd25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
 		boolean verify = verifier.verify(jsonLdObject);
 		assertFalse(verify);
 	}

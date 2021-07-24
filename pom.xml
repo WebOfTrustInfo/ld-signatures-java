@@ -153,7 +153,12 @@
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>0.3.0</version>
+			<version>0.4-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.erdtman</groupId>
+			<artifactId>java-json-canonicalization</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>

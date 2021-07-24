@@ -9,11 +9,10 @@
   "homepage" : "https://manu.sporny.org/",
   "image" : "https://manu.sporny.org/images/manu.png",
   "proof" : {
-    "type" : "EcdsaSecp256k1Signature2019",
+    "type" : "Ed25519Signature2020",
     "creator": "did:sov:WRfXPg8dantKVubE3HX8pw",
     "created" : "2017-10-24T05:33:31Z",
     "domain" : "example.com",
-    "nonce" : null,
-    "jws" : "eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJFUzI1NksifQ..MEUCIQC3t0NSkMxEAGwLjhhE-G__-Ok5CZGcT9GBbKqVvozh-AIgBg6mqSDiJoKcK6aLN88Gorlb8qR-yv9VtDfUM9qQZUY"
+    "proofValue" : "zd4XJsrXZPKR4KyYfHYTXZwHdcetercr5apNMgh5rjPp9nobNmCrtXFn5eiDMzXz7nSfYuhMhmKnPph1Epfi5FuT"
   }
 }
