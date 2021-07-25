@@ -41,7 +41,7 @@ public class JsonLdSignJcsEcdsaSecp256k1Signature2019Test {
 		assertEquals(created, ldProof.getCreated());
 		assertEquals(domain, ldProof.getDomain());
 		assertEquals(nonce, ldProof.getNonce());
-		assertEquals("381yXZEgLdxfNwKdo7X8jDxKTjPYYvaDWtQNw41Ys5wYrf3t2SNzzpanrUps1aU3PYbVjvgHeRXmhuH36R2dYFK2b5STpTQA", ldProof.getJsonObject().get("signatureValue"));
+		assertEquals("2iPdSfeGMN4JzEFiWAeqzXTYDhB5u3y2pAZrVif4zMJUXANQj8uaNr9ZVHUGgQWUN36bPA6mZC3yTVPuVihmEpbg", ldProof.getJsonObject().get("signatureValue"));
 
 		JcsEcdsaSecp256k1Signature2019LdVerifier verifier = new JcsEcdsaSecp256k1Signature2019LdVerifier(TestUtil.testSecp256k1PublicKey);
 		boolean verify = verifier.verify(jsonLdObject, ldProof);
