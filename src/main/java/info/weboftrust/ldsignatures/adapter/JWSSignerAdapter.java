@@ -29,7 +29,8 @@ public class JWSSignerAdapter extends BaseJWSProvider implements JWSSigner {
 
 		try {
 
-			return Base64URL.encode(this.signer.sign(signingInput, header.getAlgorithm().getName()));
+			byte[] signature = this.signer.sign(signingInput, header.getAlgorithm().getName());
+			return Base64URL.encode(signature);
 		} catch (GeneralSecurityException ex) {
 
 			throw new JOSEException(ex.getMessage(), ex);
