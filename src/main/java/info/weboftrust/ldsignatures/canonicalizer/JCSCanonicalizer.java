@@ -3,7 +3,6 @@ package info.weboftrust.ldsignatures.canonicalizer;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.LdProof;
-import info.weboftrust.ldsignatures.util.SHAUtil;
 import org.erdtman.jcs.JsonCanonicalizer;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class JCSCanonicalizer extends Canonicalizer {
 
         LdProof ldProofWithoutProofValues = LdProof.builder()
                 .base(ldProof)
-                .defaultContexts(true)
+                .defaultContexts(false)
                 .build();
         LdProof.removeLdProofValues(ldProofWithoutProofValues);
 
@@ -43,7 +42,7 @@ public class JCSCanonicalizer extends Canonicalizer {
 
         // construct the canonicalization result
 
-        byte[] canonicalizationResult = SHAUtil.sha256(canonicalizedJsonLdObjectWithProofWithoutProofValues);
+        byte[] canonicalizationResult = canonicalizedJsonLdObjectWithProofWithoutProofValues.getBytes();
         return canonicalizationResult;
     }
 }
