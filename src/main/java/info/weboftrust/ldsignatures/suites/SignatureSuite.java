@@ -35,7 +35,7 @@ public abstract class SignatureSuite {
 		return this.getJwsAlgorithmsForKeyTypeName().get(keyTypeName);
 	}
 
-	public String findDefaultJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
+	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName) {
 		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
 		return foundAlgorithmsForKeyTypeName == null ? null : foundAlgorithmsForKeyTypeName.get(0);
 	}
