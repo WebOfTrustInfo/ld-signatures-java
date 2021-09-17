@@ -17,9 +17,9 @@ public class BbsBlsSignature2020SignatureSuite extends SignatureSuite {
 				URI.create("https://w3id.org/security#URDNA2015"),
 				URI.create("https://www.blake2.net/"),
 				URI.create("https://electriccoin.co/blog/new-snark-curve/"),
-				List.of(KeyTypeName.BLS12381_G1,
-						KeyTypeName.BLS12381_G2),
-				Map.of(KeyTypeName.BLS12381_G1, List.of(JWSAlgorithm.BBSPlus),
-						KeyTypeName.BLS12381_G2, List.of(JWSAlgorithm.BBSPlus)));
+				List.of(KeyTypeName.Bls12381G1,
+						KeyTypeName.Bls12381G2),
+				Map.of(KeyTypeName.Bls12381G1, List.of(JWSAlgorithm.BBSPlus),
+						KeyTypeName.Bls12381G2, List.of(JWSAlgorithm.BBSPlus)));
 	}
 }
