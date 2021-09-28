@@ -36,7 +36,7 @@ public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020S
 
         try {
 
-            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
+            JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.parse(signer.getAlgorithm())).base64URLEncodePayload(false).criticalParams(Collections.singleton("b64")).build();
             byte[] jwsSigningInput = JWSUtil.getJwsSigningInput(jwsHeader, signingInput);
 
             JWSSigner jwsSigner = new JWSSignerAdapter(signer, JWSAlgorithm.parse(signer.getAlgorithm()));
