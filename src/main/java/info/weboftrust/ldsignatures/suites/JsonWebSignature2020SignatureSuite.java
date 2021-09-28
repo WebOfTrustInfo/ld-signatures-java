@@ -22,7 +22,7 @@ public class JsonWebSignature2020SignatureSuite extends SignatureSuite {
 						KeyTypeName.secp256k1,
 						KeyTypeName.P_256,
 						KeyTypeName.P_384),
-				Map.of(KeyTypeName.RSA, List.of(JWSAlgorithm.PS256),
+				Map.of(KeyTypeName.RSA, List.of(JWSAlgorithm.PS256, JWSAlgorithm.RS256),
 						KeyTypeName.Ed25519, List.of(JWSAlgorithm.EdDSA),
 						KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K),
 						KeyTypeName.P_256, List.of(JWSAlgorithm.ES256),
