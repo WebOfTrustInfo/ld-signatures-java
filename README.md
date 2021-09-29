@@ -7,6 +7,7 @@
 This is a work-in-progress implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
+ - [Ed25519Signature2020](https://w3c-ccg.github.io/lds-ed25519-2020/)
  - [EcdsaSecp256k1Signature2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019/)
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
  - [JsonWebSignature2020](https://w3c-ccg.github.io/lds-jws2020/)
