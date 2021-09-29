@@ -9,6 +9,9 @@ This is a work-in-progress implementation of the following cryptographic suites 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
  - [EcdsaSecp256k1Signature2019](https://w3c-ccg.github.io/lds-ecdsa-secp256k1-2019/)
  - [RsaSignature2018](https://w3c-ccg.github.io/lds-rsa2018/)
+ - [JsonWebSignature2020](https://w3c-ccg.github.io/lds-jws2020/)
+ - [JcsEd25519Signature2020](https://identity.foundation/JcsEd25519Signature2020/)
+ - JcsEcdsaSecp256k1Signature2019
 
 Not ready for production use! Use at your own risk! Pull requests welcome.
 
@@ -23,7 +26,7 @@ Dependency:
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>0.4-SNAPSHOT</version>
+		<version>0.5-SNAPSHOT</version>
 		<scope>compile</scope>
 	</dependency>
 
