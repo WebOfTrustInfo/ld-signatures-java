@@ -11,6 +11,7 @@ public class LDSecurityKeywords {
     public static final String JSONLD_TERM_CREATOR = "creator";
     public static final String JSONLD_TERM_CREATED = "created";
     public static final String JSONLD_TERM_DOMAIN = "domain";
+    public static final String JSONLD_TERM_CHALLENGE = "challenge";
     public static final String JSONLD_TERM_NONCE = "nonce";
     public static final String JSONLD_TERM_PROOFPURPOSE = "proofPurpose";
     public static final String JSONLD_TERM_VERIFICATIONMETHOD = "verificationMethod";

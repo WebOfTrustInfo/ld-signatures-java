@@ -37,6 +37,7 @@ public class LdProof extends JsonLDObject {
 		private URI creator;
 		private Date created;
 		private String domain;
+		private String challenge;
 		private String nonce;
 		private String proofPurpose;
 		private URI verificationMethod;
@@ -56,6 +57,7 @@ public class LdProof extends JsonLDObject {
 			if (this.creator != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CREATOR, JsonLDUtils.uriToString(this.creator));
 			if (this.created != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CREATED, JsonLDUtils.dateToString(this.created));
 			if (this.domain != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_DOMAIN, this.domain);
+			if (this.challenge != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_CHALLENGE, this.challenge);
 			if (this.nonce != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_NONCE, this.nonce);
 			if (this.proofPurpose != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_PROOFPURPOSE, this.proofPurpose);
 			if (this.verificationMethod != null) JsonLDUtils.jsonLdAdd(this.jsonLdObject, LDSecurityKeywords.JSONLD_TERM_VERIFICATIONMETHOD, JsonLDUtils.uriToString(this.verificationMethod));
@@ -77,6 +79,11 @@ public class LdProof extends JsonLDObject {
 
 		public B domain(String domain) {
 			this.domain = domain;
+			return (B) this;
+		}
+
+		public B challenge(String challenge) {
+			this.challenge = challenge;
 			return (B) this;
 		}
 
@@ -162,6 +169,10 @@ public class LdProof extends JsonLDObject {
 
 	public String getDomain() {
 		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_DOMAIN);
+	}
+
+	public String getChallenge() {
+		return JsonLDUtils.jsonLdGetString(this.getJsonObject(), LDSecurityKeywords.JSONLD_TERM_CHALLENGE);
 	}
 
 	public String getNonce() {

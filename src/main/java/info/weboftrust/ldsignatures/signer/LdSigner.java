@@ -22,6 +22,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
     private URI creator;
     private Date created;
     private String domain;
+    private String challenge;
     private String nonce;
     private String proofPurpose;
     private URI verificationMethod;
@@ -33,7 +34,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.canonicalizer = canonicalizer;
     }
 
-    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, Canonicalizer canonicalizer, URI creator, Date created, String domain, String nonce, String proofPurpose, URI verificationMethod) {
+    protected LdSigner(SIGNATURESUITE signatureSuite, ByteSigner signer, Canonicalizer canonicalizer, URI creator, Date created, String domain, String challenge, String nonce, String proofPurpose, URI verificationMethod) {
 
         this.signatureSuite = signatureSuite;
         this.signer = signer;
@@ -41,6 +42,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         this.creator = creator;
         this.created = created;
         this.domain = domain;
+        this.challenge = challenge;
         this.nonce = nonce;
         this.proofPurpose = proofPurpose;
         this.verificationMethod = verificationMethod;
@@ -77,6 +79,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
                 .creator(this.getCreator())
                 .created(this.getCreated())
                 .domain(this.getDomain())
+                .challenge(this.getChallenge())
                 .nonce(this.getNonce())
                 .proofPurpose(this.getProofPurpose())
                 .verificationMethod(this.getVerificationMethod())
@@ -155,6 +158,14 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(String challenge) {
+        this.challenge = challenge;
     }
 
     public String getNonce() {
