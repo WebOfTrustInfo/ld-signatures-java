@@ -16,5 +16,6 @@ public class LDSecurityKeywords {
     public static final String JSONLD_TERM_VERIFICATIONMETHOD = "verificationMethod";
     public static final String JSONLD_TERM_PROOFVALUE = "proofValue";
     public static final String JSONLD_TERM_JWS = "jws";
+    public static final String JSONLD_TERM_AUTHENTICATION = "authentication";
     public static final String JSONLD_TERM_ASSERTIONMETHOD = "assertionMethod";
 }
