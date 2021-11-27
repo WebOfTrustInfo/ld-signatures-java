@@ -121,6 +121,8 @@ public class LdProof extends JsonLDObject {
 		return new LdProof(jsonObject);
 	}
 
+	public static LdProof fromJsonLDObject(JsonLDObject jsonLDObject) { return fromJsonObject(jsonLDObject.getJsonObject()); }
+
 	public static LdProof fromJson(Reader reader) {
 		return new LdProof(readJson(reader));
 	}
