@@ -1,10 +1,8 @@
-![RWoT Logo](https://github.com/WebOfTrustInfo/ld-signatures-java/blob/master/wot-logo.png?raw=true)
-
 # ld-signatures-java
 
 ## Information
 
-This is a work-in-progress implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+This is an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
  - [Ed25519Signature2020](https://w3c-ccg.github.io/lds-ed25519-2020/)
@@ -14,8 +12,6 @@ This is a work-in-progress implementation of the following cryptographic suites 
  - [JcsEd25519Signature2020](https://identity.foundation/JcsEd25519Signature2020/)
  - JcsEcdsaSecp256k1Signature2019
 
-Not ready for production use! Use at your own risk! Pull requests welcome.
-
 ## Maven
 
 Build:
@@ -24,11 +20,17 @@ Build:
 
 Dependency:
 
+	<repositories>
+		<repository>
+			<id>danubetech-maven-public</id>
+			<url>https://repo.danubetech.com/repository/maven-public/</url>
+		</repository>
+	</repositories>
+
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>0.5-SNAPSHOT</version>
-		<scope>compile</scope>
+		<version>1.0.0</version>
 	</dependency>
 
 ## Example
@@ -79,7 +81,11 @@ Example Linked Data Proof:
 
 Danube Tech - https://danubetech.com/
 
+<img align="left" src="https://raw.githubusercontent.com/WebOfTrustInfo/ld-signatures-java/main/docs/logo-wot.png">
+
 Originally built during [Rebooting Web-of-Trust](http://www.weboftrust.info/) in Paris on April 21st 2017.
+
+<br clear="left" />
 
 <img align="left" src="https://raw.githubusercontent.com/WebOfTrustInfo/ld-signatures-java/master/docs/logo-ngi-essiflab.png" width="115">
 
