@@ -10,7 +10,10 @@ import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
@@ -86,7 +89,6 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
                 .build();
 
         // obtain the canonicalized document
-
         byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(ldProof, jsonLdObject);
 
         // sign
@@ -94,7 +96,6 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         LdProof.Builder ldProofBuilder = LdProof.builder()
                 .base(ldProof)
                 .defaultContexts(defaultContexts);
-
         this.sign(ldProofBuilder, canonicalizationResult);
 
         ldProof = ldProofBuilder.build();
@@ -102,10 +103,20 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         // add proof to JSON-LD
 
         if (addToJsonLdObject) ldProof.addToJsonLDObject(jsonLdObject);
-
+        loadMissingContext(jsonLdObject);
         // done
 
         return ldProof;
+    }
+
+    private void loadMissingContext(JsonLDObject jsonLDObject){
+        if(this.getSignatureSuite().getSupportedJsonLDContext().stream().noneMatch(jsonLDObject.getContexts()::contains)){
+            List<Object> contextList =new ArrayList<>();
+            contextList.addAll((Collection<?>) jsonLDObject.getJsonObject().get("@context"));
+            contextList.add(this.signatureSuite.getSupportedJsonLDContext().get(0).toString());
+            jsonLDObject.setJsonObjectKeyValue("@context",contextList);
+
+        }
     }
 
     public LdProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {

@@ -19,8 +19,9 @@ public abstract class SignatureSuite {
 	private URI proofAlgorithm;
 	private List<KeyTypeName> keyTypeNames;
 	private Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
+	private List<URI> supportedJsonLDContext;
 
-	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName) {
+	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName,List<URI> supportedJsonLDContext) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
@@ -29,6 +30,11 @@ public abstract class SignatureSuite {
 		this.proofAlgorithm = proofAlgorithm;
 		this.keyTypeNames = keyTypeNames;
 		this.jwsAlgorithmForKeyTypeName = jwsAlgorithmForKeyTypeName;
+		this.supportedJsonLDContext = supportedJsonLDContext;
+	}
+
+	public List<URI> getSupportedJsonLDContext() {
+		return supportedJsonLDContext;
 	}
 
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
