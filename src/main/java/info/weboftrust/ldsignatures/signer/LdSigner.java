@@ -1,8 +1,10 @@
 package info.weboftrust.ldsignatures.signer;
 
+import com.apicatalog.jsonld.lang.Keywords;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
@@ -10,10 +12,7 @@ import info.weboftrust.ldsignatures.suites.SignatureSuite;
 import java.io.IOException;
 import java.net.URI;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
@@ -89,6 +88,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
                 .build();
 
         // obtain the canonicalized document
+
         byte[] canonicalizationResult = this.getCanonicalizer().canonicalize(ldProof, jsonLdObject);
 
         // sign
@@ -104,6 +104,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
         if (addToJsonLdObject) ldProof.addToJsonLDObject(jsonLdObject);
         loadMissingContext(jsonLdObject);
+
         // done
 
         return ldProof;
@@ -111,11 +112,10 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
     private void loadMissingContext(JsonLDObject jsonLDObject){
         if(this.getSignatureSuite().getSupportedJsonLDContext().stream().noneMatch(jsonLDObject.getContexts()::contains)){
-            List<Object> contextList =new ArrayList<>();
-            contextList.addAll((Collection<?>) jsonLDObject.getJsonObject().get("@context"));
-            contextList.add(this.signatureSuite.getSupportedJsonLDContext().get(0).toString());
-            jsonLDObject.setJsonObjectKeyValue("@context",contextList);
-
+            URI missingContext = this.signatureSuite.getSupportedJsonLDContext().get(0);
+            if (missingContext != null) {
+                JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, missingContext);
+            }
         }
     }
 
