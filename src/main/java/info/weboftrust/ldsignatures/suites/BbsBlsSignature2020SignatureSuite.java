@@ -23,6 +23,6 @@ public class BbsBlsSignature2020SignatureSuite extends SignatureSuite {
 						KeyTypeName.Bls12381G2),
 				Map.of(KeyTypeName.Bls12381G1, List.of(JWSAlgorithm.BBSPlus),
 						KeyTypeName.Bls12381G2, List.of(JWSAlgorithm.BBSPlus)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1,LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }

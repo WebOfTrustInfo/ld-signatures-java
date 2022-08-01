@@ -21,7 +21,7 @@ public class RsaSignature2018SignatureSuite extends SignatureSuite {
 				URI.create("https://registry.ietf.org/ietf-jose-jws-algorithms#RS256"),
 				List.of(KeyTypeName.RSA),
 				Map.of(KeyTypeName.RSA, List.of(JWSAlgorithm.RS256)),
-				Arrays.asList(URI.create("https://www.w3.org/2018/credentials/v1"),LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				Arrays.asList(URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 
 	}
 }

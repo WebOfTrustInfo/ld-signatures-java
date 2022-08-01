@@ -21,6 +21,6 @@ public class Ed25519Signature2020SignatureSuite extends SignatureSuite {
 				URI.create("http://w3id.org/security#ed25519"),
 				List.of(KeyTypeName.Ed25519),
 				Map.of(KeyTypeName.Ed25519, List.of(JWSAlgorithm.EdDSA)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SUITES_ED25519_2020_V1,LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SUITES_ED25519_2020_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }

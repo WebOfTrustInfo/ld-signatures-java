@@ -21,6 +21,6 @@ public class EcdsaKoblitzSignature2016SignatureSuite extends SignatureSuite {
 				URI.create("http://w3id.org/security#koblitz"),
 				List.of(KeyTypeName.secp256k1),
 				Map.of(KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V1,LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
+				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V1, LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }
