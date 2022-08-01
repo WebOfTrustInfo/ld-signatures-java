@@ -21,6 +21,6 @@ public class EcdsaSecp256k1Signature2019SignatureSuite extends SignatureSuite {
 				URI.create("http://w3id.org/security#secp256k1"),
 				List.of(KeyTypeName.secp256k1),
 				Map.of(KeyTypeName.secp256k1, List.of(JWSAlgorithm.ES256K)),
-				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SUITES_SECP256K1_2019_V1,LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3,URI.create("https://www.w3.org/2018/credentials/v1")));
+				Arrays.asList(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SUITES_SECP256K1_2019_V1, URI.create("https://www.w3.org/2018/credentials/v1"), LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_V3));
 	}
 }
