@@ -19,9 +19,9 @@ public abstract class SignatureSuite {
 	private URI proofAlgorithm;
 	private List<KeyTypeName> keyTypeNames;
 	private Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
-	private List<URI> supportedJsonLDContext;
+	private List<URI> supportedJsonLDContexts;
 
-	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName,List<URI> supportedJsonLDContext) {
+	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName,List<URI> supportedJsonLDContexts) {
 		this.term = term;
 		this.id = id;
 		this.type = URI_TYPE_SIGNATURESUITE;
@@ -30,11 +30,7 @@ public abstract class SignatureSuite {
 		this.proofAlgorithm = proofAlgorithm;
 		this.keyTypeNames = keyTypeNames;
 		this.jwsAlgorithmForKeyTypeName = jwsAlgorithmForKeyTypeName;
-		this.supportedJsonLDContext = supportedJsonLDContext;
-	}
-
-	public List<URI> getSupportedJsonLDContext() {
-		return supportedJsonLDContext;
+		this.supportedJsonLDContexts = supportedJsonLDContexts;
 	}
 
 	public List<String> findJwsAlgorithmsForKeyTypeName(KeyTypeName keyTypeName) {
@@ -43,7 +39,12 @@ public abstract class SignatureSuite {
 
 	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName) {
 		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
-		return foundAlgorithmsForKeyTypeName == null ? null : foundAlgorithmsForKeyTypeName.get(0);
+		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.size() < 1) ? null : foundAlgorithmsForKeyTypeName.get(0);
+	}
+
+	public URI getDefaultSupportedJsonLDContext() {
+		List<URI> supportedJsonLDContexts = this.getSupportedJsonLDContexts();
+		return (supportedJsonLDContexts == null || supportedJsonLDContexts.size() < 1) ? null : supportedJsonLDContexts.get(0);
 	}
 
 	public String getTerm() {
@@ -78,17 +79,21 @@ public abstract class SignatureSuite {
 		return jwsAlgorithmForKeyTypeName;
 	}
 
+	public List<URI> getSupportedJsonLDContexts() {
+		return supportedJsonLDContexts;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		SignatureSuite that = (SignatureSuite) o;
-		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmForKeyTypeName, that.jwsAlgorithmForKeyTypeName);
+		return Objects.equals(term, that.term) && Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(canonicalizationAlgorithm, that.canonicalizationAlgorithm) && Objects.equals(digestAlgorithm, that.digestAlgorithm) && Objects.equals(proofAlgorithm, that.proofAlgorithm) && Objects.equals(keyTypeNames, that.keyTypeNames) && Objects.equals(jwsAlgorithmForKeyTypeName, that.jwsAlgorithmForKeyTypeName) && Objects.equals(supportedJsonLDContexts, that.supportedJsonLDContexts);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmForKeyTypeName);
+		return Objects.hash(term, id, type, canonicalizationAlgorithm, digestAlgorithm, proofAlgorithm, keyTypeNames, jwsAlgorithmForKeyTypeName, supportedJsonLDContexts);
 	}
 
 	@Override
@@ -102,6 +107,7 @@ public abstract class SignatureSuite {
 				", proofAlgorithm=" + proofAlgorithm +
 				", keyTypeNames=" + keyTypeNames +
 				", jwsAlgorithmForKeyTypeName=" + jwsAlgorithmForKeyTypeName +
+				", supportedJsonLDContexts=" + supportedJsonLDContexts +
 				'}';
 	}
 }
