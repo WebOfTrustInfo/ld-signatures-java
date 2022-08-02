@@ -1,8 +1,10 @@
 package info.weboftrust.ldsignatures.signer;
 
+import com.apicatalog.jsonld.lang.Keywords;
 import com.danubetech.keyformats.crypto.ByteSigner;
 import foundation.identity.jsonld.JsonLDException;
 import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
@@ -94,7 +96,6 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         LdProof.Builder ldProofBuilder = LdProof.builder()
                 .base(ldProof)
                 .defaultContexts(defaultContexts);
-
         this.sign(ldProofBuilder, canonicalizationResult);
 
         ldProof = ldProofBuilder.build();
@@ -102,10 +103,20 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         // add proof to JSON-LD
 
         if (addToJsonLdObject) ldProof.addToJsonLDObject(jsonLdObject);
+        loadMissingContext(jsonLdObject);
 
         // done
 
         return ldProof;
+    }
+
+    private void loadMissingContext(JsonLDObject jsonLDObject){
+        if(this.getSignatureSuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)){
+            URI missingJsonLDContext = this.signatureSuite.getDefaultSupportedJsonLDContexts();
+            if (missingJsonLDContext != null) {
+                JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, missingJsonLDContext);
+            }
+        }
     }
 
     public LdProof sign(JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException {
