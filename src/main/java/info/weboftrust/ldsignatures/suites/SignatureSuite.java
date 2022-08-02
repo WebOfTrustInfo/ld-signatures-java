@@ -42,7 +42,7 @@ public abstract class SignatureSuite {
 		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.size() < 1) ? null : foundAlgorithmsForKeyTypeName.get(0);
 	}
 
-	public URI getDefaultSupportedJsonLDContext() {
+	public URI getDefaultSupportedJsonLDContexts() {
 		List<URI> supportedJsonLDContexts = this.getSupportedJsonLDContexts();
 		return (supportedJsonLDContexts == null || supportedJsonLDContexts.size() < 1) ? null : supportedJsonLDContexts.get(0);
 	}
