@@ -112,7 +112,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
     private void loadMissingContext(JsonLDObject jsonLDObject){
         if(this.getSignatureSuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)){
-            URI missingJsonLDContext = this.signatureSuite.getDefaultSupportedJsonLDContexts();
+            URI missingJsonLDContext = this.signatureSuite.getDefaultSupportedJsonLDContext();
             if (missingJsonLDContext != null) {
                 JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, missingJsonLDContext);
             }
