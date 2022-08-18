@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.KeyFactory;
-import java.security.interfaces.RSAPrivateKey;
+import java.security.KeyPair;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -72,7 +72,7 @@ class TestUtil {
 	public static final byte[] testEd25519PublicKey;
 	public static final ECKey testSecp256k1PrivateKey;
 	public static final ECKey testSecp256k1PublicKey;
-	public static final RSAPrivateKey testRSAPrivateKey;
+	public static final KeyPair testRSAPrivateKey;
 	public static final RSAPublicKey testRSAPublicKey;
 
 	static {
@@ -121,7 +121,7 @@ class TestUtil {
 
 			PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(encoded);
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			testRSAPrivateKey = (RSAPrivateKey) keyFactory.generatePrivate(spec);
+			testRSAPrivateKey = new KeyPair(testRSAPublicKey, keyFactory.generatePrivate(spec));
 		} catch (Exception ex) {
 
 			throw new RuntimeException(ex.getMessage(), ex);

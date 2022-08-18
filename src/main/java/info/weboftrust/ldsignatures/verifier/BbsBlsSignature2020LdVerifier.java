@@ -1,5 +1,6 @@
 package info.weboftrust.ldsignatures.verifier;
 
+import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Bls12381G2_BBSPlus_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
@@ -8,7 +9,6 @@ import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
 import info.weboftrust.ldsignatures.suites.BbsBlsSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
-import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
@@ -19,7 +19,7 @@ public class BbsBlsSignature2020LdVerifier extends LdVerifier<BbsBlsSignature202
         super(SignatureSuites.SIGNATURE_SUITE_BBSBLSSIGNATURE2020, verifier, new URDNA2015Canonicalizer());
     }
 
-    public BbsBlsSignature2020LdVerifier(ECKey publicKey) {
+    public BbsBlsSignature2020LdVerifier(KeyPair publicKey) {
 
         this(new Bls12381G2_BBSPlus_PublicKeyVerifier(publicKey));
     }

@@ -30,7 +30,7 @@ public class BasicSignTest {
 
 		JWSObject jwsObject = new JWSObject(jwsHeader, payload);
 
-		JWSSigner jwsSigner = new RSASSASigner(TestUtil.testRSAPrivateKey);
+		JWSSigner jwsSigner = new RSASSASigner(TestUtil.testRSAPrivateKey.getPrivate());
 		jwsObject.sign(jwsSigner);
 		signatureValue = jwsObject.serialize(true);
 

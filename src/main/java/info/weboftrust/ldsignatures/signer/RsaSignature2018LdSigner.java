@@ -15,7 +15,7 @@ import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import info.weboftrust.ldsignatures.util.JWSUtil;
 
 import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAPrivateKey;
+import java.security.KeyPair;
 import java.util.Collections;
 
 public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018SignatureSuite> {
@@ -25,7 +25,7 @@ public class RsaSignature2018LdSigner extends LdSigner<RsaSignature2018Signature
         super(SignatureSuites.SIGNATURE_SUITE_RSASIGNATURE2018, signer, new URDNA2015Canonicalizer());
     }
 
-    public RsaSignature2018LdSigner(RSAPrivateKey privateKey) {
+    public RsaSignature2018LdSigner(KeyPair privateKey) {
 
         this(new RSA_RS256_PrivateKeySigner(privateKey));
     }
