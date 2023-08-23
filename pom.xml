@@ -148,12 +148,12 @@
 		<dependency>
 			<groupId>decentralized-identity</groupId>
 			<artifactId>jsonld-common-java</artifactId>
-			<version>1.3.0</version>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>1.8.0</version>
+			<version>1.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.erdtman</groupId>
@@ -168,7 +168,7 @@
 		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multibase</artifactId>
-			<version>v1.1.0</version>
+			<version>v1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hyperledger</groupId>
@@ -179,7 +179,7 @@
 		<dependency>
 			<groupId>com.google.crypto.tink</groupId>
 			<artifactId>tink</artifactId>
-			<version>1.9.0</version>
+			<version>1.10.0</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
