@@ -30,7 +30,7 @@ Dependency:
 	<dependency>
 		<groupId>info.weboftrust</groupId>
 		<artifactId>ld-signatures-java</artifactId>
-		<version>1.3.0</version>
+		<version>1.5.0</version>
 	</dependency>
 
 ## Example
