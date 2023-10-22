@@ -114,7 +114,7 @@ public class LdProof extends JsonLDObject {
 	}
 
 	public static Builder<? extends Builder<?>> builder() {
-		return new Builder(new LdProof());
+		return new Builder<>(new LdProof());
 	}
 
 	public static LdProof fromJsonObject(Map<String, Object> jsonObject) {

@@ -1,13 +1,11 @@
 package info.weboftrust.ldsignatures.signer;
 
 import com.danubetech.keyformats.crypto.ByteSigner;
-import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PrivateKeySigner;
 import com.danubetech.keyformats.crypto.impl.secp256k1_ES256K_PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
 import info.weboftrust.ldsignatures.suites.JcsEcdsaSecp256k1Signature2019SignatureSuite;
-import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Base58;
 import org.bitcoinj.core.ECKey;
@@ -32,7 +30,7 @@ public class JcsEcdsaSecp256k1Signature2019LdSigner extends LdSigner<JcsEcdsaSec
         this((ByteSigner) null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // sign
 
@@ -47,7 +45,7 @@ public class JcsEcdsaSecp256k1Signature2019LdSigner extends LdSigner<JcsEcdsaSec
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

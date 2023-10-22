@@ -9,9 +9,7 @@ import java.text.ParseException;
 
 public class DetachedJWSObject extends JWSObject {
 
-	private static final long serialVersionUID = 4931892811891099374L;
-
-	private Base64URL parsedSignature;
+	private final Base64URL parsedSignature;
 
 	public DetachedJWSObject(JWSHeader jwsHeader, Payload payload, Base64URL parsedSignature) throws ParseException {
 

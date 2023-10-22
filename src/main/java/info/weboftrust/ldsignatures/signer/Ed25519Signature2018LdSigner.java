@@ -34,7 +34,7 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
         this((ByteSigner) null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // build the JWS and sign
 
@@ -59,7 +59,7 @@ public class Ed25519Signature2018LdSigner extends LdSigner<Ed25519Signature2018S
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

@@ -24,7 +24,7 @@ public class JsonWebSignature2020LdVerifier extends LdVerifier<JsonWebSignature2
 
     public JsonWebSignature2020LdVerifier() {
 
-        this((ByteVerifier) null);
+        this(null);
     }
 
     public static boolean verify(byte[] signingInput, LdProof ldProof, ByteVerifier verifier) throws GeneralSecurityException {

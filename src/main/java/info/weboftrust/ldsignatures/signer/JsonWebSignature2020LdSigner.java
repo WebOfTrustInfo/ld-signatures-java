@@ -25,10 +25,10 @@ public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020S
 
     public JsonWebSignature2020LdSigner() {
 
-        this((ByteSigner) null);
+        this(null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // build the JWS and sign
 
@@ -53,7 +53,7 @@ public class JsonWebSignature2020LdSigner extends LdSigner<JsonWebSignature2020S
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

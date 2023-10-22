@@ -35,7 +35,7 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
         this((ByteSigner) null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // build the JWS and sign
 
@@ -60,7 +60,7 @@ public class EcdsaSecp256k1Signature2019LdSigner extends LdSigner<EcdsaSecp256k1
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

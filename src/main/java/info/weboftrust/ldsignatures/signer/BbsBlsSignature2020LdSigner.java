@@ -30,7 +30,7 @@ public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020Sig
         this((ByteSigner) null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // sign
 
@@ -49,7 +49,7 @@ public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020Sig
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +32,7 @@ public class JsonLdVerifyEd25519Signature2020Test {
 	@SuppressWarnings("unchecked")
 	public void testVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2020Test.class.getResourceAsStream("signed.good.Ed25519Signature2020.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyEd25519Signature2020Test.class.getResourceAsStream("signed.good.Ed25519Signature2020.jsonld"))));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);
@@ -43,7 +44,7 @@ public class JsonLdVerifyEd25519Signature2020Test {
 	@SuppressWarnings("unchecked")
 	public void testBadVerify() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdVerifyEd25519Signature2020Test.class.getResourceAsStream("signed.bad.Ed25519Signature2020.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdVerifyEd25519Signature2020Test.class.getResourceAsStream("signed.bad.Ed25519Signature2020.jsonld"))));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		Ed25519Signature2020LdVerifier verifier = new Ed25519Signature2020LdVerifier(TestUtil.testEd25519PublicKey);

@@ -6,7 +6,6 @@ import foundation.identity.jsonld.JsonLDObject;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.Canonicalizer;
 import info.weboftrust.ldsignatures.suites.SignatureSuite;
-import info.weboftrust.ldsignatures.util.SHAUtil;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

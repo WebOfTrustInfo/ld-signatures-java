@@ -68,7 +68,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         return LdSignerRegistry.getLdSignerBySignatureSuite(signatureSuite);
     }
 
-    public abstract void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
+    public abstract void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException;
 
     public LdProof sign(JsonLDObject jsonLdObject, boolean addToJsonLdObject, boolean defaultContexts) throws IOException, GeneralSecurityException, JsonLDException {
 
@@ -93,7 +93,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
 
         // sign
 
-        LdProof.Builder ldProofBuilder = LdProof.builder()
+        LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder = LdProof.builder()
                 .base(ldProof)
                 .defaultContexts(defaultContexts);
         this.sign(ldProofBuilder, canonicalizationResult);

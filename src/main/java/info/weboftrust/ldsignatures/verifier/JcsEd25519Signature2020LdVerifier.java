@@ -3,13 +3,11 @@ package info.weboftrust.ldsignatures.verifier;
 import com.danubetech.keyformats.crypto.ByteVerifier;
 import com.danubetech.keyformats.crypto.impl.Ed25519_EdDSA_PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
 import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Base58;
-import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 

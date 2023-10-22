@@ -8,7 +8,6 @@ import info.weboftrust.ldsignatures.canonicalizer.JCSCanonicalizer;
 import info.weboftrust.ldsignatures.suites.JcsEd25519Signature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Base58;
-import io.ipfs.multibase.Multibase;
 
 import java.security.GeneralSecurityException;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
         this((ByteSigner) null);
     }
 
-    public static void sign(LdProof.Builder ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
+    public static void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput, ByteSigner signer) throws GeneralSecurityException {
 
         // sign
 
@@ -45,7 +44,7 @@ public class JcsEd25519Signature2020LdSigner extends LdSigner<JcsEd25519Signatur
     }
 
     @Override
-    public void sign(LdProof.Builder ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
+    public void sign(LdProof.Builder<? extends LdProof.Builder<?>> ldProofBuilder, byte[] signingInput) throws GeneralSecurityException {
 
         sign(ldProofBuilder, signingInput, this.getSigner());
     }

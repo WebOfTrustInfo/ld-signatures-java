@@ -19,7 +19,7 @@ public class SignatureSuites {
 	public static final BbsBlsSignature2020SignatureSuite SIGNATURE_SUITE_BBSBLSSIGNATURE2020 = new BbsBlsSignature2020SignatureSuite();
 	public static final JsonWebSignature2020SignatureSuite SIGNATURE_SUITE_JSONWEBSIGNATURE2020 = new JsonWebSignature2020SignatureSuite();
 
-	public static List<? extends SignatureSuite> SIGNATURE_SUITES = List.of(
+	public static final List<? extends SignatureSuite> SIGNATURE_SUITES = List.of(
 			SIGNATURE_SUITE_RSASIGNATURE2018,
 			SIGNATURE_SUITE_ED25519SIGNATURE2018,
 			SIGNATURE_SUITE_ED25519SIGNATURE2020,
@@ -56,12 +56,8 @@ public class SignatureSuites {
 		for (SignatureSuite signatureSuite : SIGNATURE_SUITES) {
 			List<KeyTypeName> keyTypeNames = signatureSuite.getKeyTypeNames();
 			for (KeyTypeName keyTypeName : keyTypeNames) {
-				List<SignatureSuite> signatureSuitesList = SIGNATURE_SUITES_BY_KEY_TYPE_NAME.get(keyTypeName);
-				if (signatureSuitesList == null) {
-					signatureSuitesList = new ArrayList<>();
-					SIGNATURE_SUITES_BY_KEY_TYPE_NAME.put(keyTypeName, signatureSuitesList);
-				}
-				signatureSuitesList.add(signatureSuite);
+                List<SignatureSuite> signatureSuitesList = SIGNATURE_SUITES_BY_KEY_TYPE_NAME.computeIfAbsent(keyTypeName, k -> new ArrayList<>());
+                signatureSuitesList.add(signatureSuite);
 			}
 		}
 	}

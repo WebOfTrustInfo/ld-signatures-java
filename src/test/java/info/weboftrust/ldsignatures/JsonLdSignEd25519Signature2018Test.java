@@ -1,13 +1,13 @@
 package info.weboftrust.ldsignatures;
 
-import foundation.identity.jsonld.JsonLDObject;
-import foundation.identity.jsonld.JsonLDUtils;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaSHA256Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
+import foundation.identity.jsonld.JsonLDObject;
+import foundation.identity.jsonld.JsonLDUtils;
 import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.signer.Ed25519Signature2018LdSigner;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,7 +37,7 @@ public class JsonLdSignEd25519Signature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignEd25519Signature2018Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");

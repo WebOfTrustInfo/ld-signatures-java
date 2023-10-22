@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,7 +22,7 @@ public class JsonLdSignRsaSignature2018Test {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignRsaSignature2018Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("https://example.com/jdoe/keys/1");

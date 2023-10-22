@@ -11,15 +11,15 @@ public abstract class SignatureSuite {
 
 	public static final URI URI_TYPE_SIGNATURESUITE = URI.create("https://w3id.org/security#SignatureSuite");
 
-	private String term;
-	private URI id;
-	private URI type;
-	private URI canonicalizationAlgorithm;
-	private URI digestAlgorithm;
-	private URI proofAlgorithm;
-	private List<KeyTypeName> keyTypeNames;
-	private Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
-	private List<URI> supportedJsonLDContexts;
+	private final String term;
+	private final URI id;
+	private final URI type;
+	private final URI canonicalizationAlgorithm;
+	private final URI digestAlgorithm;
+	private final URI proofAlgorithm;
+	private final List<KeyTypeName> keyTypeNames;
+	private final Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName;
+	private final List<URI> supportedJsonLDContexts;
 
 	public SignatureSuite(String term, URI id, URI canonicalizationAlgorithm, URI digestAlgorithm, URI proofAlgorithm, List<KeyTypeName> keyTypeNames, Map<KeyTypeName, List<String>> jwsAlgorithmForKeyTypeName,List<URI> supportedJsonLDContexts) {
 		this.term = term;
@@ -39,12 +39,12 @@ public abstract class SignatureSuite {
 
 	public String findDefaultJwsAlgorithmForKeyTypeName(KeyTypeName keyTypeName) {
 		List<String> foundAlgorithmsForKeyTypeName = this.findJwsAlgorithmsForKeyTypeName(keyTypeName);
-		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.size() < 1) ? null : foundAlgorithmsForKeyTypeName.get(0);
+		return (foundAlgorithmsForKeyTypeName == null || foundAlgorithmsForKeyTypeName.isEmpty()) ? null : foundAlgorithmsForKeyTypeName.get(0);
 	}
 
 	public URI getDefaultSupportedJsonLDContext() {
 		List<URI> supportedJsonLDContexts = this.getSupportedJsonLDContexts();
-		return (supportedJsonLDContexts == null || supportedJsonLDContexts.size() < 1) ? null : supportedJsonLDContexts.get(0);
+		return (supportedJsonLDContexts == null || supportedJsonLDContexts.isEmpty()) ? null : supportedJsonLDContexts.get(0);
 	}
 
 	public String getTerm() {

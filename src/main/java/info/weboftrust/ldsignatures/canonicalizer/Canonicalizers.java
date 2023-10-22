@@ -10,7 +10,7 @@ public class Canonicalizers {
 	public static final JCSCanonicalizer CANONICALIZER_JCSCANONICALIZER = new JCSCanonicalizer();
 	public static final URDNA2015Canonicalizer CANONICALIZER_URDNA2015CANONICALIZER = new URDNA2015Canonicalizer();
 
-	public static List<? extends Canonicalizer> CANONICALIZERS = List.of(
+	public static final List<? extends Canonicalizer> CANONICALIZERS = List.of(
 			CANONICALIZER_JCSCANONICALIZER,
 			CANONICALIZER_URDNA2015CANONICALIZER
 	);
@@ -31,12 +31,8 @@ public class Canonicalizers {
 		for (Canonicalizer canonicalizer : CANONICALIZERS) {
 			List<String> algorithms = canonicalizer.getAlgorithms();
 			for (String algorithm : algorithms) {
-				List<Canonicalizer> canonicalizersList = CANONICALIZERS_BY_ALGORITHM.get(algorithm);
-				if (canonicalizersList == null) {
-					canonicalizersList = new ArrayList<>();
-					CANONICALIZERS_BY_ALGORITHM.put(algorithm, canonicalizersList);
-				}
-				canonicalizersList.add(canonicalizer);
+                List<Canonicalizer> canonicalizersList = CANONICALIZERS_BY_ALGORITHM.computeIfAbsent(algorithm, k -> new ArrayList<>());
+                canonicalizersList.add(canonicalizer);
 			}
 		}
 	}

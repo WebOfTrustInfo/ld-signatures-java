@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,7 +37,7 @@ public class JsonLdSignJcsEd25519Signature2020Test {
 	@SuppressWarnings("unchecked")
 	public void testSign() throws Throwable {
 
-		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(JsonLdSignJcsEd25519Signature2020Test.class.getResourceAsStream("input.jsonld")));
+		JsonLDObject jsonLdObject = JsonLDObject.fromJson(new InputStreamReader(Objects.requireNonNull(JsonLdSignJcsEd25519Signature2020Test.class.getResourceAsStream("input.jsonld"))));
 		jsonLdObject.setDocumentLoader(LDSecurityContexts.DOCUMENT_LOADER);
 
 		URI creator = URI.create("did:sov:WRfXPg8dantKVubE3HX8pw");

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public abstract class Canonicalizer {
 
-    private List<String> algorithms;
+    private final List<String> algorithms;
 
     public abstract byte[] canonicalize(LdProof ldProof, JsonLDObject jsonLdObject) throws IOException, GeneralSecurityException, JsonLDException;
 
