@@ -6,7 +6,6 @@ import com.danubetech.keyformats.crypto.impl.Bls12381G2_BBSPlus_PrivateKeySigner
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import info.weboftrust.ldsignatures.LdProof;
 import info.weboftrust.ldsignatures.canonicalizer.URDNA2015Canonicalizer;
-import info.weboftrust.ldsignatures.jsonld.LDSecurityContexts;
 import info.weboftrust.ldsignatures.suites.BbsBlsSignature2020SignatureSuite;
 import info.weboftrust.ldsignatures.suites.SignatureSuites;
 import io.ipfs.multibase.Multibase;
@@ -38,10 +37,6 @@ public class BbsBlsSignature2020LdSigner extends LdSigner<BbsBlsSignature2020Sig
 
         byte[] bytes = signer.sign(signingInput, JWSAlgorithm.BBSPlus);
         proofValue = Multibase.encode(Multibase.Base.Base58BTC, bytes);
-
-        // add JSON-LD context
-
-        ldProofBuilder.context(LDSecurityContexts.JSONLD_CONTEXT_W3ID_SECURITY_BBS_V1);
 
         // done
 
