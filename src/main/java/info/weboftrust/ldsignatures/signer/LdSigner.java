@@ -114,7 +114,7 @@ public abstract class LdSigner<SIGNATURESUITE extends SignatureSuite> {
         if(this.getSignatureSuite().getSupportedJsonLDContexts().stream().noneMatch(jsonLDObject.getContexts()::contains)){
             URI missingJsonLDContext = this.signatureSuite.getDefaultSupportedJsonLDContext();
             if (missingJsonLDContext != null) {
-                JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, missingJsonLDContext);
+                JsonLDUtils.jsonLdAddAsJsonArray(jsonLDObject, Keywords.CONTEXT, JsonLDUtils.uriToString(missingJsonLDContext));
             }
         }
     }
