@@ -10,6 +10,7 @@ import info.weboftrust.ldsignatures.jsonld.LDSecurityKeywords;
 import java.io.Reader;
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class LdProof extends JsonLDObject {
@@ -141,6 +142,10 @@ public class LdProof extends JsonLDObject {
 
 	public static LdProof getFromJsonLDObject(JsonLDObject jsonLdObject) {
 		return JsonLDObject.getFromJsonLDObject(LdProof.class, jsonLdObject);
+	}
+
+	public static List<LdProof> getFromJsonLDObjectAsList(JsonLDObject jsonLdObject) {
+		return JsonLDObject.getFromJsonLDObjectAsList(LdProof.class, jsonLdObject);
 	}
 
 	public static void removeFromJsonLdObject(JsonLDObject jsonLdObject) {
