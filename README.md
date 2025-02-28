@@ -2,7 +2,9 @@
 
 ## Information
 
-This is an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
+**This library is deprecated and continued as [data-integrity-java](https://github.com/danubetech/data-integrity-java).**
+
+It provides an implementation of the following cryptographic suites for [Linked Data Proofs](https://w3c-ccg.github.io/ld-proofs/):
 
  - [Ed25519Signature2018](https://w3c-ccg.github.io/lds-ed25519-2018/)
  - [Ed25519Signature2020](https://w3c-ccg.github.io/lds-ed25519-2020/)
@@ -61,7 +63,7 @@ Example code:
     signer.setVerificationMethod(URI.create("https://example.com/jdoe/keys/1"));
     signer.setDomain("example.com");
     signer.setNonce("343s$FSFDa-");
-    LdProof ldProof = signer.sign(jsonLdObject);
+    LdProof dataIntegrityProof = signer.sign(jsonLdObject);
 
     System.out.println(jsonLdObject.toJson(true));
 
