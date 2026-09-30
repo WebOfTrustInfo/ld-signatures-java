@@ -187,7 +187,7 @@
 		<dependency>
 			<groupId>com.danubetech</groupId>
 			<artifactId>key-formats-java</artifactId>
-			<version>1.20.0</version>
+			<version>1.35.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.erdtman</groupId>
